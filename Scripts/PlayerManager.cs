@@ -13,25 +13,36 @@ public class PlayerManager : MonoBehaviour
     public Rigidbody2D rb;
     private BoxCollider2D coll;
     private bool isGrounded; //To check if the player touches the ground
+    public float horizontal;
+    private float playerYScale;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         coll = GetComponent<BoxCollider2D>();
+        playerYScale = GetComponent<Transform>().localScale.y;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        float x = Input.GetAxisRaw("Horizontal");
+        horizontal = Input.GetAxisRaw("Horizontal");
 
-        Vector2 movement = new Vector2(x * speed, rb.velocity.y);
+        Vector2 movement = new Vector2(horizontal * speed, rb.velocity.y);
 
         rb.velocity = movement;
     }
 
     private void Update()
+    {
+        Jump();
+
+        if (horizontal == -1) gameObject.transform.localScale = new Vector3(-1, playerYScale, 1);
+        else if (horizontal == 1) gameObject.transform.localScale = new Vector3(1, playerYScale, 1);
+    }
+
+    private void Jump()
     {
         isGrounded = Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, .1f, layer);
 
