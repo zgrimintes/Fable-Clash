@@ -1,27 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
+    [SerializeField] private FighterManager fighterManager_data;
     [SerializeField] private float gravityScale = 1;
     [SerializeField] private float fallGravityScale = 4;
     [SerializeField] private LayerMask layer;
+    [SerializeField] private float jumpForce;
 
-    public float speed;
-    public float jumpForce;
-    public Rigidbody2D rb;
+    private Rigidbody2D rb;
     private BoxCollider2D coll;
+    private float speed;
     private bool isGrounded; //To check if the player touches the ground
-    public float horizontal;
+    private float horizontal;
     private float playerYScale;
 
     // Start is called before the first frame update
     void Start()
     {
+        LoadPlayer(fighterManager_data);
         rb = GetComponent<Rigidbody2D>();
         coll = GetComponent<BoxCollider2D>();
         playerYScale = GetComponent<Transform>().localScale.y;
+    }
+
+    private void LoadPlayer(FighterManager data)
+    {
+        WeightClass w_data = (WeightClass)data.w_Class;
+        speed = w_data.speed;
     }
 
     // Update is called once per frame
@@ -48,7 +57,6 @@ public class PlayerManager : MonoBehaviour
 
         if (isGrounded == true && Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("jump");
             rb.velocity = new Vector2(rb.velocity.y, jumpForce);
         }
 
