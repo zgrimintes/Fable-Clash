@@ -6,6 +6,7 @@ using UnityEngine;
 public class FighterManager : ScriptableObject
 {
     public int HP;
+    public int mana;
     public ScriptableObject w_Class;
     public string characterName;
 }
