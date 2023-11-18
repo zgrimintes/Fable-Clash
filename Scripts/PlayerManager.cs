@@ -1,36 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    [SerializeField] private FighterManager fighterManager_data;
+    [SerializeField] private FighterManager fighterManager;
     [SerializeField] private float gravityScale = 1;
     [SerializeField] private float fallGravityScale = 4;
     [SerializeField] private LayerMask layer;
     [SerializeField] private float jumpForce;
 
+    public GameObject textPrfb;
     private Rigidbody2D rb;
     private BoxCollider2D coll;
     private float speed;
     private bool isGrounded; //To check if the player touches the ground
     private float horizontal;
     private float playerYScale;
+    public int mana;
 
     // Start is called before the first frame update
     void Start()
     {
-        LoadPlayer(fighterManager_data);
         rb = GetComponent<Rigidbody2D>();
         coll = GetComponent<BoxCollider2D>();
         playerYScale = GetComponent<Transform>().localScale.y;
+        LoadPlayer(fighterManager);
     }
 
-    private void LoadPlayer(FighterManager data)
+    private void LoadPlayer(FighterManager data) //Function for loading the data from the ScriptableObject into the GameObject
     {
         WeightClass w_data = (WeightClass)data.w_Class;
         speed = w_data.speed;
+        mana = data.mana;
     }
 
     // Update is called once per frame
@@ -49,6 +53,12 @@ public class PlayerManager : MonoBehaviour
 
         if (horizontal == -1) gameObject.transform.localScale = new Vector3(-1, playerYScale, 1);
         else if (horizontal == 1) gameObject.transform.localScale = new Vector3(1, playerYScale, 1);
+
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            fighterManager.normal_Attack(gameObject);
+            textPrfb.GetComponentInChildren<TextMeshProUGUI>().text = "Mana: " + mana.ToString();
+        }
     }
 
     private void Jump()
