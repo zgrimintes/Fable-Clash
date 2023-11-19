@@ -21,6 +21,13 @@ public class PlayerManager : MonoBehaviour
     private float playerYScale;
     public int mana;
 
+    private float timeSinceTapped;
+    private bool doubleTapped = false;
+    private bool tapped = false;
+    private float timeToDT = 0.4f;
+    private bool lastKey = true;
+    private bool isDashing = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,12 +51,13 @@ public class PlayerManager : MonoBehaviour
 
         Vector2 movement = new Vector2(horizontal * speed, rb.velocity.y);
 
-        rb.velocity = movement;
+        if (!isDashing) rb.velocity = movement;
     }
 
     private void Update()
     {
-        Jump();
+        Dash();
+        if (!isDashing) Jump();
 
         if (horizontal == -1) gameObject.transform.localScale = new Vector3(-1, playerYScale, 1);
         else if (horizontal == 1) gameObject.transform.localScale = new Vector3(1, playerYScale, 1);
@@ -59,6 +67,62 @@ public class PlayerManager : MonoBehaviour
             fighterManager.normal_Attack(gameObject);
             textPrfb.GetComponentInChildren<TextMeshProUGUI>().text = "Mana: " + mana.ToString();
         }
+    }
+
+    private void Dash()
+    {
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            if (!tapped)
+            {
+                timeSinceTapped = Time.time;
+                tapped = true;
+            }
+            else
+            {
+                if (Time.time - timeSinceTapped < timeToDT && lastKey)
+                {
+                    doubleTapped = true;
+                }
+
+                tapped = false;
+            }
+            lastKey = true;
+        } //Dash for right
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            if (!tapped)
+            {
+                timeSinceTapped = Time.time;
+                tapped = true;
+            }
+            else
+            {
+                if (Time.time - timeSinceTapped < timeToDT && !lastKey)
+                {
+                    doubleTapped = true;
+                }
+
+                tapped = false;
+            }
+            lastKey = false;
+        } //Dash for left
+
+        if (doubleTapped)
+        {
+            doubleTapped = false;
+            StartCoroutine(Dashh());
+        }
+    }
+
+    private IEnumerator Dashh()
+    {
+        isDashing = true;
+        rb.velocity = new Vector2(rb.velocity.x * 3, rb.velocity.y);
+        Debug.Log("Dash");
+        yield return new WaitForSeconds(0.2f);
+        isDashing = false;
     }
 
     private void Jump()
