@@ -18,6 +18,7 @@ public class PlayerManager : MonoBehaviour
     private float speed;
     private bool isGrounded; //To check if the player touches the ground
     private float horizontal;
+    private float horizontalS;
     private float playerYScale;
     public int mana;
 
@@ -25,7 +26,7 @@ public class PlayerManager : MonoBehaviour
     private bool doubleTapped = false;
     private bool tapped = false;
     private float timeToDT = 0.4f;
-    private bool lastKey = true;
+    private int lastKey = 0; // -1 for A and 1 for D
     private bool isDashing = false;
 
     // Start is called before the first frame update
@@ -59,8 +60,8 @@ public class PlayerManager : MonoBehaviour
         Dash();
         if (!isDashing) Jump();
 
-        if (horizontal == -1) gameObject.transform.localScale = new Vector3(-1, playerYScale, 1);
-        else if (horizontal == 1) gameObject.transform.localScale = new Vector3(1, playerYScale, 1);
+        if (horizontal == -1) { gameObject.transform.localScale = new Vector3(-1, playerYScale, 1); horizontalS = -1; }
+        else if (horizontal == 1) { gameObject.transform.localScale = new Vector3(1, playerYScale, 1); horizontalS = 1; }
 
         if (Input.GetKeyDown(KeyCode.J))
         {
@@ -80,14 +81,14 @@ public class PlayerManager : MonoBehaviour
             }
             else
             {
-                if (Time.time - timeSinceTapped < timeToDT && lastKey)
+                if (Time.time - timeSinceTapped < timeToDT && lastKey == 1)
                 {
                     doubleTapped = true;
                 }
 
                 tapped = false;
             }
-            lastKey = true;
+            lastKey = 1;
         } //Dash for right
 
         if (Input.GetKeyDown(KeyCode.A))
@@ -99,14 +100,14 @@ public class PlayerManager : MonoBehaviour
             }
             else
             {
-                if (Time.time - timeSinceTapped < timeToDT && !lastKey)
+                if (Time.time - timeSinceTapped < timeToDT && lastKey == -1)
                 {
                     doubleTapped = true;
                 }
 
                 tapped = false;
             }
-            lastKey = false;
+            lastKey = -1;
         } //Dash for left
 
         if (doubleTapped)
@@ -119,8 +120,8 @@ public class PlayerManager : MonoBehaviour
     private IEnumerator Dashh()
     {
         isDashing = true;
-        rb.velocity = new Vector2(rb.velocity.x * 3, rb.velocity.y);
-        Debug.Log("Dash");
+        lastKey = 0;
+        rb.velocity = new Vector2(horizontalS * speed * 3, rb.velocity.y);
         yield return new WaitForSeconds(0.2f);
         isDashing = false;
     }
