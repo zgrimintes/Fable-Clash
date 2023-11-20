@@ -18,7 +18,7 @@ public class PlayerManager : MonoBehaviour
     private float speed;
     private bool isGrounded; //To check if the player touches the ground
     private float horizontal;
-    private float horizontalS;
+    public float horizontalS;
     private float playerYScale;
     public int mana;
 
