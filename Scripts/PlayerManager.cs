@@ -74,11 +74,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.D))
         {
-            if (!tapped)
-            {
-                timeSinceTapped = Time.time;
-                tapped = true;
-            }
+            if (!tapped) tapped = true;
             else
             {
                 if (Time.time - timeSinceTapped < timeToDT && lastKey == 1)
@@ -89,15 +85,12 @@ public class PlayerManager : MonoBehaviour
                 tapped = false;
             }
             lastKey = 1;
+            timeSinceTapped = Time.time;
         } //Dash for right
 
         if (Input.GetKeyDown(KeyCode.A))
         {
-            if (!tapped)
-            {
-                timeSinceTapped = Time.time;
-                tapped = true;
-            }
+            if (!tapped) tapped = true;
             else
             {
                 if (Time.time - timeSinceTapped < timeToDT && lastKey == -1)
@@ -107,6 +100,7 @@ public class PlayerManager : MonoBehaviour
 
                 tapped = false;
             }
+            timeSinceTapped = Time.time;
             lastKey = -1;
         } //Dash for left
 
