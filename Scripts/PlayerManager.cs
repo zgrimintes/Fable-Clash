@@ -29,6 +29,9 @@ public class PlayerManager : MonoBehaviour
     private int lastKey = 0; // -1 for A and 1 for D
     private bool isDashing = false;
 
+    private float cooldown = 0.8f;
+    private float lastAttack;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -63,8 +66,9 @@ public class PlayerManager : MonoBehaviour
         if (horizontal == -1) { gameObject.transform.localScale = new Vector3(-1, playerYScale, 1); horizontalS = -1; }
         else if (horizontal == 1) { gameObject.transform.localScale = new Vector3(1, playerYScale, 1); horizontalS = 1; }
 
-        if (Input.GetKeyDown(KeyCode.J))
+        if (Input.GetKeyDown(KeyCode.J) && Time.time - lastAttack > cooldown)
         {
+            lastAttack = Time.time;
             fighterManager.normal_Attack(gameObject);
             textPrfb.GetComponentInChildren<TextMeshProUGUI>().text = "Mana: " + mana.ToString();
         }
