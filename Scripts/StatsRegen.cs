@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StatsRegen : PlayerManager
+public class StatsRegen : MonoBehaviour
 {
     [SerializeField] private float timeToGainMana = 15f;
+    [SerializeField] private FighterManager fighterManager;
     private float lastManaGain;
+    private int mana;
+
 
     void Update()
     {
@@ -16,7 +19,7 @@ public class StatsRegen : PlayerManager
         if (Time.time - lastManaGain > timeToGainMana)
         {
             lastManaGain = Time.time;
-            updateText(mana + 1);
+            GetComponent<PlayerManager>().updateText(mana + 1);
             fighterManager.mana_Gain(gameObject);
         }
     }
