@@ -6,12 +6,12 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    [SerializeField] private FighterManager fighterManager;
     [SerializeField] private float gravityScale = 1;
     [SerializeField] private float fallGravityScale = 4;
     [SerializeField] private LayerMask layer;
     [SerializeField] private float jumpForce;
 
+    public FighterManager fighterManager;
     public GameObject textPrfb;
     private Rigidbody2D rb;
     private BoxCollider2D coll;
@@ -39,6 +39,7 @@ public class PlayerManager : MonoBehaviour
         coll = GetComponent<BoxCollider2D>();
         playerYScale = GetComponent<Transform>().localScale.y;
         LoadPlayer(fighterManager);
+        updateText(mana);
     }
 
     private void LoadPlayer(FighterManager data) //Function for loading the data from the ScriptableObject into the GameObject
@@ -68,9 +69,11 @@ public class PlayerManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.J) && Time.time - lastAttack > cooldown)
         {
+            if (mana < 1) return;
+
             lastAttack = Time.time;
             fighterManager.normal_Attack(gameObject);
-            textPrfb.GetComponentInChildren<TextMeshProUGUI>().text = "Mana: " + mana.ToString();
+            updateText(mana);
         }
     }
 
@@ -135,6 +138,11 @@ public class PlayerManager : MonoBehaviour
 
         if (rb.velocity.y > 0) rb.gravityScale = gravityScale;
         else rb.gravityScale = fallGravityScale;
+    }
+
+    public void updateText(int mana)
+    {
+        textPrfb.GetComponentInChildren<TextMeshProUGUI>().text = "Mana: " + mana.ToString();
     }
 
 }
