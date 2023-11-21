@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using UnityEngine;
 
 public class AttackManager : MonoBehaviour
 {
     [SerializeField] private GameObject Weapon;
-    [SerializeField] private Vector3 offset;
+
+    public Transform attackPoint;
+    public float attackRange = 0.5f;
+    public LayerMask enemyLayer;
 
     public void Attack()
     {
@@ -14,5 +18,12 @@ public class AttackManager : MonoBehaviour
         else if (GetComponent<PlayerManager>().horizontalS == 1) wp.GetComponent<Animator>().Play("SwordSwing");
 
         wp.AddComponent<FollowPlayer>().toFollow = gameObject; //Adding the FollowPlayer script 
+
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
+
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            Debug.Log("Hit " + enemy.name);
+        }
     }
 }
