@@ -4,7 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : AttackManager
 {
     [SerializeField] private float gravityScale = 1;
     [SerializeField] private float fallGravityScale = 4;
@@ -21,6 +21,7 @@ public class PlayerManager : MonoBehaviour
     public float horizontalS;
     private float playerYScale;
     public int mana;
+    public int HP;
 
     private float timeSinceTapped;
     private bool doubleTapped = false;
@@ -39,7 +40,7 @@ public class PlayerManager : MonoBehaviour
         coll = GetComponent<BoxCollider2D>();
         playerYScale = GetComponent<Transform>().localScale.y;
         LoadPlayer(fighterManager);
-        updateText(mana);
+        updateText();
     }
 
     private void LoadPlayer(FighterManager data) //Function for loading the data from the ScriptableObject into the GameObject
@@ -47,6 +48,7 @@ public class PlayerManager : MonoBehaviour
         WeightClass w_data = (WeightClass)data.w_Class;
         speed = w_data.speed;
         mana = data.mana;
+        HP = data.HP;
     }
 
     // Update is called once per frame
@@ -69,11 +71,14 @@ public class PlayerManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.J) && Time.time - lastAttack > cooldown)
         {
-            if (mana < 1) return;
+            if (mana > 0)
+            {
+                lastAttack = Time.time;
+                normal_Attack();
+                fighterManager.normal_Attack(gameObject);
+                updateText();
+            }
 
-            lastAttack = Time.time;
-            fighterManager.normal_Attack(gameObject);
-            updateText(mana);
         }
     }
 
@@ -140,9 +145,23 @@ public class PlayerManager : MonoBehaviour
         else rb.gravityScale = fallGravityScale;
     }
 
-    public void updateText(int mana)
+    public void updateText()
     {
-        textPrfb.GetComponentInChildren<TextMeshProUGUI>().text = "Mana: " + mana.ToString();
+        TextMeshProUGUI[] children = textPrfb.GetComponentsInChildren<TextMeshProUGUI>();
+
+        foreach (TextMeshProUGUI child in children)
+        {
+            if (child == null) return;
+
+            if (child.name == "HealthP")
+                child.text = "Health: " + HP;
+            else if (child.name == "ManaP ")
+                child.text = "Mana: " + mana;
+        }
     }
 
+    public void take_damage(int damage)
+    {
+        fighterManager.take_damage(damage);
+    }
 }
