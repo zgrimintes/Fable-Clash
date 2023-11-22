@@ -29,7 +29,7 @@ public class AttackManager : MonoBehaviour
 
         foreach (Collider2D enemy in hitEnemies)
         {
-            enemy.GetComponent<EnemyController>().take_damage(1);
+            enemy.GetComponent<CharacterManager>().take_damage(1);
         }
     }
 }

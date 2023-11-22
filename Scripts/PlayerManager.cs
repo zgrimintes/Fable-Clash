@@ -4,24 +4,19 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerManager : AttackManager
+public class PlayerManager : CharacterManager
 {
     [SerializeField] private float gravityScale = 1;
     [SerializeField] private float fallGravityScale = 4;
-    [SerializeField] private LayerMask layer;
     [SerializeField] private float jumpForce;
+    [SerializeField] private LayerMask layer;
 
-    public FighterManager fighterManager;
-    public GameObject textPrfb;
     private Rigidbody2D rb;
     private BoxCollider2D coll;
-    private float speed;
     private bool isGrounded; //To check if the player touches the ground
     private float horizontal;
     public float horizontalS;
     private float playerYScale;
-    public int mana;
-    public int HP;
 
     private float timeSinceTapped;
     private bool doubleTapped = false;
@@ -30,10 +25,6 @@ public class PlayerManager : AttackManager
     private int lastKey = 0; // -1 for A and 1 for D
     private bool isDashing = false;
 
-    private float cooldown = 0.8f;
-    private float lastAttack;
-
-    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -43,15 +34,6 @@ public class PlayerManager : AttackManager
         updateText();
     }
 
-    private void LoadPlayer(FighterManager data) //Function for loading the data from the ScriptableObject into the GameObject
-    {
-        WeightClass w_data = (WeightClass)data.w_Class;
-        speed = w_data.speed;
-        mana = data.mana;
-        HP = data.HP;
-    }
-
-    // Update is called once per frame
     void FixedUpdate()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
@@ -71,14 +53,7 @@ public class PlayerManager : AttackManager
 
         if (Input.GetKeyDown(KeyCode.J) && Time.time - lastAttack > cooldown)
         {
-            if (mana > 0)
-            {
-                lastAttack = Time.time;
-                normal_Attack();
-                fighterManager.normal_Attack(gameObject);
-                updateText();
-            }
-
+            tryToAttack();
         }
     }
 
@@ -143,25 +118,5 @@ public class PlayerManager : AttackManager
 
         if (rb.velocity.y > 0) rb.gravityScale = gravityScale;
         else rb.gravityScale = fallGravityScale;
-    }
-
-    public void updateText()
-    {
-        TextMeshProUGUI[] children = textPrfb.GetComponentsInChildren<TextMeshProUGUI>();
-
-        foreach (TextMeshProUGUI child in children)
-        {
-            if (child == null) return;
-
-            if (child.name == "HealthP")
-                child.text = "Health: " + HP;
-            else if (child.name == "ManaP ")
-                child.text = "Mana: " + mana;
-        }
-    }
-
-    public void take_damage(int damage)
-    {
-        fighterManager.take_damage(damage);
     }
 }

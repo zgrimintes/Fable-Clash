@@ -12,15 +12,15 @@ public class StatsRegen : MonoBehaviour
 
     void Update()
     {
-        mana = GetComponent<PlayerManager>().mana;
+        mana = GetComponent<CharacterManager>().mana;
 
         if (mana == 4) return;
 
         if (Time.time - lastManaGain > timeToGainMana)
         {
             lastManaGain = Time.time;
-            GetComponent<PlayerManager>().updateText(mana + 1);
             fighterManager.mana_Gain(gameObject);
+            GetComponent<CharacterManager>().updateText();
         }
     }
 }
