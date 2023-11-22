@@ -16,12 +16,16 @@ public class FighterManager : ScriptableObject
     {
         mana -= 1;
         parent.GetComponent<PlayerManager>().mana = mana;
-        parent.GetComponent<AttackManager>().Attack();
     }
 
     public void mana_Gain(GameObject parent)
     {
         mana += 1;
         parent.GetComponent<PlayerManager>().mana = mana;
+    }
+
+    public void take_damage(int damage)
+    {
+        HP -= damage;
     }
 }
