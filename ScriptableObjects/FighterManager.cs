@@ -12,6 +12,7 @@ public class FighterManager : ScriptableObject
     public ScriptableObject w_Class;
     public string characterName;
     public bool enemy;
+    public int roundsWon;
 
     public void normal_Attack(GameObject parent)
     {
