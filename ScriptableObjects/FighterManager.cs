@@ -14,16 +14,22 @@ public class FighterManager : ScriptableObject
     public bool enemy;
     public int roundsWon;
 
-    public void normal_Attack(GameObject parent)
+    public void ranged_Attack(GameObject parent)
     {
-        mana -= 1;
-        parent.GetComponent<CharacterManager>().mana = mana;
+        stamina -= 1;
+        parent.GetComponent<CharacterManager>().stamina = stamina;
     }
 
     public void mana_Gain(GameObject parent)
     {
         mana += 1;
         parent.GetComponent<CharacterManager>().mana = mana;
+    }
+
+    public void stamina_Gain(GameObject parent)
+    {
+        stamina += 1;
+        parent.GetComponent<CharacterManager>().stamina = stamina;
     }
 
     public void take_damage(GameObject parent, int damage)
