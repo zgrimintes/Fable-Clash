@@ -5,13 +5,16 @@ using UnityEngine;
 
 public class CharacterManager : AttackManager
 {
-    public int mana;
-    public int HP;
-    public float speed;
-    public float stamina;
+    [HideInInspector] public float jumpForce = 15.5f;
+    [HideInInspector] public float gravityScale = 4;
+    [HideInInspector] public float fallGravityScale = 5;
+    [HideInInspector] public int mana;
+    [HideInInspector] public int HP;
+    [HideInInspector] public int stamina;
+    [HideInInspector] public float speed;
+    [HideInInspector] public float cooldown = 0.8f;
+    [HideInInspector] public float lastAttack;
     public FighterManager fighterManager;
-    public float cooldown = 0.8f;
-    public float lastAttack;
     public GameObject textPrfb;
 
     public void LoadPlayer(FighterManager data) //Function for loading the data from the ScriptableObject into the GameObject
@@ -54,13 +57,20 @@ public class CharacterManager : AttackManager
         updateText();
     }
 
-    public void tryToAttack()
+    public void try_NA()
     {
-        if (mana > 0)
+        lastAttack = Time.time;
+        normal_Attack();
+        updateText();
+    }
+
+    public void try_RA()
+    {
+        if (stamina > 0)
         {
             lastAttack = Time.time;
-            normal_Attack();
-            fighterManager.normal_Attack(gameObject);
+            ranged_Attack();
+            fighterManager.ranged_Attack(gameObject);
             updateText();
         }
     }
