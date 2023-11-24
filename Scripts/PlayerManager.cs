@@ -6,9 +6,6 @@ using UnityEngine;
 
 public class PlayerManager : CharacterManager
 {
-    [SerializeField] private float gravityScale = 1;
-    [SerializeField] private float fallGravityScale = 4;
-    [SerializeField] private float jumpForce;
     [SerializeField] private LayerMask layer;
 
     private Rigidbody2D rb;
@@ -46,14 +43,18 @@ public class PlayerManager : CharacterManager
     private void Update()
     {
         Dash();
-        if (!isDashing) Jump();
+        if (!isDashing && Input.GetKeyDown(KeyCode.Space)) Jump();
 
         if (horizontal == -1) { gameObject.transform.localScale = new Vector3(-1, playerYScale, 1); horizontalS = -1; }
         else if (horizontal == 1) { gameObject.transform.localScale = new Vector3(1, playerYScale, 1); horizontalS = 1; }
 
         if (Input.GetKeyDown(KeyCode.J) && Time.time - lastAttack > cooldown)
         {
-            tryToAttack();
+            try_NA();
+        }
+        if (Input.GetKeyDown(KeyCode.L) && Time.time - lastAttack > cooldown)
+        {
+            try_RA();
         }
     }
 
@@ -106,12 +107,11 @@ public class PlayerManager : CharacterManager
         yield return new WaitForSeconds(0.2f);
         isDashing = false;
     }
-
     private void Jump()
     {
         isGrounded = Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, .1f, layer);
 
-        if (isGrounded == true && Input.GetKeyDown(KeyCode.Space))
+        if (isGrounded == true)
         {
             rb.velocity = new Vector2(rb.velocity.y, jumpForce);
         }
