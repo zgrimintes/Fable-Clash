@@ -74,4 +74,15 @@ public class CharacterManager : AttackManager
             updateText();
         }
     }
+
+    public void try_HA()
+    {
+        if (stamina > 0)
+        {
+            lastAttack = Time.time;
+            heavy_Attack();
+            fighterManager.heavy_Attack(gameObject);
+            updateText();
+        }
+    }
 }
