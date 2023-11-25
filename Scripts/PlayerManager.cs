@@ -56,6 +56,10 @@ public class PlayerManager : CharacterManager
         {
             try_RA();
         }
+        if (Input.GetKeyDown(KeyCode.K) && Time.time - lastAttack > cooldown)
+        {
+            try_HA();
+        }
     }
 
     private void Dash()
