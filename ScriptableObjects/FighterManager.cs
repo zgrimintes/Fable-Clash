@@ -20,6 +20,12 @@ public class FighterManager : ScriptableObject
         parent.GetComponent<CharacterManager>().stamina = stamina;
     }
 
+    public void heavy_Attack(GameObject parent)
+    {
+        stamina -= 2;
+        parent.GetComponent<CharacterManager>().stamina = stamina;
+    }
+
     public void mana_Gain(GameObject parent)
     {
         mana += 1;
