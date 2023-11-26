@@ -14,16 +14,43 @@ public class CharacterManager : AttackManager
     [HideInInspector] public float speed;
     [HideInInspector] public float cooldown = 0.8f;
     [HideInInspector] public float lastAttack;
+
     public FighterManager fighterManager;
     public GameObject textPrfb;
+    [HideInInspector] public Rigidbody2D rb;
+    [HideInInspector] public BoxCollider2D coll;
+
+    int _NA_dmg;
+    int _RA_dmg;
+    int _HA_dmg;
+    int _MA_dmg;
+    int _SA_dmg;
+    string _ch_name;
+
+    protected override void Start()
+    {
+        base.Start();
+
+        rb = GetComponent<Rigidbody2D>();
+        coll = GetComponent<BoxCollider2D>();
+        LoadPlayer(fighterManager);
+        updateText();
+    }
 
     public void LoadPlayer(FighterManager data) //Function for loading the data from the ScriptableObject into the GameObject
     {
         WeightClass w_data = (WeightClass)data.w_Class;
         speed = w_data.speed;
+        _NA_dmg = w_data._NA_dmg;
+        _RA_dmg = w_data._RA_dmg;
+        _HA_dmg = w_data._HA_dmg;
+        _MA_dmg = w_data._MA_dmg;
+        _SA_dmg = w_data._S_dmg;
+
         mana = data.mana;
         HP = data.HP;
         stamina = data.stamina;
+        _ch_name = data.characterName;
     }
 
     public void updateText()
@@ -60,7 +87,7 @@ public class CharacterManager : AttackManager
     public void try_NA()
     {
         lastAttack = Time.time;
-        normal_Attack();
+        normal_Attack(_NA_dmg);
         updateText();
     }
 
@@ -69,7 +96,7 @@ public class CharacterManager : AttackManager
         if (stamina > 0)
         {
             lastAttack = Time.time;
-            ranged_Attack();
+            ranged_Attack(_RA_dmg);
             fighterManager.ranged_Attack(gameObject);
             updateText();
         }
@@ -80,8 +107,19 @@ public class CharacterManager : AttackManager
         if (stamina > 1)
         {
             lastAttack = Time.time;
-            heavy_Attack();
+            heavy_Attack(_HA_dmg);
             fighterManager.heavy_Attack(gameObject);
+            updateText();
+        }
+    }
+
+    public void try_MA()
+    {
+        if (mana > 1)
+        {
+            lastAttack = Time.time;
+            magic_Attack(_MA_dmg, _ch_name);
+            fighterManager.magic_Attack(gameObject);
             updateText();
         }
     }
