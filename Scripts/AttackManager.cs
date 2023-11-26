@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices.WindowsRuntime;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AttackManager : MonoBehaviour
@@ -10,11 +12,13 @@ public class AttackManager : MonoBehaviour
     [SerializeField] private GameObject Weapon;
     [SerializeField] private GameObject Projectile;
 
+    [HideInInspector] public GameObject wp;
+    [HideInInspector] public bool hasHit; //So you can't hit more than once per attack
+
     public Transform attackPoint;
     public float attackRange = 0.5f;
     public float flying_speed = 0.2f;
     public LayerMask enemyLayer;
-    GameObject wp;
     Animator animator;
     private int dmg;
 
@@ -27,8 +31,6 @@ public class AttackManager : MonoBehaviour
 
         if (GetComponent<PlayerManager>().horizontalS == -1) animator.Play("SwordSwingLeft");
         else if (GetComponent<PlayerManager>().horizontalS == 1) animator.Play("SwordSwing");
-
-        //checkForColls(attackPoint.position, attackRange);
     }
 
     public void ranged_Attack()
@@ -49,7 +51,7 @@ public class AttackManager : MonoBehaviour
         animator = wp.GetComponent<Animator>();
         wp.AddComponent<FollowPlayer>().toFollow = gameObject; //Adding the FollowPlayer
 
-        if (GetComponent<PlayerManager>().horizontalS == -1) animator.Play("SwordSwingLeft");
+        if (GetComponent<PlayerManager>().horizontalS == -1) animator.Play("HeavySwordSwingLeft");
         else if (GetComponent<PlayerManager>().horizontalS == 1) animator.Play("HeavySwordSwing");
 
         checkForColls(attackPoint.position, attackRange + 0.1f);
@@ -82,6 +84,7 @@ public class AttackManager : MonoBehaviour
         foreach (Collider2D enemy in hitEnemies)
         {
             enemy.GetComponent<CharacterManager>().take_damage(dmg);
+            hasHit = true;
         }
     }
 }
