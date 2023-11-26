@@ -10,6 +10,7 @@ using UnityEngine;
 public class AttackManager : MonoBehaviour
 {
     MagicAbilitiesManager magicAbilitiesManager;
+    SpecialAttacksManager specialAttacksManager;
     [SerializeField] private GameObject Weapon;
     [SerializeField] private GameObject Projectile;
 
@@ -26,6 +27,7 @@ public class AttackManager : MonoBehaviour
     protected virtual void Start()
     {
         magicAbilitiesManager = GetComponent<MagicAbilitiesManager>();
+        specialAttacksManager = GetComponent<SpecialAttacksManager>();
     }
 
     protected virtual void Update()
@@ -76,19 +78,31 @@ public class AttackManager : MonoBehaviour
         if (GetComponent<PlayerManager>().horizontalS == -1) animator.Play("HeavySwordSwingLeft");
         else if (GetComponent<PlayerManager>().horizontalS == 1) animator.Play("HeavySwordSwing");
 
-        checkForColls(attackPoint.position, attackRange + 0.1f);
     }
 
-    public void magic_Attack(int _MA_dmg, string ch_name)
+    public void magic_Attack(int _MA_dmg, string _ch_name)
     {
         dmg = _MA_dmg;
 
-        switch (ch_name)
+        switch (_ch_name)
         {
             case "Praslea":
                 float dir = GetComponent<PlayerManager>().horizontalS;
                 magicAbilitiesManager.Praslea_MA(wp);
                 StartCoroutine(ranged(dir));
+                break;
+        }
+    }
+
+    public void special_Attack(int _SA_dmg, string _ch_name)
+    {
+        dmg = _SA_dmg;
+
+        switch (_ch_name)
+        {
+            case "Praslea":
+                dmg = specialAttacksManager.Praslea_SA(wp, Projectile);
+                GetComponent<CharacterManager>().enemy.GetComponent<CharacterManager>().take_damage(dmg);
                 break;
         }
     }
