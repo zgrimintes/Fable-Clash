@@ -9,6 +9,7 @@ using UnityEngine;
 
 public class AttackManager : MonoBehaviour
 {
+    MagicAbilitiesManager magicAbilitiesManager;
     [SerializeField] private GameObject Weapon;
     [SerializeField] private GameObject Projectile;
 
@@ -22,9 +23,30 @@ public class AttackManager : MonoBehaviour
     Animator animator;
     private int dmg;
 
-    public void normal_Attack()
+    protected virtual void Start()
     {
-        dmg = 1;
+        magicAbilitiesManager = GetComponent<MagicAbilitiesManager>();
+    }
+
+    protected virtual void Update()
+    {
+        if (wp == null)
+        {
+            hasHit = false;
+            return;
+        }
+
+        if (wp.GetComponent<CanHit>() == null) return;
+
+        if (wp.GetComponent<CanHit>().canHit && !hasHit)
+        {
+            checkForColls(attackPoint.position, attackRange);
+        }
+    }
+
+    public void normal_Attack(int _NA_dmg)
+    {
+        dmg = _NA_dmg;
         wp = Instantiate(Weapon, transform.position, Quaternion.identity);
         animator = wp.GetComponent<Animator>();
         wp.AddComponent<FollowPlayer>().toFollow = gameObject; //Adding the FollowPlayer
@@ -33,9 +55,9 @@ public class AttackManager : MonoBehaviour
         else if (GetComponent<PlayerManager>().horizontalS == 1) animator.Play("SwordSwing");
     }
 
-    public void ranged_Attack()
+    public void ranged_Attack(int _RA_dmg)
     {
-        dmg = 1;
+        dmg = _RA_dmg;
         float dir = GetComponent<PlayerManager>().horizontalS;
 
         if (dir >= 0) wp = Instantiate(Projectile, transform.position, Quaternion.Euler(0, 0, 270));
@@ -44,9 +66,9 @@ public class AttackManager : MonoBehaviour
         StartCoroutine(ranged(dir));
     }
 
-    public void heavy_Attack()
+    public void heavy_Attack(int _HA_dmg)
     {
-        dmg = 2;
+        dmg = _HA_dmg;
         wp = Instantiate(Weapon, transform.position, Quaternion.identity);
         animator = wp.GetComponent<Animator>();
         wp.AddComponent<FollowPlayer>().toFollow = gameObject; //Adding the FollowPlayer
@@ -55,6 +77,20 @@ public class AttackManager : MonoBehaviour
         else if (GetComponent<PlayerManager>().horizontalS == 1) animator.Play("HeavySwordSwing");
 
         checkForColls(attackPoint.position, attackRange + 0.1f);
+    }
+
+    public void magic_Attack(int _MA_dmg, string ch_name)
+    {
+        dmg = _MA_dmg;
+
+        switch (ch_name)
+        {
+            case "Praslea":
+                float dir = GetComponent<PlayerManager>().horizontalS;
+                magicAbilitiesManager.Praslea_MA(wp);
+                StartCoroutine(ranged(dir));
+                break;
+        }
     }
 
     public IEnumerator ranged(float dir)
