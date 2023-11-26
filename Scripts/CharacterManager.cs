@@ -77,7 +77,7 @@ public class CharacterManager : AttackManager
 
     public void try_HA()
     {
-        if (stamina > 0)
+        if (stamina > 1)
         {
             lastAttack = Time.time;
             heavy_Attack();
