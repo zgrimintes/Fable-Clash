@@ -40,7 +40,7 @@ public class PlayerManager : CharacterManager
         if (!isDashing) rb.velocity = movement;
     }
 
-    private void Update()
+    public void Update()
     {
         Dash();
         if (!isDashing && Input.GetKeyDown(KeyCode.Space)) Jump();
@@ -60,6 +60,21 @@ public class PlayerManager : CharacterManager
         {
             try_HA();
         }
+
+        #region Can Hit?
+
+        if (wp == null)
+        {
+            hasHit = false;
+            return;
+        }
+
+        if (wp.GetComponent<CanHit>().canHit && !hasHit)
+        {
+            checkForColls(attackPoint.position, attackRange);
+        }
+
+        #endregion
     }
 
     private void Dash()
