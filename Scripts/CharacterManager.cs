@@ -19,6 +19,7 @@ public class CharacterManager : AttackManager
     public GameObject textPrfb;
     [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public BoxCollider2D coll;
+    [HideInInspector] public GameObject enemy;
 
     int _NA_dmg;
     int _RA_dmg;
@@ -51,6 +52,9 @@ public class CharacterManager : AttackManager
         HP = data.HP;
         stamina = data.stamina;
         _ch_name = data.characterName;
+
+        if (data.enemy) enemy = GameObject.FindGameObjectWithTag("Enemy");
+        else enemy = GameObject.FindGameObjectWithTag("Player");
     }
 
     public void updateText()
@@ -120,6 +124,17 @@ public class CharacterManager : AttackManager
             lastAttack = Time.time;
             magic_Attack(_MA_dmg, _ch_name);
             fighterManager.magic_Attack(gameObject);
+            updateText();
+        }
+    }
+
+    public void try_SA()
+    {
+        if (mana > 2)
+        {
+            lastAttack = Time.time;
+            special_Attack(_SA_dmg, _ch_name);
+            fighterManager.special_Attack(gameObject);
             updateText();
         }
     }
