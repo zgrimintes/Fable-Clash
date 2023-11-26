@@ -31,6 +31,11 @@ public class FighterManager : ScriptableObject
         mana -= 2;
         parent.GetComponent<CharacterManager>().mana = mana;
     }
+    public void special_Attack(GameObject parent)
+    {
+        mana -= 3;
+        parent.GetComponent<CharacterManager>().mana = mana;
+    }
 
     public void mana_Gain(GameObject parent)
     {
