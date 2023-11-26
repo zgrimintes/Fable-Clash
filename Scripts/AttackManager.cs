@@ -16,13 +16,13 @@ public class AttackManager : MonoBehaviour
 
     [HideInInspector] public GameObject wp;
     [HideInInspector] public bool hasHit; //So you can't hit more than once per attack
+    [HideInInspector] public int dmg;
 
     public Transform attackPoint;
     public float attackRange = 0.5f;
     public float flying_speed = 0.2f;
     public LayerMask enemyLayer;
     Animator animator;
-    private int dmg;
 
     protected virtual void Start()
     {
@@ -83,7 +83,7 @@ public class AttackManager : MonoBehaviour
     public void magic_Attack(int _MA_dmg, string _ch_name)
     {
         dmg = _MA_dmg;
-
+  
         switch (_ch_name)
         {
             case "Praslea":
@@ -101,8 +101,7 @@ public class AttackManager : MonoBehaviour
         switch (_ch_name)
         {
             case "Praslea":
-                dmg = specialAttacksManager.Praslea_SA(wp, Projectile);
-                GetComponent<CharacterManager>().enemy.GetComponent<CharacterManager>().take_damage(dmg);
+                specialAttacksManager.Praslea_SA(wp, Projectile);
                 break;
         }
     }
