@@ -18,9 +18,9 @@ public class StatsRegen : MonoBehaviour
         mana = GetComponent<CharacterManager>().mana;
         stamina = GetComponent<CharacterManager>().stamina;
 
-        if (mana == 4 && stamina == 5) return;
+        if (mana >= 4 && stamina >= 5) return;
 
-        if (mana != 4)
+        if (mana < 4)
         {
             if (Time.time - lastManaGain > timeToGainMana)
             {
@@ -30,7 +30,7 @@ public class StatsRegen : MonoBehaviour
             }
         }
 
-        if (stamina != 5)
+        if (stamina < 5)
         {
             if (Time.time - lastStaminaGain > timeToGainStamina)
             {
