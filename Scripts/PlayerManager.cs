@@ -8,8 +8,6 @@ public class PlayerManager : CharacterManager
 {
     [SerializeField] private LayerMask layer;
 
-    private Rigidbody2D rb;
-    private BoxCollider2D coll;
     private bool isGrounded; //To check if the player touches the ground
     private float horizontal;
     public float horizontalS;
@@ -22,13 +20,11 @@ public class PlayerManager : CharacterManager
     private int lastKey = 0; // -1 for A and 1 for D
     private bool isDashing = false;
 
-    void Start()
+    protected override void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        coll = GetComponent<BoxCollider2D>();
+        base.Start();
+
         playerYScale = GetComponent<Transform>().localScale.y;
-        LoadPlayer(fighterManager);
-        updateText();
     }
 
     void FixedUpdate()
@@ -40,8 +36,10 @@ public class PlayerManager : CharacterManager
         if (!isDashing) rb.velocity = movement;
     }
 
-    public void Update()
+    protected override void Update()
     {
+        base.Update();
+
         Dash();
         if (!isDashing && Input.GetKeyDown(KeyCode.Space)) Jump();
 
@@ -60,21 +58,10 @@ public class PlayerManager : CharacterManager
         {
             try_HA();
         }
-
-        #region Can Hit?
-
-        if (wp == null)
+        if (Input.GetKeyDown(KeyCode.I) && Time.time - lastAttack > cooldown)
         {
-            hasHit = false;
-            return;
+            try_MA();
         }
-
-        if (wp.GetComponent<CanHit>().canHit && !hasHit)
-        {
-            checkForColls(attackPoint.position, attackRange);
-        }
-
-        #endregion
     }
 
     private void Dash()
