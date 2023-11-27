@@ -96,7 +96,6 @@ public class CharacterManager : AttackManager
         {
             last_mist_dmg = Time.time;
             take_damage(1);
-            Debug.Log("Take Mist Damage");
         }
     }
 
