@@ -83,7 +83,7 @@ public class AttackManager : MonoBehaviour
     public void magic_Attack(int _MA_dmg, string _ch_name)
     {
         dmg = _MA_dmg;
-
+  
         switch (_ch_name)
         {
             case "Praslea":
