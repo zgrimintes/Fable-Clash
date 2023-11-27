@@ -24,16 +24,35 @@ public class SpecialAttacksManager : MonoBehaviour
         wp = Instantiate(projectile, transform.position, Quaternion.identity);
         StartCoroutine(fly(wp));
 
-        for (index = 0; index < 7; index++) 
+        for (index = 0; index < 7; index++)
         {
             rainStartPoints[index] = Random.Range(enemy.transform.position.x - 6f, enemy.transform.position.x + 6f); //Spaw in proximity of the enemy
-            projectiles[index] = Instantiate(projectile, new Vector3(rainStartPoints[index], 15, 0), Quaternion.Euler(0, 0, 180)); 
+            projectiles[index] = Instantiate(projectile, new Vector3(rainStartPoints[index], 15, 0), Quaternion.Euler(0, 0, 180));
         }
 
         for (index = 0; index < 7; index++)
         {
             StartCoroutine(fall(projectiles[index]));
         }
+    }
+
+    public void Zmeul_SA(float dir)
+    {
+        StartCoroutine(charge(dir));
+    }
+
+    public IEnumerator charge(float dir)
+    {
+        Debug.Log("Charge" + dir);
+        float speed = 0.001f;
+        while (!attackManager.outOfBounds(gameObject) && Physics2D.OverlapBox(gameObject.transform.position, gameObject.transform.localScale, 0, layer) == null)
+        {
+            gameObject.transform.position += new Vector3(speed * dir, 0, 0);
+            speed += Time.deltaTime / 8;
+            yield return null;
+        }
+
+        attackManager.checkForColls(transform.position, 1f);
     }
 
     public IEnumerator fly(GameObject wp)
