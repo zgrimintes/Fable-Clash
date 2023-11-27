@@ -83,7 +83,7 @@ public class AttackManager : MonoBehaviour
     public void magic_Attack(int _MA_dmg, string _ch_name)
     {
         dmg = _MA_dmg;
-  
+
         switch (_ch_name)
         {
             case "Praslea":
@@ -106,6 +106,9 @@ public class AttackManager : MonoBehaviour
             case "Praslea":
                 specialAttacksManager.Praslea_SA(wp, Projectile);
                 break;
+            case "Zmeul":
+                specialAttacksManager.Zmeul_SA(GetComponent<PlayerManager>().horizontalS);
+                break;
         }
     }
 
@@ -124,7 +127,7 @@ public class AttackManager : MonoBehaviour
 
     public bool outOfBounds(GameObject gameObj)
     {
-        if (gameObj.transform.position.x > 14f || gameObj.transform.position.x < -14f) return true;
+        if (gameObj.transform.position.x > 12f || gameObj.transform.position.x < -12f) return true;
 
         return false;
     }
