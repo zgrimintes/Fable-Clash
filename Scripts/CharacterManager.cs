@@ -28,6 +28,8 @@ public class CharacterManager : AttackManager
     int _SA_dmg;
     string _ch_name;
 
+    private float last_mist_dmg;
+
     protected override void Start()
     {
         base.Start();
@@ -53,7 +55,7 @@ public class CharacterManager : AttackManager
         stamina = data.stamina;
         _ch_name = data.characterName;
 
-        if (data.enemy) enemy = GameObject.FindGameObjectWithTag("Enemy");
+        if (!data.enemy) enemy = GameObject.FindGameObjectWithTag("Enemy");
         else enemy = GameObject.FindGameObjectWithTag("Player");
     }
 
@@ -86,6 +88,16 @@ public class CharacterManager : AttackManager
     {
         fighterManager.take_damage(gameObject, damage);
         updateText();
+    }
+
+    public void OnParticleCollision(GameObject other) //For the damage taken by the mist created by Zmeu's MA
+    {
+        if (Time.time - last_mist_dmg > 1f)
+        {
+            last_mist_dmg = Time.time;
+            take_damage(1);
+            Debug.Log("Take Mist Damage");
+        }
     }
 
     public void try_NA()
