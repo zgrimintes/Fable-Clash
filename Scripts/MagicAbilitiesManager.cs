@@ -6,7 +6,7 @@ using UnityEngine;
 public class MagicAbilitiesManager : MonoBehaviour
 {
     public GameObject Mace;
-    Animator animator;
+    public GameObject Mist;
     AttackManager attackManager;
 
     private void Start()
@@ -18,8 +18,11 @@ public class MagicAbilitiesManager : MonoBehaviour
     {
         wp = Instantiate(Mace, transform.position, Quaternion.identity);
 
-        animator = wp.GetComponent<Animator>();
-
         attackManager.wp = wp;
+    }
+
+    public void Zmeul_MA()
+    {
+        Instantiate(Mist, new Vector3(transform.position.x, -2f), Quaternion.identity);
     }
 }
