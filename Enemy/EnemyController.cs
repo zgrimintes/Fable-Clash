@@ -45,10 +45,4 @@ public class EnemyController : CharacterManager
     {
         rb.velocity = velocity;
     }
-
-    public void Stop()
-    {
-        rb.velocity = Vector2.zero;
-    }
 }
-
