@@ -10,7 +10,6 @@ public class PlayerManager : CharacterManager
 
     private bool isGrounded; //To check if the player touches the ground
     private float horizontal;
-    public float horizontalS;
     private float playerYScale;
 
     private float timeSinceTapped;
