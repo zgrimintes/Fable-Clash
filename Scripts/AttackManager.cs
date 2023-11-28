@@ -53,14 +53,14 @@ public class AttackManager : MonoBehaviour
         animator = wp.GetComponent<Animator>();
         wp.AddComponent<FollowPlayer>().toFollow = gameObject; //Adding the FollowPlayer
 
-        if (GetComponent<PlayerManager>().horizontalS == -1) animator.Play("SwordSwingLeft");
-        else if (GetComponent<PlayerManager>().horizontalS == 1) animator.Play("SwordSwing");
+        if (GetComponent<CharacterManager>().horizontalS == -1) animator.Play("SwordSwingLeft");
+        else if (GetComponent<CharacterManager>().horizontalS == 1) animator.Play("SwordSwing");
     }
 
     public void ranged_Attack(int _RA_dmg)
     {
         dmg = _RA_dmg;
-        float dir = GetComponent<PlayerManager>().horizontalS;
+        float dir = GetComponent<CharacterManager>().horizontalS;
 
         if (dir >= 0) wp = Instantiate(Projectile, transform.position, Quaternion.Euler(0, 0, 270));
         else wp = Instantiate(Projectile, transform.position, Quaternion.Euler(0, 0, 90));
@@ -75,8 +75,8 @@ public class AttackManager : MonoBehaviour
         animator = wp.GetComponent<Animator>();
         wp.AddComponent<FollowPlayer>().toFollow = gameObject; //Adding the FollowPlayer
 
-        if (GetComponent<PlayerManager>().horizontalS == -1) animator.Play("HeavySwordSwingLeft");
-        else if (GetComponent<PlayerManager>().horizontalS == 1) animator.Play("HeavySwordSwing");
+        if (GetComponent<CharacterManager>().horizontalS == -1) animator.Play("HeavySwordSwingLeft");
+        else if (GetComponent<CharacterManager>().horizontalS == 1) animator.Play("HeavySwordSwing");
 
     }
 
@@ -87,7 +87,7 @@ public class AttackManager : MonoBehaviour
         switch (_ch_name)
         {
             case "Praslea":
-                float dir = GetComponent<PlayerManager>().horizontalS;
+                float dir = GetComponent<CharacterManager>().horizontalS;
                 magicAbilitiesManager.Praslea_MA(wp);
                 StartCoroutine(ranged(dir));
                 break;
@@ -107,7 +107,7 @@ public class AttackManager : MonoBehaviour
                 specialAttacksManager.Praslea_SA(wp, Projectile);
                 break;
             case "Zmeul":
-                specialAttacksManager.Zmeul_SA(GetComponent<PlayerManager>().horizontalS);
+                specialAttacksManager.Zmeul_SA(GetComponent<CharacterManager>().horizontalS);
                 break;
         }
     }
