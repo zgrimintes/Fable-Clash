@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CharacterManager : AttackManager
 {
-    [HideInInspector] public float jumpForce = 15.5f;
+    [HideInInspector] public float jumpForce = 18f;
     [HideInInspector] public float gravityScale = 4;
     [HideInInspector] public float fallGravityScale = 5;
     [HideInInspector] public int mana;
@@ -14,6 +14,7 @@ public class CharacterManager : AttackManager
     [HideInInspector] public float speed;
     [HideInInspector] public float cooldown = 0.8f;
     [HideInInspector] public float lastAttack;
+    [HideInInspector] public float horizontalS;
 
     public FighterManager fighterManager;
     public GameObject textPrfb;
@@ -38,6 +39,14 @@ public class CharacterManager : AttackManager
         coll = GetComponent<BoxCollider2D>();
         LoadPlayer(fighterManager);
         updateText();
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+
+        if (transform.localScale.x < 0) horizontalS = -1;
+        else horizontalS = 1;
     }
 
     public void LoadPlayer(FighterManager data) //Function for loading the data from the ScriptableObject into the GameObject
