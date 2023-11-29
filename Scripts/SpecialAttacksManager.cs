@@ -43,7 +43,6 @@ public class SpecialAttacksManager : MonoBehaviour
 
     public IEnumerator charge(float dir)
     {
-        Debug.Log("Charge" + dir);
         float speed = 0.001f;
         while (!attackManager.outOfBounds(gameObject) && Physics2D.OverlapBox(gameObject.transform.position, gameObject.transform.localScale, 0, layer) == null)
         {
@@ -76,7 +75,7 @@ public class SpecialAttacksManager : MonoBehaviour
                 break;
             }
 
-            wp.transform.position = wp.transform.position - new Vector3(0, 0.05f, 0);
+            wp.transform.position = wp.transform.position - new Vector3(0, 0.04f, 0);
             yield return null;
         }
 
