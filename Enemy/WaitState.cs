@@ -5,10 +5,10 @@ using UnityEngine;
 public class WaitState : EnemyState
 {
     protected float timeSinceStopped;
+    public float attackColldown = 2f;
+    private int attackNb = 0;
 
-    public WaitState(EnemyController enemy, EnemyStateMachine stateMachine) : base(enemy, stateMachine)
-    {
-    }
+    public WaitState(EnemyController enemy, EnemyStateMachine stateMachine) : base(enemy, stateMachine) { }
 
     public override void EnterState()
     {
@@ -25,11 +25,30 @@ public class WaitState : EnemyState
     {
         base.FrameUpdate();
 
-        if (Time.time - timeSinceStopped > 2f)
+        if (Time.time - timeSinceStopped > attackColldown)
         {
             timeSinceStopped = Time.time;
-            enemy.GetComponent<CharacterManager>().try_RA();
+            attackCycle();
+            //enemy.GetComponent<CharacterManager>().try_RA();
+        }
+    }
 
+    protected void attackCycle()
+    {
+        switch (attackNb)
+        {
+            case 0:
+                enemy.GetComponent<CharacterManager>().try_RA();
+                attackNb = 1;
+                break;
+            case 1:
+                enemy.GetComponent<CharacterManager>().try_MA();
+                attackNb = 2;
+                break;
+            case 2:
+                enemy.GetComponent<CharacterManager>().try_SA();
+                attackNb = 0;
+                break;
         }
     }
 
@@ -38,4 +57,3 @@ public class WaitState : EnemyState
         base.PhysicsUpdate();
     }
 }
-
