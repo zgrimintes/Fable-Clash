@@ -31,6 +31,11 @@ public class WaitState : EnemyState
             attackCycle();
             //enemy.GetComponent<CharacterManager>().try_RA();
         }
+
+        if (enemy.isTooFar)
+        {
+            enemy.stateMachine.Change(enemy.chaseState);
+        }
     }
 
     protected void attackCycle()
