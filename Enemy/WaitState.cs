@@ -7,6 +7,7 @@ public class WaitState : EnemyState
     protected float timeSinceStopped;
     public float attackColldown = 2f;
     private int attackNb = 0;
+    private bool dashed = false;
 
     public WaitState(EnemyController enemy, EnemyStateMachine stateMachine) : base(enemy, stateMachine) { }
 
@@ -14,6 +15,7 @@ public class WaitState : EnemyState
     {
         base.EnterState();
         timeSinceStopped = Time.time;
+        dashed = false;
     }
 
     public override void ExitState()
@@ -34,8 +36,15 @@ public class WaitState : EnemyState
 
         if (enemy.isTooFar)
         {
-            enemy.stateMachine.Change(enemy.chaseState);
+            if (!dashed)
+            {
+                enemy.StartCoroutine(enemy.Dashh());
+                enemy.try_NA();
+                dashed = true;
+            }
         }
+
+        if (!enemy.isDashing && dashed) enemy.stateMachine.Change(enemy.chaseState);
     }
 
     protected void attackCycle()
