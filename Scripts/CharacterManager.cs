@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Networking.Types;
 
 public class CharacterManager : AttackManager
 {
+    #region All hidden pubilc variables
     [HideInInspector] public float jumpForce = 18f;
     [HideInInspector] public float gravityScale = 4;
     [HideInInspector] public float fallGravityScale = 5;
@@ -15,6 +18,13 @@ public class CharacterManager : AttackManager
     [HideInInspector] public float cooldown = 0.8f;
     [HideInInspector] public float lastAttack;
     [HideInInspector] public float horizontalS;
+    [HideInInspector] public float timeSinceTapped;
+    [HideInInspector] public bool doubleTapped = false;
+    [HideInInspector] public bool tapped = false;
+    [HideInInspector] public float timeToDT = 0.4f;
+    [HideInInspector] public int lastKey = 0; // -1 for A and 1 for D
+    [HideInInspector] public bool isDashing = false;
+    #endregion
 
     public FighterManager fighterManager;
     public GameObject textPrfb;
@@ -30,6 +40,8 @@ public class CharacterManager : AttackManager
     string _ch_name;
 
     private float last_mist_dmg;
+
+
 
     protected override void Start()
     {
@@ -106,6 +118,56 @@ public class CharacterManager : AttackManager
             last_mist_dmg = Time.time;
             take_damage(1);
         }
+    }
+
+    public void Dash()
+    {
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            if (!tapped) tapped = true;
+            else
+            {
+                if (Time.time - timeSinceTapped < timeToDT && lastKey == 1)
+                {
+                    doubleTapped = true;
+                }
+
+                tapped = false;
+            }
+            lastKey = 1;
+            timeSinceTapped = Time.time;
+        } //Dash for right
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            if (!tapped) tapped = true;
+            else
+            {
+                if (Time.time - timeSinceTapped < timeToDT && lastKey == -1)
+                {
+                    doubleTapped = true;
+                }
+
+                tapped = false;
+            }
+            timeSinceTapped = Time.time;
+            lastKey = -1;
+        } //Dash for left
+
+        if (doubleTapped)
+        {
+            doubleTapped = false;
+            StartCoroutine(Dashh());
+        }
+    }
+
+    public IEnumerator Dashh()
+    {
+        isDashing = true;
+        lastKey = 0;
+        rb.velocity = new Vector2(horizontalS * speed * 3, rb.velocity.y);
+        yield return new WaitForSeconds(0.2f);
+        isDashing = false;
     }
 
     public void try_NA()
