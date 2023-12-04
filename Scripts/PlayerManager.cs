@@ -12,13 +12,6 @@ public class PlayerManager : CharacterManager
     private float horizontal;
     private float playerYScale;
 
-    private float timeSinceTapped;
-    private bool doubleTapped = false;
-    private bool tapped = false;
-    private float timeToDT = 0.4f;
-    private int lastKey = 0; // -1 for A and 1 for D
-    private bool isDashing = false;
-
     protected override void Start()
     {
         base.Start();
@@ -67,55 +60,6 @@ public class PlayerManager : CharacterManager
         }
     }
 
-    private void Dash()
-    {
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            if (!tapped) tapped = true;
-            else
-            {
-                if (Time.time - timeSinceTapped < timeToDT && lastKey == 1)
-                {
-                    doubleTapped = true;
-                }
-
-                tapped = false;
-            }
-            lastKey = 1;
-            timeSinceTapped = Time.time;
-        } //Dash for right
-
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            if (!tapped) tapped = true;
-            else
-            {
-                if (Time.time - timeSinceTapped < timeToDT && lastKey == -1)
-                {
-                    doubleTapped = true;
-                }
-
-                tapped = false;
-            }
-            timeSinceTapped = Time.time;
-            lastKey = -1;
-        } //Dash for left
-
-        if (doubleTapped)
-        {
-            doubleTapped = false;
-            StartCoroutine(Dashh());
-        }
-    }
-
-    private IEnumerator Dashh()
-    {
-        isDashing = true;
-        lastKey = 0;
-        rb.velocity = new Vector2(horizontalS * speed * 3, rb.velocity.y);
-        yield return new WaitForSeconds(0.2f);
-        isDashing = false;
-    }
     private void Jump()
     {
         isGrounded = Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, .1f, layer);
