@@ -29,8 +29,8 @@ public class ChaseState : EnemyState
 
         if (!enemy.isTooFar)
         {
-            enemy.MoveEnemy(Vector2.zero);
-            enemy.stateMachine.Change(enemy.waitState);
+            //enemy.MoveEnemy(Vector2.zero);
+            //enemy.stateMachine.Change(enemy.waitState);
             return;
         }
 
@@ -43,4 +43,3 @@ public class ChaseState : EnemyState
     }
 
 }
-
