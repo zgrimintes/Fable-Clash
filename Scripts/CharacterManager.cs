@@ -105,7 +105,7 @@ public class CharacterManager : AttackManager
         }
     }
 
-    public void take_damage(int damage, Transform dmg_pos)
+    public void take_damage(int damage)
     {
         rb.velocity = new Vector2(rb.velocity.x * -10, rb.velocity.y);
         fighterManager.take_damage(gameObject, damage);
