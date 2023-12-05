@@ -105,8 +105,9 @@ public class CharacterManager : AttackManager
         }
     }
 
-    public void take_damage(int damage)
+    public void take_damage(int damage, Transform dmg_pos)
     {
+        rb.velocity = new Vector2(rb.velocity.x * -10, rb.velocity.y);
         fighterManager.take_damage(gameObject, damage);
         updateText();
     }
@@ -116,7 +117,9 @@ public class CharacterManager : AttackManager
         if (Time.time - last_mist_dmg > 1f)
         {
             last_mist_dmg = Time.time;
-            take_damage(1);
+            // take_damage(1);
+            fighterManager.take_damage(gameObject, 1);
+            updateText();
         }
     }
 
