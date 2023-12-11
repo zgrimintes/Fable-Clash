@@ -27,13 +27,6 @@ public class ChaseState : EnemyState
     {
         base.FrameUpdate();
 
-        if (!enemy.isTooFar)
-        {
-            //enemy.MoveEnemy(Vector2.zero);
-            //enemy.stateMachine.Change(enemy.waitState);
-            return;
-        }
-
         enemy.MoveEnemy(new Vector2(enemy.playerInstance.transform.position.x - enemy.transform.position.x, 0).normalized * (enemy.speed / 2));
     }
 
