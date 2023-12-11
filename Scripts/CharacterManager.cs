@@ -175,6 +175,8 @@ public class CharacterManager : AttackManager
 
     public void try_NA()
     {
+        if (Time.time - lastAttack < cooldown) return;
+
         lastAttack = Time.time;
         normal_Attack(_NA_dmg);
         updateText();
@@ -182,6 +184,8 @@ public class CharacterManager : AttackManager
 
     public void try_RA()
     {
+        if (Time.time - lastAttack < cooldown) return;
+
         if (stamina > 0)
         {
             lastAttack = Time.time;
@@ -193,6 +197,8 @@ public class CharacterManager : AttackManager
 
     public void try_HA()
     {
+        if (Time.time - lastAttack < cooldown) return;
+
         if (stamina > 1)
         {
             lastAttack = Time.time;
@@ -204,6 +210,8 @@ public class CharacterManager : AttackManager
 
     public void try_MA()
     {
+        if (Time.time - lastAttack < cooldown) return;
+
         if (mana > 1)
         {
             lastAttack = Time.time;
@@ -215,6 +223,8 @@ public class CharacterManager : AttackManager
 
     public void try_SA()
     {
+        if (Time.time - lastAttack < cooldown) return;
+
         if (mana > 2)
         {
             lastAttack = Time.time;
