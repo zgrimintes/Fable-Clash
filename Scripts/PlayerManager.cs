@@ -38,23 +38,23 @@ public class PlayerManager : CharacterManager
         if (horizontal == -1) { gameObject.transform.localScale = new Vector3(-1, playerYScale, 1); horizontalS = -1; }
         else if (horizontal == 1) { gameObject.transform.localScale = new Vector3(1, playerYScale, 1); horizontalS = 1; }
 
-        if (Input.GetKeyDown(KeyCode.J) && Time.time - lastAttack > cooldown)
+        if (Input.GetKeyDown(KeyCode.J))
         {
             try_NA();
         }
-        if (Input.GetKeyDown(KeyCode.L) && Time.time - lastAttack > cooldown)
+        if (Input.GetKeyDown(KeyCode.L))
         {
             try_RA();
         }
-        if (Input.GetKeyDown(KeyCode.K) && Time.time - lastAttack > cooldown)
+        if (Input.GetKeyDown(KeyCode.K))
         {
             try_HA();
         }
-        if (Input.GetKeyDown(KeyCode.I) && Time.time - lastAttack > cooldown)
+        if (Input.GetKeyDown(KeyCode.I))
         {
             try_MA();
         }
-        if (Input.GetKeyDown(KeyCode.LeftShift) && Time.time - lastAttack > cooldown)
+        if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             try_SA();
         }
