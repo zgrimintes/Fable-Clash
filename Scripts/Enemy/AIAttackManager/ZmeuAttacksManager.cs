@@ -80,7 +80,7 @@ public class AIAttacksZmeu : MonoBehaviour
             }
         }
 
-        Attack(_indx_max);
+        Attack(_indx_max + 1);
     }
 
     private void Attack(int nb) // 1 for NA, 2 for HA, 3 for RA, 4 for MA, 5 for SA
