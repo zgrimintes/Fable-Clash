@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class EnemyController : CharacterManager
 {
+    public AIAttacksZmeu zmeuAI;
     public GameObject playerInstance;
     public bool isTooFar = true;
 
@@ -43,6 +44,11 @@ public class EnemyController : CharacterManager
 
     public void MoveEnemy(Vector2 velocity)
     {
-        rb.velocity = velocity;
+        if (!isKnockback) rb.velocity = velocity;//Stop writing the velocity if you are getting knockbacked
+        else
+        {
+            rb.velocity = new Vector2(velocity.x * -5, velocity.y);
+            StartCoroutine(Knockback());
+        }
     }
 }
