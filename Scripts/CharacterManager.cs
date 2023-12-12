@@ -24,6 +24,7 @@ public class CharacterManager : AttackManager
     [HideInInspector] public float timeToDT = 0.4f;
     [HideInInspector] public int lastKey = 0; // -1 for A and 1 for D
     [HideInInspector] public bool isDashing = false;
+    [HideInInspector] public bool isKnockback = false;
     #endregion
 
     public FighterManager fighterManager;
@@ -107,7 +108,8 @@ public class CharacterManager : AttackManager
 
     public void take_damage(int damage)
     {
-        rb.velocity = new Vector2(rb.velocity.x * -10, rb.velocity.y);
+        //rb.AddForce(new Vector2(transform.position.x * -1000, transform.position.y), ForceMode2D.Impulse);
+        isKnockback = true;
         fighterManager.take_damage(gameObject, damage);
         updateText();
     }
@@ -171,6 +173,12 @@ public class CharacterManager : AttackManager
         rb.velocity = new Vector2(horizontalS * speed * 3, rb.velocity.y);
         yield return new WaitForSeconds(0.2f);
         isDashing = false;
+    }
+
+    public IEnumerator Knockback()
+    {
+        yield return new WaitForSeconds(0.1f);
+        isKnockback = false;
     }
 
     public void try_NA()
