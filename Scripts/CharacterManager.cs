@@ -220,7 +220,7 @@ public class CharacterManager : AttackManager
     {
         if (Time.time - lastAttack < cooldown) return;
 
-        if (mana > 1)
+        if (mana > 2)
         {
             lastAttack = Time.time;
             magic_Attack(_MA_dmg, _ch_name);
@@ -233,7 +233,7 @@ public class CharacterManager : AttackManager
     {
         if (Time.time - lastAttack < cooldown) return;
 
-        if (mana > 2)
+        if (mana > 3)
         {
             lastAttack = Time.time;
             special_Attack(_SA_dmg, _ch_name);
