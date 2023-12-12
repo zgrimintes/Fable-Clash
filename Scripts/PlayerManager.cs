@@ -25,7 +25,13 @@ public class PlayerManager : CharacterManager
 
         Vector2 movement = new Vector2(horizontal * speed, rb.velocity.y);
 
-        if (!isDashing) rb.velocity = movement;
+        if (!isDashing && !isKnockback) rb.velocity = movement; //Stop the writing for the velocity if you dash or getting knockbacked
+        if (isKnockback) //For when getting knockbacked
+        {
+            Vector2 movement2 = new Vector2(horizontalS * speed, rb.velocity.y);
+            rb.velocity = new Vector2(movement2.x * -2.5f, movement2.y);
+            StartCoroutine(Knockback());
+        }
     }
 
     protected override void Update()
