@@ -29,6 +29,7 @@ public class StatsRegen : MonoBehaviour
                 GetComponent<CharacterManager>().updateText();
             }
         }
+        else lastManaGain = Time.time;
 
         if (stamina < 5)
         {
@@ -39,5 +40,6 @@ public class StatsRegen : MonoBehaviour
                 GetComponent<CharacterManager>().updateText();
             }
         }
+        else lastStaminaGain = Time.time;
     }
 }
