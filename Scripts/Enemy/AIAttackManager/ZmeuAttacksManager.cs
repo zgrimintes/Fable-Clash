@@ -28,6 +28,7 @@ public class AIAttacksZmeu : MonoBehaviour
         }
         else
         {
+            attacks[3] -= .5f;
             attacks[2] += .6f; attacks[4] += .5f;
             if (playerInstance.GetComponent<CharacterManager>().HP > 10)
             {
@@ -49,7 +50,7 @@ public class AIAttacksZmeu : MonoBehaviour
         }
         else
         {
-            if (attacks[3] != 0) attacks[3] += .4f;
+            if (attacks[3] != 0) attacks[3] += .2f;
             if (attacks[1] != 0) attacks[1] += .3f;
         }
 
@@ -57,8 +58,8 @@ public class AIAttacksZmeu : MonoBehaviour
         else if (enemyController.stamina >= 2) { attacks[1] += .2f; attacks[2] -= .1f; }
         else attacks[1] = attacks[2] = 0;
 
-        if (enemyController.mana == 2) { attacks[3] += .3f; attacks[4] = 0; }
-        else if (enemyController.mana >= 3) { attacks[3] += .1f; attacks[4] += .15f; }
+        if (enemyController.mana == 2) { attacks[3] += .2f; attacks[4] = 0; }
+        else if (enemyController.mana >= 3) { attacks[3] += .1f; attacks[4] += .35f; }
         else if (enemyController.mana < 2) attacks[3] = attacks[4] = 0;
 
 
