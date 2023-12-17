@@ -19,7 +19,7 @@ public class AttackManager : MonoBehaviour
     [HideInInspector] public int dmg;
 
     public Transform attackPoint;
-    public float attackRange = 0.5f;
+    public float attackRange = 0.6f;
     public float flying_speed = 0.2f;
     public LayerMask enemyLayer;
     Animator animator;
@@ -116,7 +116,7 @@ public class AttackManager : MonoBehaviour
     {
         while (Physics2D.OverlapBox(wp.transform.position, wp.transform.localScale, 0, enemyLayer) == null && !outOfBounds(wp))
         {
-            wp.transform.position = wp.transform.position + new Vector3(flying_speed * dir, 0, 0);
+            wp.transform.position = wp.transform.position + new Vector3(flying_speed * dir * Time.deltaTime, 0, 0);
             yield return null;
         }
 
