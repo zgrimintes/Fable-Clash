@@ -28,9 +28,21 @@ public class PlayerManager : CharacterManager
         if (!isDashing && !isKnockback) rb.velocity = movement; //Stop the writing for the velocity if you dash or getting knockbacked
         if (isKnockback) //For when getting knockbacked
         {
-            Vector2 movement2 = new Vector2(horizontalS * speed, rb.velocity.y);
-            rb.velocity = new Vector2(movement2.x * -2.5f, movement2.y);
+            int kbHor = getKnHor();
+            Vector2 movement2 = new Vector2(kbHor * speed, rb.velocity.y);
+            rb.velocity = new Vector2(movement2.x * 2.5f, movement2.y);
             StartCoroutine(Knockback());
+        }
+    }
+
+    private int getKnHor()
+    {
+        switch (attackDir)
+        {
+            case true:
+                return 1;
+            case false:
+                return -1;
         }
     }
 
@@ -41,8 +53,16 @@ public class PlayerManager : CharacterManager
         Dash();
         if (!isDashing && Input.GetKeyDown(KeyCode.Space)) Jump();
 
-        if (horizontal == -1) { gameObject.transform.localScale = new Vector3(-1, playerYScale, 1); horizontalS = -1; }
-        else if (horizontal == 1) { gameObject.transform.localScale = new Vector3(1, playerYScale, 1); horizontalS = 1; }
+        if (horizontal == -1)
+        {
+            gameObject.transform.localScale = new Vector3(-1, playerYScale, 1);
+            if (!isKnockback) horizontalS = -1;
+        }
+        else if (horizontal == 1)
+        {
+            gameObject.transform.localScale = new Vector3(1, playerYScale, 1);
+            if (!isKnockback) horizontalS = 1;
+        }
 
         if (Input.GetKeyDown(KeyCode.J))
         {
