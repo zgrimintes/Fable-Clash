@@ -22,6 +22,17 @@ public class AIAttacksZmeu : MonoBehaviour
 
         attacks[0] = attacks[1] = attacks[2] = attacks[3] = attacks[4] = 0;
 
+        checkDistance();
+        checkLookingDir();
+        checkStamina();
+        checkMana();
+        checkYAxis();
+
+        chooseAttack();
+    }
+
+    protected void checkDistance()
+    {
         if (!enemyController.isTooFar)
         {
             attacks[0] += .5f; attacks[1] += .5f; attacks[3] += .5f; attacks[2] += .15f; attacks[4] += .15f;
@@ -41,7 +52,10 @@ public class AIAttacksZmeu : MonoBehaviour
                 attacks[2] -= .1f;
             }
         }
+    }
 
+    protected void checkLookingDir()
+    {
         if (enemyController.horizontalS == playerInstance.GetComponent<CharacterManager>().horizontalS)
         {
             attacks[4] += .35f;
@@ -53,18 +67,30 @@ public class AIAttacksZmeu : MonoBehaviour
             if (attacks[3] != 0) attacks[3] += .2f;
             if (attacks[1] != 0) attacks[1] += .3f;
         }
+    }
 
+    protected void checkStamina()
+    {
         if (enemyController.stamina == 1) { attacks[2] += .2f; attacks[1] = 0; }
         else if (enemyController.stamina >= 2) { attacks[1] += .2f; attacks[2] -= .1f; }
         else attacks[1] = attacks[2] = 0;
+    }
 
+    protected void checkMana()
+    {
         if (enemyController.mana == 2) { attacks[3] += .2f; attacks[4] = 0; }
         else if (enemyController.mana >= 3) { attacks[3] += .1f; attacks[4] += .35f; }
         else if (enemyController.mana < 2) attacks[3] = attacks[4] = 0;
+    }
 
-
-        Debug.Log(attacks[0] + " " + attacks[1] + " " + attacks[2] + " " + attacks[3] + " " + attacks[4] + " ");
-        chooseAttack();
+    protected void checkYAxis()
+    {
+        if (Mathf.Abs(playerInstance.transform.position.y) - Mathf.Abs(transform.position.y) > 0.28f)
+        {
+            attacks[3] = 0;
+            attacks[2] -= .2f;
+        }
+        Debug.Log(Mathf.Abs(playerInstance.transform.position.y) - Mathf.Abs(transform.position.y));
     }
 
     private void chooseAttack() //For choosing the optimal attack in that frame
