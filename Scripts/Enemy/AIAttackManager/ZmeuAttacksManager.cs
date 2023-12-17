@@ -90,7 +90,6 @@ public class AIAttacksZmeu : MonoBehaviour
             attacks[3] = 0;
             attacks[2] -= .2f;
         }
-        Debug.Log(Mathf.Abs(playerInstance.transform.position.y) - Mathf.Abs(transform.position.y));
     }
 
     private void chooseAttack() //For choosing the optimal attack in that frame
