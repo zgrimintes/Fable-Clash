@@ -122,6 +122,8 @@ public class CharacterManager : AttackManager
 
     public void OnParticleCollision(GameObject other) //For the damage taken by the mist created by Zmeu's MA
     {
+        if (fighterManager.name == "Zmeul") return;
+
         if (Time.time - last_mist_dmg > 1f)
         {
             last_mist_dmg = Time.time;
