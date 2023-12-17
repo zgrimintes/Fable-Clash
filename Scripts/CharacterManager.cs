@@ -17,7 +17,8 @@ public class CharacterManager : AttackManager
     [HideInInspector] public float speed;
     [HideInInspector] public float cooldown = 0.8f;
     [HideInInspector] public float lastAttack;
-    [HideInInspector] public float horizontalS;
+    [HideInInspector] public float horizontalS; //Save the last looking direction
+    [HideInInspector] public bool attackDir; //The direction from where the charater was attacked: FALSE meaning from LEFT and TRUE meaning from RIGHT
     [HideInInspector] public float timeSinceTapped;
     [HideInInspector] public bool doubleTapped = false;
     [HideInInspector] public bool tapped = false;
@@ -108,10 +109,15 @@ public class CharacterManager : AttackManager
 
     public void take_damage(int damage)
     {
-        //rb.AddForce(new Vector2(transform.position.x * -1000, transform.position.y), ForceMode2D.Impulse);
         isKnockback = true;
+        attackDir = calculateAttackingDir();
         fighterManager.take_damage(gameObject, damage);
         updateText();
+    }
+
+    private bool calculateAttackingDir()
+    {
+        return transform.position.x > enemy.transform.position.x;
     }
 
     public void OnParticleCollision(GameObject other) //For the damage taken by the mist created by Zmeu's MA
@@ -220,7 +226,7 @@ public class CharacterManager : AttackManager
     {
         if (Time.time - lastAttack < cooldown) return;
 
-        if (mana > 2)
+        if (mana >= 2)
         {
             lastAttack = Time.time;
             magic_Attack(_MA_dmg, _ch_name);
@@ -233,7 +239,7 @@ public class CharacterManager : AttackManager
     {
         if (Time.time - lastAttack < cooldown) return;
 
-        if (mana > 3)
+        if (mana >= 3)
         {
             lastAttack = Time.time;
             special_Attack(_SA_dmg, _ch_name);
