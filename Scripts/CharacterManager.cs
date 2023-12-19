@@ -15,7 +15,7 @@ public class CharacterManager : AttackManager
     [HideInInspector] public int HP;
     [HideInInspector] public int stamina;
     [HideInInspector] public float speed;
-    [HideInInspector] public float cooldown = 0.8f;
+    [HideInInspector] public float cooldown;
     [HideInInspector] public float lastAttack;
     [HideInInspector] public float horizontalS; //Save the last looking direction
     [HideInInspector] public bool attackDir; //The direction from where the charater was attacked: FALSE meaning from LEFT and TRUE meaning from RIGHT
@@ -72,6 +72,7 @@ public class CharacterManager : AttackManager
         _HA_dmg = w_data._HA_dmg;
         _MA_dmg = w_data._MA_dmg;
         _SA_dmg = w_data._S_dmg;
+        cooldown = w_data._Attack_Cooldown;
 
         mana = data.mana;
         HP = data.HP;
