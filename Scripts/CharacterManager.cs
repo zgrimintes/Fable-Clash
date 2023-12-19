@@ -61,10 +61,16 @@ public class CharacterManager : AttackManager
 
         if (transform.localScale.x < 0) horizontalS = -1;
         else horizontalS = 1;
+
+        if (HP == 0)
+        {
+            //Do stuff
+        }
     }
 
     public void LoadPlayer(FighterManager data) //Function for loading the data from the ScriptableObject into the GameObject
     {
+        data.startOfFight();
         WeightClass w_data = (WeightClass)data.w_Class;
         speed = w_data.speed;
         _NA_dmg = w_data._NA_dmg;
