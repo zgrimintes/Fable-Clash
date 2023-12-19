@@ -12,5 +12,5 @@ public class WeightClass : ScriptableObject
     public int _RA_dmg;
     public int _MA_dmg;
     public int _S_dmg;
-
+    public int _Attack_Cooldown;
 }
