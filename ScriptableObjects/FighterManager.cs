@@ -54,4 +54,11 @@ public class FighterManager : ScriptableObject
         HP -= damage;
         parent.GetComponent<CharacterManager>().HP = HP;
     }
+
+    public void startOfFight()
+    {
+        HP = 15;
+        mana = 4;
+        stamina = 5;
+    }
 }
