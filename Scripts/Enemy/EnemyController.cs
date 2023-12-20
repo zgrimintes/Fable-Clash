@@ -10,6 +10,7 @@ public class EnemyController : CharacterManager
     public AIAttacksZmeu zmeuAI;
     public GameObject playerInstance;
     public bool isTooFar = true;
+    public bool canAttack = false;
 
     #region State Machine Variables
 
@@ -30,7 +31,7 @@ public class EnemyController : CharacterManager
     {
         base.Start();
 
-        stateMachine.Initialize(chaseState);
+        stateMachine.Initialize(waitState);
     }
 
     protected override void Update()
