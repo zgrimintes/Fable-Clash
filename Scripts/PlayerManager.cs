@@ -11,6 +11,7 @@ public class PlayerManager : CharacterManager
     private bool isGrounded; //To check if the player touches the ground
     private float horizontal;
     private float playerYScale;
+    public bool canMove;
 
     protected override void Start()
     {
@@ -21,6 +22,8 @@ public class PlayerManager : CharacterManager
 
     void FixedUpdate()
     {
+        if (!canMove) return;
+
         horizontal = Input.GetAxisRaw("Horizontal");
 
         Vector2 movement = new Vector2(horizontal * speed, rb.velocity.y);
@@ -48,6 +51,8 @@ public class PlayerManager : CharacterManager
 
     protected override void Update()
     {
+        if (!canMove) return;
+
         base.Update();
 
         Dash();
