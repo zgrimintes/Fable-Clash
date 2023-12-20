@@ -4,11 +4,14 @@ using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class OffFinghtManager : MonoBehaviour
 {
-    public TextMeshProUGUI countdown, scoreIndicator;
-    public GameObject enemy, player;
+    TextMeshProUGUI countdown, scoreIndicator;
+    GameObject enemy, player;
+
+    public GameObject button;
 
     private void Awake()
     {
@@ -36,6 +39,8 @@ public class OffFinghtManager : MonoBehaviour
                     break;
             }
         }
+
+
     }
 
     private void minusOneCountdown(int n)
@@ -69,11 +74,13 @@ public class OffFinghtManager : MonoBehaviour
 
         if (winsEnemy == 2)
         {
+            //button.SetActive(true);
             scoreIndicator.text = enemy.GetComponent<CharacterManager>().fighterManager.name + " has won!";
             return;
         }
         else if (winsPlayer == 2)
         {
+            button.SetActive(true);
             scoreIndicator.text = player.GetComponent<CharacterManager>().fighterManager.name + " has won!";
             return;
         }
@@ -97,6 +104,7 @@ public class OffFinghtManager : MonoBehaviour
 
     public void startOfFight()
     {
-
+        enemy.GetComponent<CharacterManager>().fighterManager.roundsWon = 0;
+        player.GetComponent<CharacterManager>().fighterManager.roundsWon = 0;
     }
 }
