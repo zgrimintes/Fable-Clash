@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
 
     private void HandleStart()
     {
-
+        canvas.GetComponent<OffFinghtManager>().startOfFight();
     }
 }
 
