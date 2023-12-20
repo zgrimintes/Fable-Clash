@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,6 +10,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public GameStates State;
+
+    public GameObject canvas;
 
     public static event Action<GameStates> StateChanged;
 
@@ -22,6 +26,9 @@ public class GameManager : MonoBehaviour
 
         switch (State)
         {
+            case GameStates.Start:
+                HandleStart();
+                break;
             case GameStates.Dialogue:
                 HandleDialogue();
                 break;
@@ -46,18 +53,18 @@ public class GameManager : MonoBehaviour
 
     private void HandleEndOfRound()
     {
-        GameObject enemy, player;
-        enemy = GameObject.Find("Enemy");
-        player = GameObject.Find("Player");
+        canvas.GetComponent<OffFinghtManager>().roundWon();
+    }
 
-        //if (round_won == 2) _win_condition_checkd
+    private void HandleStart()
+    {
 
-        SceneManager.LoadScene("SampleScene");
     }
 }
 
 public enum GameStates
 {
+    Start,
     Dialogue,
     EndOfRound,
     Fight,
