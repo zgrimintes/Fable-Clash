@@ -24,10 +24,28 @@ public class AttackManager : MonoBehaviour
     public LayerMask enemyLayer;
     Animator animator;
 
+    private Vector3 positionToAttack;
+
     protected virtual void Start()
     {
         magicAbilitiesManager = GetComponent<MagicAbilitiesManager>();
         specialAttacksManager = GetComponent<SpecialAttacksManager>();
+
+        Debug.Log(attackPoint.position);
+        switch (GetComponent<CharacterManager>().fighterManager.w_Class.name)
+        {
+            case "LightWeight":
+                positionToAttack = new Vector2(1.9f, 0);
+                break;
+            case "MediumWeight":
+                positionToAttack = new Vector2(5.9f, 0);
+                break;
+            case "HeavyWeight":
+                positionToAttack = new Vector2(10.9f, 0);
+                break;
+        }
+
+        attackPoint.transform.localPosition += positionToAttack;
     }
 
     protected virtual void Update()
@@ -49,7 +67,7 @@ public class AttackManager : MonoBehaviour
     public void normal_Attack(int _NA_dmg)
     {
         dmg = _NA_dmg;
-        wp = Instantiate(Weapon, transform.position, Quaternion.identity);
+        wp = Instantiate(Weapon, positionToAttack, Quaternion.identity);
         animator = wp.GetComponent<Animator>();
         wp.AddComponent<FollowPlayer>().toFollow = gameObject; //Adding the FollowPlayer
 
@@ -71,7 +89,7 @@ public class AttackManager : MonoBehaviour
     public void heavy_Attack(int _HA_dmg)
     {
         dmg = _HA_dmg;
-        wp = Instantiate(Weapon, transform.position, Quaternion.identity);
+        wp = Instantiate(Weapon, positionToAttack, Quaternion.identity);
         animator = wp.GetComponent<Animator>();
         wp.AddComponent<FollowPlayer>().toFollow = gameObject; //Adding the FollowPlayer
 
