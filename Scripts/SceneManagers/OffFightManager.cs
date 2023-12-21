@@ -39,8 +39,6 @@ public class OffFinghtManager : MonoBehaviour
                     break;
             }
         }
-
-
     }
 
     private void minusOneCountdown(int n)
@@ -74,7 +72,7 @@ public class OffFinghtManager : MonoBehaviour
 
         if (winsEnemy == 2)
         {
-            //button.SetActive(true);
+            button.SetActive(true);
             scoreIndicator.text = enemy.GetComponent<CharacterManager>().fighterManager.name + " has won!";
             return;
         }
