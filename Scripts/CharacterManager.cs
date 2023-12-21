@@ -4,11 +4,12 @@ using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking.Types;
+using UnityEngine.SceneManagement;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class CharacterManager : AttackManager
 {
     #region All hidden pubilc variables
-    [HideInInspector] public float jumpForce = 18f;
     [HideInInspector] public float gravityScale = 4;
     [HideInInspector] public float fallGravityScale = 5;
     [HideInInspector] public int mana;
@@ -26,10 +27,12 @@ public class CharacterManager : AttackManager
     [HideInInspector] public int lastKey = 0; // -1 for A and 1 for D
     [HideInInspector] public bool isDashing = false;
     [HideInInspector] public bool isKnockback = false;
+    [HideInInspector] public bool isGrounded; //To check if the player touches the ground
     #endregion
 
     public FighterManager fighterManager;
     public GameObject textPrfb;
+    public LayerMask layer;
     [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public BoxCollider2D coll;
     [HideInInspector] public GameObject enemy;
@@ -42,8 +45,8 @@ public class CharacterManager : AttackManager
     string _ch_name;
 
     private float last_mist_dmg;
-
-
+    private bool hasLost = false;
+    private float jumpForce = 20f;
 
     protected override void Start()
     {
@@ -62,9 +65,13 @@ public class CharacterManager : AttackManager
         if (transform.localScale.x < 0) horizontalS = -1;
         else horizontalS = 1;
 
-        if (HP == 0)
+        if (HP <= 0)
         {
-            //Do stuff
+            if (hasLost) return;
+
+            hasLost = true;
+            enemy.GetComponent<CharacterManager>().fighterManager.roundsWon++;
+            GameManager.Instance.updateGameState(GameStates.EndOfRound);
         }
     }
 
@@ -112,6 +119,18 @@ public class CharacterManager : AttackManager
             else if (child.name == sName)
                 child.text = "Stamina: " + stamina;
         }
+    }
+    public void Jump()
+    {
+        isGrounded = Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, .1f, layer);
+
+        if (isGrounded == true)
+        {
+            rb.velocity = new Vector2(rb.velocity.y, jumpForce);
+        }
+
+        if (rb.velocity.y > 0) rb.gravityScale = gravityScale;
+        else rb.gravityScale = fallGravityScale;
     }
 
     public void take_damage(int damage)
