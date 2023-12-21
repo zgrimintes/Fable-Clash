@@ -12,6 +12,7 @@ public class SpecialAttacksManager : MonoBehaviour
 
     int hits_Praslea = 0;
     int index;
+    public float fallingSpeed;
 
     private void Start()
     {
@@ -43,15 +44,16 @@ public class SpecialAttacksManager : MonoBehaviour
 
     public IEnumerator charge(float dir)
     {
+        Debug.Log(gameObject.GetComponent<BoxCollider2D>().size);
         float speed = 0.001f;
-        while (!attackManager.outOfBounds(gameObject) && Physics2D.OverlapBox(gameObject.transform.position, gameObject.transform.localScale, 0, layer) == null)
+        while (!attackManager.outOfBounds(gameObject) && Physics2D.OverlapBox(gameObject.transform.position, gameObject.GetComponent<BoxCollider2D>().size * .3f, 0, layer) == null)
         {
             gameObject.transform.position += new Vector3(speed * dir, 0, 0);
             speed += Time.deltaTime / 8;
             yield return null;
         }
 
-        attackManager.checkForColls(transform.position, 1f);
+        attackManager.checkForColls(transform.position, 3f);
     }
 
     public IEnumerator fly(GameObject wp)
@@ -75,7 +77,7 @@ public class SpecialAttacksManager : MonoBehaviour
                 break;
             }
 
-            wp.transform.position = wp.transform.position - new Vector3(0, 0.04f, 0);
+            wp.transform.position = wp.transform.position - new Vector3(0, fallingSpeed * Time.deltaTime, 0);
             yield return null;
         }
 
