@@ -39,8 +39,8 @@ public class EnemyController : CharacterManager
         base.Update();
         stateMachine.CurrentEnemyState.FrameUpdate();
 
-        if (transform.position.x > playerInstance.transform.position.x) transform.localScale = new Vector3(-1, transform.localScale.y);
-        else transform.localScale = new Vector3(1, transform.localScale.y);
+        if (transform.position.x > playerInstance.transform.position.x && transform.localScale.x > 0) transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y);
+        else if (transform.position.x < playerInstance.transform.position.x && transform.localScale.x < 0) transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y);
     }
 
     public void MoveEnemy(Vector2 velocity)
