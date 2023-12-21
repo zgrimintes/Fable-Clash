@@ -6,11 +6,9 @@ using UnityEngine;
 
 public class PlayerManager : CharacterManager
 {
-    [SerializeField] private LayerMask layer;
-
-    private bool isGrounded; //To check if the player touches the ground
     private float horizontal;
     private float playerYScale;
+    private float playerXScale;
     public bool canMove;
 
     protected override void Start()
@@ -18,6 +16,7 @@ public class PlayerManager : CharacterManager
         base.Start();
 
         playerYScale = GetComponent<Transform>().localScale.y;
+        playerXScale = GetComponent<Transform>().localScale.x;
     }
 
     void FixedUpdate()
@@ -60,12 +59,12 @@ public class PlayerManager : CharacterManager
 
         if (horizontal == -1)
         {
-            gameObject.transform.localScale = new Vector3(-1, playerYScale, 1);
+            gameObject.transform.localScale = new Vector3(-playerXScale, playerYScale, 1);
             if (!isKnockback) horizontalS = -1;
         }
         else if (horizontal == 1)
         {
-            gameObject.transform.localScale = new Vector3(1, playerYScale, 1);
+            gameObject.transform.localScale = new Vector3(playerXScale, playerYScale, 1);
             if (!isKnockback) horizontalS = 1;
         }
 
@@ -89,18 +88,5 @@ public class PlayerManager : CharacterManager
         {
             try_SA();
         }
-    }
-
-    private void Jump()
-    {
-        isGrounded = Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, .1f, layer);
-
-        if (isGrounded == true)
-        {
-            rb.velocity = new Vector2(rb.velocity.y, jumpForce);
-        }
-
-        if (rb.velocity.y > 0) rb.gravityScale = gravityScale;
-        else rb.gravityScale = fallGravityScale;
     }
 }
