@@ -27,7 +27,7 @@ public class SpecialAttacksManager : MonoBehaviour
 
         for (index = 0; index < 7; index++)
         {
-            rainStartPoints[index] = Random.Range(enemy.transform.position.x - 6f, enemy.transform.position.x + 6f); //Spaw in proximity of the enemy
+            rainStartPoints[index] = Random.Range(enemy.transform.position.x - 6f, enemy.transform.position.x + 6f); //Spaw in proximity to the enemy
             projectiles[index] = Instantiate(projectile, new Vector3(rainStartPoints[index], 15, 0), Quaternion.Euler(0, 0, 180));
         }
 
@@ -44,7 +44,6 @@ public class SpecialAttacksManager : MonoBehaviour
 
     public IEnumerator charge(float dir)
     {
-        Debug.Log(gameObject.GetComponent<BoxCollider2D>().size);
         float speed = 0.001f;
         while (!attackManager.outOfBounds(gameObject) && Physics2D.OverlapBox(gameObject.transform.position, gameObject.GetComponent<BoxCollider2D>().size * .3f, 0, layer) == null)
         {
@@ -53,7 +52,7 @@ public class SpecialAttacksManager : MonoBehaviour
             yield return null;
         }
 
-        attackManager.checkForColls(transform.position, 3f);
+        attackManager.checkForColls(transform.position, 3.5f);
     }
 
     public IEnumerator fly(GameObject wp)
