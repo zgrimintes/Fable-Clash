@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "FighterManager", menuName = "Figher Manager")]
 public class FighterManager : ScriptableObject
@@ -13,6 +14,7 @@ public class FighterManager : ScriptableObject
     public string characterName;
     public bool enemy;
     public int roundsWon;
+    public Sprite sprite;
 
     public void ranged_Attack(GameObject parent)
     {
