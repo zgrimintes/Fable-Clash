@@ -47,7 +47,7 @@ public class CharacterManager : AttackManager
 
     private float last_mist_dmg;
     private bool hasLost = false;
-    private float jumpForce = 20f;
+    private float jumpForce = 21f;
     private float scaleConstant = .3f;
 
     protected override void Start()
