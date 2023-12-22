@@ -28,6 +28,7 @@ public class CharacterManager : AttackManager
     [HideInInspector] public bool isDashing = false;
     [HideInInspector] public bool isKnockback = false;
     [HideInInspector] public bool isGrounded; //To check if the player touches the ground
+    [HideInInspector] public Sprite sprite; //To set the sprite of the character
     #endregion
 
     public FighterManager fighterManager;
@@ -47,6 +48,7 @@ public class CharacterManager : AttackManager
     private float last_mist_dmg;
     private bool hasLost = false;
     private float jumpForce = 20f;
+    private float scaleConstant = .3f;
 
     protected override void Start()
     {
@@ -91,9 +93,13 @@ public class CharacterManager : AttackManager
         HP = data.HP;
         stamina = data.stamina;
         _ch_name = data.characterName;
+        sprite = data.sprite;
 
         if (!data.enemy) enemy = GameObject.FindGameObjectWithTag("Enemy");
         else enemy = GameObject.FindGameObjectWithTag("Player");
+
+        gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
+        gameObject.transform.localScale = new Vector2(scaleConstant, scaleConstant);
     }
 
     public void updateText()
