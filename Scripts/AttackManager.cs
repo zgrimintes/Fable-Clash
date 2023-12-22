@@ -31,7 +31,6 @@ public class AttackManager : MonoBehaviour
         magicAbilitiesManager = GetComponent<MagicAbilitiesManager>();
         specialAttacksManager = GetComponent<SpecialAttacksManager>();
 
-        Debug.Log(attackPoint.position);
         switch (GetComponent<CharacterManager>().fighterManager.w_Class.name)
         {
             case "LightWeight":
@@ -41,7 +40,7 @@ public class AttackManager : MonoBehaviour
                 positionToAttack = new Vector2(5.9f, 0);
                 break;
             case "HeavyWeight":
-                positionToAttack = new Vector2(10.9f, 0);
+                positionToAttack = new Vector2(9.9f, 0);
                 break;
         }
 
@@ -67,7 +66,7 @@ public class AttackManager : MonoBehaviour
     public void normal_Attack(int _NA_dmg)
     {
         dmg = _NA_dmg;
-        wp = Instantiate(Weapon, positionToAttack, Quaternion.identity);
+        wp = Instantiate(Weapon, transform.position, Quaternion.identity);
         animator = wp.GetComponent<Animator>();
         wp.AddComponent<FollowPlayer>().toFollow = gameObject; //Adding the FollowPlayer
 
@@ -89,7 +88,7 @@ public class AttackManager : MonoBehaviour
     public void heavy_Attack(int _HA_dmg)
     {
         dmg = _HA_dmg;
-        wp = Instantiate(Weapon, positionToAttack, Quaternion.identity);
+        wp = Instantiate(Weapon, transform.position, Quaternion.identity);
         animator = wp.GetComponent<Animator>();
         wp.AddComponent<FollowPlayer>().toFollow = gameObject; //Adding the FollowPlayer
 
