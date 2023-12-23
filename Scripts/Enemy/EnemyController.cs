@@ -7,7 +7,11 @@ using UnityEngine;
 
 public class EnemyController : CharacterManager
 {
+    #region References to AI scritps
     public AIAttacksZmeu zmeuAI;
+    public AIAttacksPrislea prisleaAI;
+    #endregion
+
     public GameObject playerInstance;
     public bool isTooFar = true;
     public bool canAttack = false;
@@ -26,6 +30,8 @@ public class EnemyController : CharacterManager
         stateMachine = new EnemyStateMachine();
         chaseState = new ChaseState(this, stateMachine);
         waitState = new WaitState(this, stateMachine);
+        zmeuAI = GetComponent<AIAttacksZmeu>();
+        prisleaAI = GetComponent<AIAttacksPrislea>();
     }
 
     protected override void Start()
@@ -33,6 +39,13 @@ public class EnemyController : CharacterManager
         base.Start();
 
         stateMachine.Initialize(waitState);
+        choseAIScript();
+    }
+
+    protected void choseAIScript()
+    {
+        GetComponent<AIAttacksPrislea>().enabled = (prisleaAI.nameToHave == _ch_name);
+        GetComponent<AIAttacksZmeu>().enabled = (zmeuAI.nameToHave == _ch_name);
     }
 
     protected override void Update()
