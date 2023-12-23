@@ -16,6 +16,7 @@ public class CharacterManager : AttackManager
     [HideInInspector] public int HP;
     [HideInInspector] public int stamina;
     [HideInInspector] public float speed;
+    [HideInInspector] public string _ch_name;
     [HideInInspector] public float cooldown;
     [HideInInspector] public float lastAttack;
     [HideInInspector] public float horizontalS; //Save the last looking direction
@@ -43,7 +44,6 @@ public class CharacterManager : AttackManager
     int _HA_dmg;
     int _MA_dmg;
     int _SA_dmg;
-    string _ch_name;
 
     private float last_mist_dmg;
     private bool hasLost = false;
