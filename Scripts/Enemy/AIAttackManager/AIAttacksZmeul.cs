@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class AIAttacksZmeu : MonoBehaviour
 {
+    public string nameToHave = "Zmeul"; //for checking if the enemy shoudl inherit this script
     public EnemyController enemyController;
     GameObject playerInstance;
 
@@ -18,15 +19,17 @@ public class AIAttacksZmeu : MonoBehaviour
 
     public void Update()
     {
+        if (!enemyController.canAttack) return;
+
         if (Time.time - enemyController.lastAttack < enemyController.cooldown) return;
 
         attacks[0] = attacks[1] = attacks[2] = attacks[3] = attacks[4] = 0;
 
         checkDistance();
         checkLookingDir();
+        checkYAxis();
         checkStamina();
         checkMana();
-        checkYAxis();
 
         chooseAttack();
     }
