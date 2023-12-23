@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AIAttacksPrislea : MonoBehaviour
 {
+    public string nameToHave = "Prislea"; //for checking if the enemy shoudl inherit this script
     public EnemyController enemyController;
     GameObject playerInstance;
 
