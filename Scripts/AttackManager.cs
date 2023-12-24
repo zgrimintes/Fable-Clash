@@ -16,7 +16,7 @@ public class AttackManager : MonoBehaviour
 
     [HideInInspector] public GameObject wp;
     [HideInInspector] public bool hasHit; //So you can't hit more than once per attack
-    [HideInInspector] public int dmg;
+    [HideInInspector] public float dmg;
 
     public Transform attackPoint;
     public float attackRange = 0.6f;
@@ -59,11 +59,11 @@ public class AttackManager : MonoBehaviour
 
         if (wp.GetComponent<CanHit>().canHit && !hasHit)
         {
-            checkForColls(attackPoint.position, attackRange);
+            checkForColls(attackPoint.position, attackRange, 0);
         }
     }
 
-    public void normal_Attack(int _NA_dmg)
+    public void normal_Attack(float _NA_dmg)
     {
         dmg = _NA_dmg;
         wp = Instantiate(Weapon, transform.position, Quaternion.identity);
@@ -74,7 +74,7 @@ public class AttackManager : MonoBehaviour
         else if (GetComponent<CharacterManager>().horizontalS == 1) animator.Play("SwordSwing");
     }
 
-    public void ranged_Attack(int _RA_dmg)
+    public void ranged_Attack(float _RA_dmg)
     {
         dmg = _RA_dmg;
         float dir = GetComponent<CharacterManager>().horizontalS;
@@ -82,10 +82,10 @@ public class AttackManager : MonoBehaviour
         if (dir >= 0) wp = Instantiate(Projectile, transform.position, Quaternion.Euler(0, 0, 270));
         else wp = Instantiate(Projectile, transform.position, Quaternion.Euler(0, 0, 90));
 
-        StartCoroutine(ranged(dir));
+        StartCoroutine(ranged(dir, 0));
     }
 
-    public void heavy_Attack(int _HA_dmg)
+    public void heavy_Attack(float _HA_dmg)
     {
         dmg = _HA_dmg;
         wp = Instantiate(Weapon, transform.position, Quaternion.identity);
@@ -97,16 +97,16 @@ public class AttackManager : MonoBehaviour
 
     }
 
-    public void magic_Attack(int _MA_dmg, string _ch_name)
+    public void magic_Attack(float _MA_dmg, string _ch_name)
     {
         dmg = _MA_dmg;
 
         switch (_ch_name)
         {
-            case "Praslea":
+            case "Prislea":
                 float dir = GetComponent<CharacterManager>().horizontalS;
                 magicAbilitiesManager.Praslea_MA(wp);
-                StartCoroutine(ranged(dir));
+                StartCoroutine(ranged(dir, 1));
                 break;
             case "Zmeul":
                 magicAbilitiesManager.Zmeul_MA();
@@ -114,13 +114,13 @@ public class AttackManager : MonoBehaviour
         }
     }
 
-    public void special_Attack(int _SA_dmg, string _ch_name)
+    public void special_Attack(float _SA_dmg, string _ch_name)
     {
         dmg = _SA_dmg;
 
         switch (_ch_name)
         {
-            case "Praslea":
+            case "Prislea":
                 specialAttacksManager.Praslea_SA(wp, Projectile);
                 break;
             case "Zmeul":
@@ -129,7 +129,7 @@ public class AttackManager : MonoBehaviour
         }
     }
 
-    public IEnumerator ranged(float dir)
+    public IEnumerator ranged(float dir, int effect)
     {
         while (Physics2D.OverlapBox(wp.transform.position, wp.transform.localScale, 0, enemyLayer) == null && !outOfBounds(wp))
         {
@@ -137,7 +137,7 @@ public class AttackManager : MonoBehaviour
             yield return null;
         }
 
-        checkForColls(wp.transform.position, 1f);
+        checkForColls(wp.transform.position, 1f, effect);
 
         Destroy(wp);
     }
@@ -149,13 +149,14 @@ public class AttackManager : MonoBehaviour
         return false;
     }
 
-    public void checkForColls(Vector2 point, float radius)
+    public void checkForColls(Vector2 point, float radius, int effect)
     {
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(point, radius, enemyLayer);
 
         foreach (Collider2D enemy in hitEnemies)
         {
             enemy.GetComponent<CharacterManager>().take_damage(dmg);
+            enemy.GetComponent<CharacterManager>().applyEfects(effect);
             hasHit = true;
         }
     }
