@@ -53,7 +53,7 @@ public class CharacterManager : AttackManager
     private float[] defaultValues = new float[10]; //For saving the default values of variables ->
                                                    // -> 0 - cooldown; 1 - na; 2 - ra; 3 - ha; 4 - ma; 5 - sa; 6 - speed
     private float[] inflictedTime = new float[10]; //For saving the time when the effect was inflicted -^
-
+    private bool[] hasEffects = { false, false, false, false, false, false, false, false, false, false }; //For indicating when an individual has effects
     protected override void Start()
     {
         base.Start();
@@ -62,7 +62,6 @@ public class CharacterManager : AttackManager
         coll = GetComponent<BoxCollider2D>();
         LoadPlayer(fighterManager);
         updateText();
-        getRidOfEffects();
     }
 
     protected override void Update()
@@ -80,6 +79,8 @@ public class CharacterManager : AttackManager
             enemy.GetComponent<CharacterManager>().fighterManager.roundsWon++;
             GameManager.Instance.updateGameState(GameStates.EndOfRound);
         }
+
+        getRidOfEffects();
     }
 
     public void LoadPlayer(FighterManager data) //Function for loading the data from the ScriptableObject into the GameObject
@@ -134,7 +135,11 @@ public class CharacterManager : AttackManager
 
     public void applyEfects(int effect) //For applying effects inflicted by attacks to characters
     {
-        if (effect != 0) inflictedTime[effect - 1] = Time.time;
+        if (effect != 0)
+        {
+            inflictedTime[effect - 1] = Time.time;
+            hasEffects[effect - 1] = true;
+        }
         switch (effect)
         {
             case 0:
@@ -229,7 +234,7 @@ public class CharacterManager : AttackManager
     {
         for (int i = 0; i < 10; i++)
         {
-            if (inflictedTime[i] - Time.time > 2f)
+            if (Time.time - inflictedTime[i] > 2f)
             {
                 switch (i)
                 {
@@ -241,6 +246,7 @@ public class CharacterManager : AttackManager
                         break;
                         //Fortsette senere
                 }
+                hasEffects[i] = false;
             }
         }
     }
