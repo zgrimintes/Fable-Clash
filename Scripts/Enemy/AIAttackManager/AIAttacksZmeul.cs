@@ -28,21 +28,29 @@ public class AIAttacksZmeu : MonoBehaviour
         checkDistance();
         checkLookingDir();
         checkYAxis();
+        checkIfInFront();
         checkStamina();
         checkMana();
 
         chooseAttack();
     }
 
+    protected void checkIfInFront()
+    {
+        Vector2 startPos = new Vector2(enemyController.attackPoint.position.x, enemyController.attackPoint.position.y);
+        if (Physics2D.CircleCast(startPos, 2f, new Vector2(enemyController.horizontalS, 0)) == false) attacks[3] -= .3f;
+        else attacks[3] += .3f;
+    }
+
     protected void checkDistance()
     {
         if (!enemyController.isTooFar)
         {
-            attacks[0] += .5f; attacks[1] += .5f; attacks[3] += .5f; attacks[2] += .15f; attacks[4] += .15f;
+            attacks[0] += .5f; attacks[1] += .5f; attacks[3] += .2f; attacks[2] += .15f; attacks[4] += .15f;
         }
         else
         {
-            attacks[3] -= .5f;
+            attacks[3] -= .2f;
             attacks[2] += .6f; attacks[4] += .5f;
             if (playerInstance.GetComponent<CharacterManager>().HP > 10)
             {
