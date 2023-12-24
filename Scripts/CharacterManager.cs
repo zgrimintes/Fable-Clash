@@ -5,7 +5,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Networking.Types;
 using UnityEngine.SceneManagement;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class CharacterManager : AttackManager
 {
@@ -35,8 +34,6 @@ public class CharacterManager : AttackManager
     public FighterManager fighterManager;
     public GameObject textPrfb;
     public LayerMask layer;
-    [HideInInspector] public Rigidbody2D rb;
-    [HideInInspector] public BoxCollider2D coll;
     [HideInInspector] public GameObject enemy;
 
     float _NA_dmg;
@@ -58,8 +55,6 @@ public class CharacterManager : AttackManager
     {
         base.Start();
 
-        rb = GetComponent<Rigidbody2D>();
-        coll = GetComponent<BoxCollider2D>();
         LoadPlayer(fighterManager);
         updateText();
     }
@@ -150,6 +145,27 @@ public class CharacterManager : AttackManager
         }
     }
 
+    public void getRidOfEffects()
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            if (Time.time - inflictedTime[i] > 2f)
+            {
+                switch (i)
+                {
+                    case 0:
+                        cooldown = defaultValues[i];
+                        break;
+                    case 1:
+                        _NA_dmg = defaultValues[i];
+                        break;
+                        //Fortsette senere
+                }
+                hasEffects[i] = false;
+            }
+        }
+    }
+
     public void Jump()
     {
         isGrounded = Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, .1f, layer);
@@ -227,27 +243,6 @@ public class CharacterManager : AttackManager
         {
             doubleTapped = false;
             StartCoroutine(Dashh());
-        }
-    }
-
-    public void getRidOfEffects()
-    {
-        for (int i = 0; i < 10; i++)
-        {
-            if (Time.time - inflictedTime[i] > 2f)
-            {
-                switch (i)
-                {
-                    case 0:
-                        cooldown = defaultValues[i];
-                        break;
-                    case 1:
-                        _NA_dmg = defaultValues[i];
-                        break;
-                        //Fortsette senere
-                }
-                hasEffects[i] = false;
-            }
         }
     }
 
