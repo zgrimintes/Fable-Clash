@@ -17,6 +17,8 @@ public class AttackManager : MonoBehaviour
     [HideInInspector] public GameObject wp;
     [HideInInspector] public bool hasHit; //So you can't hit more than once per attack
     [HideInInspector] public float dmg;
+    [HideInInspector] public Rigidbody2D rb;
+    [HideInInspector] public BoxCollider2D coll;
 
     public Transform attackPoint;
     public float attackRange = 0.6f;
@@ -28,23 +30,36 @@ public class AttackManager : MonoBehaviour
 
     protected virtual void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
+        coll = GetComponent<BoxCollider2D>();
         magicAbilitiesManager = GetComponent<MagicAbilitiesManager>();
         specialAttacksManager = GetComponent<SpecialAttacksManager>();
 
+        setCharacteristics();
+
+        attackPoint.transform.localPosition += positionToAttack;
+    }
+
+    protected void setCharacteristics()
+    {
         switch (GetComponent<CharacterManager>().fighterManager.w_Class.name)
         {
             case "LightWeight":
                 positionToAttack = new Vector2(1.9f, 0);
+                coll.size = new Vector2(7.15f, 12.42f);
+                coll.offset = new Vector2(-0.63f, 0.10f);
                 break;
             case "MediumWeight":
                 positionToAttack = new Vector2(5.9f, 0);
+                //coll.size = new Vector2(7.15f, 12.42f); 
                 break;
             case "HeavyWeight":
                 positionToAttack = new Vector2(9.9f, 0);
+                coll.size = new Vector2(18.09f, 16.30f);
+                coll.offset = new Vector2(1.75f, 0.28f);
                 break;
         }
 
-        attackPoint.transform.localPosition += positionToAttack;
     }
 
     protected virtual void Update()
