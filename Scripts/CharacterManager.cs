@@ -39,16 +39,20 @@ public class CharacterManager : AttackManager
     [HideInInspector] public BoxCollider2D coll;
     [HideInInspector] public GameObject enemy;
 
-    int _NA_dmg;
-    int _RA_dmg;
-    int _HA_dmg;
-    int _MA_dmg;
-    int _SA_dmg;
+    float _NA_dmg;
+    float _RA_dmg;
+    float _HA_dmg;
+    float _MA_dmg;
+    float _SA_dmg;
 
     private float last_mist_dmg;
     private bool hasLost = false;
     private float jumpForce = 21f;
     private float scaleConstant = .3f;
+
+    private float[] defaultValues = new float[10]; //For saving the default values of variables ->
+                                                   // -> 0 - cooldown; 1 - na; 2 - ra; 3 - ha; 4 - ma; 5 - sa; 6 - speed
+    private float[] inflictedTime = new float[10]; //For saving the time when the effect was inflicted -^
 
     protected override void Start()
     {
@@ -58,6 +62,7 @@ public class CharacterManager : AttackManager
         coll = GetComponent<BoxCollider2D>();
         LoadPlayer(fighterManager);
         updateText();
+        getRidOfEffects();
     }
 
     protected override void Update()
@@ -81,13 +86,13 @@ public class CharacterManager : AttackManager
     {
         data.startOfFight();
         WeightClass w_data = (WeightClass)data.w_Class;
-        speed = w_data.speed;
-        _NA_dmg = w_data._NA_dmg;
-        _RA_dmg = w_data._RA_dmg;
-        _HA_dmg = w_data._HA_dmg;
-        _MA_dmg = w_data._MA_dmg;
-        _SA_dmg = w_data._S_dmg;
-        cooldown = w_data._Attack_Cooldown;
+        speed = w_data.speed; defaultValues[6] = speed;
+        _NA_dmg = w_data._NA_dmg; defaultValues[1] = _NA_dmg;
+        _RA_dmg = w_data._RA_dmg; defaultValues[2] = _RA_dmg;
+        _HA_dmg = w_data._HA_dmg; defaultValues[3] = _HA_dmg;
+        _MA_dmg = w_data._MA_dmg; defaultValues[4] = _MA_dmg;
+        _SA_dmg = w_data._S_dmg; defaultValues[5] = _SA_dmg;
+        cooldown = w_data._Attack_Cooldown; defaultValues[0] = cooldown;
 
         mana = data.mana;
         HP = data.HP;
@@ -126,6 +131,20 @@ public class CharacterManager : AttackManager
                 child.text = "Stamina: " + stamina;
         }
     }
+
+    public void applyEfects(int effect) //For applying effects inflicted by attacks to characters
+    {
+        if (effect != 0) inflictedTime[effect - 1] = Time.time;
+        switch (effect)
+        {
+            case 0:
+                break;
+            case 1:
+                cooldown += 1f;
+                break;
+        }
+    }
+
     public void Jump()
     {
         isGrounded = Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, .1f, layer);
@@ -139,11 +158,11 @@ public class CharacterManager : AttackManager
         else rb.gravityScale = fallGravityScale;
     }
 
-    public void take_damage(int damage)
+    public void take_damage(float damage)
     {
         isKnockback = true;
         attackDir = calculateAttackingDir();
-        fighterManager.take_damage(gameObject, damage);
+        fighterManager.take_damage(gameObject, (int)damage);
         updateText();
     }
 
@@ -203,6 +222,26 @@ public class CharacterManager : AttackManager
         {
             doubleTapped = false;
             StartCoroutine(Dashh());
+        }
+    }
+
+    public void getRidOfEffects()
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            if (inflictedTime[i] - Time.time > 2f)
+            {
+                switch (i)
+                {
+                    case 0:
+                        cooldown = defaultValues[i];
+                        break;
+                    case 1:
+                        _NA_dmg = defaultValues[i];
+                        break;
+                        //Fortsette senere
+                }
+            }
         }
     }
 
