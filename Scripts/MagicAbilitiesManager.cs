@@ -23,6 +23,6 @@ public class MagicAbilitiesManager : MonoBehaviour
 
     public void Zmeul_MA()
     {
-        Instantiate(Mist, new Vector3(transform.position.x, -2f), Quaternion.identity);
+        Instantiate(Mist, new Vector3(transform.position.x + (GetComponent<CharacterManager>().horizontalS * 5), -2f), Quaternion.identity);
     }
 }
