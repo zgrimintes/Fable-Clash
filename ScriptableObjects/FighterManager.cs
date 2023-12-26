@@ -12,7 +12,6 @@ public class FighterManager : ScriptableObject
     public int stamina;
     public ScriptableObject w_Class;
     public string characterName;
-    public bool enemy;
     public int roundsWon;
     public Sprite sprite;
 
