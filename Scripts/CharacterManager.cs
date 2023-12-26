@@ -132,6 +132,9 @@ public class CharacterManager : AttackManager
     {
         getRidOfAllEffects();
         fighterManager.startOfFight();
+        HP = fighterManager.HP;
+        stamina = fighterManager.stamina;
+        mana = fighterManager.mana;
         updateText();
         hasLost = false;
     }
