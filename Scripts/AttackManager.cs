@@ -40,7 +40,7 @@ public class AttackManager : MonoBehaviour
         attackPoint.transform.localPosition += positionToAttack;
     }
 
-    protected void setCharacteristics()
+    public void setCharacteristics()
     {
         switch (GetComponent<CharacterManager>().fighterManager.w_Class.name)
         {
