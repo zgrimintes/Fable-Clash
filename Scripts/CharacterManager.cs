@@ -96,7 +96,7 @@ public class CharacterManager : AttackManager
         _ch_name = data.characterName;
         sprite = data.sprite;
 
-        if (gameObject.name == "PLayer") enemy = GameObject.FindGameObjectWithTag("Enemy");
+        if (gameObject.name == "Player") enemy = GameObject.FindGameObjectWithTag("Enemy");
         else enemy = GameObject.FindGameObjectWithTag("Player");
 
         gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
