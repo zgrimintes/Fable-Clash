@@ -29,6 +29,7 @@ public class CharacterManager : AttackManager
     [HideInInspector] public bool isKnockback = false;
     [HideInInspector] public bool isGrounded; //To check if the player touches the ground
     [HideInInspector] public Sprite sprite; //To set the sprite of the character
+    [HideInInspector] public bool hasLost = false;
     #endregion
 
     public FighterManager fighterManager;
@@ -43,7 +44,6 @@ public class CharacterManager : AttackManager
     float _SA_dmg;
 
     private float last_mist_dmg;
-    private bool hasLost = false;
     private float jumpForce = 21f;
     private float scaleConstant = .3f;
 
@@ -128,6 +128,14 @@ public class CharacterManager : AttackManager
         }
     }
 
+    public void startFight()
+    {
+        getRidOfAllEffects();
+        fighterManager.startOfFight();
+        updateText();
+        hasLost = false;
+    }
+
     public void applyEfects(int effect) //For applying effects inflicted by attacks to characters
     {
         if (effect != 0)
@@ -163,6 +171,14 @@ public class CharacterManager : AttackManager
                 }
                 hasEffects[i] = false;
             }
+        }
+    }
+
+    public void getRidOfAllEffects()
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            hasEffects[i] = false;
         }
     }
 
