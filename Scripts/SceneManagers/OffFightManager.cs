@@ -41,7 +41,7 @@ public class OffFinghtManager : MonoBehaviour
         }
     }
 
-    private void minusOneCountdown(int n)
+    public void minusOneCountdown(int n)
     {
         switch (n)
         {
@@ -54,17 +54,18 @@ public class OffFinghtManager : MonoBehaviour
             case 1:
                 countdown.text = "Fight!";
                 break;
+            case 0:
+                startFight();
+                break;
         }
     }
 
     public async void roundWon()
     {
-        GameObject enemy, player;
-        TextMeshProUGUI scoreIndicator;
-        enemy = GameObject.Find("Enemy"); enemy.GetComponent<EnemyController>().canAttack = false;
-        player = GameObject.Find("Player"); player.GetComponent<PlayerManager>().canMove = false;
+        enemy.GetComponent<EnemyController>().canAttack = false;
+        player.GetComponent<PlayerManager>().canMove = false;
+
         gameObject.SetActive(true);
-        scoreIndicator = gameObject.GetComponentInChildren<TextMeshProUGUI>();
         scoreIndicator.enabled = true;
 
         int winsPlayer = player.GetComponent<CharacterManager>().fighterManager.roundsWon,
@@ -91,14 +92,30 @@ public class OffFinghtManager : MonoBehaviour
 
         await Task.Delay(1500);
 
-        SceneManager.LoadScene("SampleScene");
+        rematch();
+    }
+
+    public void rematch()
+    {
+        scoreIndicator.enabled = false;
+        countdown.text = "3";
+        countdown.enabled = true;
+        countdown.GetComponent<Animator>().Play("Countdown");
+
+        //Reset the stats, position and effects of both characters
+        enemy.GetComponent<CharacterManager>().startFight();
+        enemy.transform.position = new Vector2(10.58f, -.5f);
+
+        player.GetComponent<CharacterManager>().startFight();
+        player.transform.position = new Vector2(-10.58f, -.5f);
+
+        GameManager.Instance.updateGameState(GameStates.Fight);
     }
 
     public void startFight()
     {
         enemy.GetComponent<EnemyController>().waitState.StartFight();
         player.GetComponent<PlayerManager>().canMove = true;
-        GetComponentInParent<Canvas>().gameObject.SetActive(false);
         gameObject.SetActive(false);
     }
 
