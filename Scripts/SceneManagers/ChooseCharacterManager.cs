@@ -5,16 +5,11 @@ using UnityEngine;
 
 public class ChoseCharacterManager : MonoBehaviour
 {
-    GameObject player, enemy;
+    public GameObject player, enemy;
 
-    public FighterManager[] fighterManagers = new FighterManager[9];
+    public FighterManager[] fighterManagersP = new FighterManager[9];
+    public FighterManager[] fighterManagersE = new FighterManager[9];
     public TextMeshProUGUI countdownText;
-
-    private void Start()
-    {
-        player = GameObject.Find("Player");
-        enemy = GameObject.Find("Enemy");
-    }
 
     public void characterChoosed(int c)
     {
@@ -25,20 +20,17 @@ public class ChoseCharacterManager : MonoBehaviour
          * 7 - Zgripturoaica, 8 - Balaurul, 9 - Crisnicul
          * */
 
-        switch (c)
+        if (c > 0)
         {
-            case 1:
-                player.GetComponent<CharacterManager>().fighterManager = fighterManagers[c - 1];
-                return;
-            case -1:
-                enemy.GetComponent<CharacterManager>().fighterManager = fighterManagers[c - 1];
-                return;
-            case 6:
-                player.GetComponent<CharacterManager>().fighterManager = fighterManagers[c - 1];
-                return;
-            case -6:
-                enemy.GetComponent<CharacterManager>().fighterManager = fighterManagers[c - 1];
-                return;
+            player.GetComponent<CharacterManager>().fighterManager = fighterManagersP[c - 1];
+            player.GetComponent<CharacterManager>().LoadPlayer(fighterManagersP[c - 1]);
+            player.GetComponent<AttackManager>().setCharacteristics();
+        }
+        else
+        {
+            enemy.GetComponent<CharacterManager>().fighterManager = fighterManagersE[Mathf.Abs(c) - 1];
+            enemy.GetComponent<CharacterManager>().LoadPlayer(fighterManagersE[Mathf.Abs(c) - 1]);
+            enemy.GetComponent<AttackManager>().setCharacteristics();
         }
     }
 
