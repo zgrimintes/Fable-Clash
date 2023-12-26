@@ -6,7 +6,6 @@ public class StatsRegen : MonoBehaviour
 {
     [SerializeField] private float timeToGainMana = 15f;
     [SerializeField] private float timeToGainStamina = 3f;
-    [SerializeField] private FighterManager fighterManager;
     private float lastManaGain;
     private float lastStaminaGain;
     private int mana;
@@ -25,7 +24,7 @@ public class StatsRegen : MonoBehaviour
             if (Time.time - lastManaGain > timeToGainMana)
             {
                 lastManaGain = Time.time;
-                fighterManager.mana_Gain(gameObject);
+                gameObject.GetComponent<CharacterManager>().fighterManager.mana_Gain(gameObject);
                 GetComponent<CharacterManager>().updateText();
             }
         }
@@ -36,7 +35,7 @@ public class StatsRegen : MonoBehaviour
             if (Time.time - lastStaminaGain > timeToGainStamina)
             {
                 lastStaminaGain = Time.time;
-                fighterManager.stamina_Gain(gameObject);
+                gameObject.GetComponent<CharacterManager>().fighterManager.stamina_Gain(gameObject);
                 GetComponent<CharacterManager>().updateText();
             }
         }
