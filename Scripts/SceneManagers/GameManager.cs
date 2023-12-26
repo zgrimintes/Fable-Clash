@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
                 HandleEndOfRound();
                 break;
             case GameStates.Fight:
+                HandleFight();
                 break;
             case GameStates.Lose:
                 break;
@@ -44,6 +45,11 @@ public class GameManager : MonoBehaviour
         }
 
         StateChanged?.Invoke(newState);
+    }
+
+    private void HandleFight()
+    {
+
     }
 
     private void HandleDialogue()
@@ -58,7 +64,7 @@ public class GameManager : MonoBehaviour
 
     private void HandleStart()
     {
-        canvas.GetComponent<OffFinghtManager>().startOfFight();
+        //canvas.GetComponent<OffFinghtManager>().startOfFight();
     }
 }
 
