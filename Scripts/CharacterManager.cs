@@ -96,7 +96,7 @@ public class CharacterManager : AttackManager
         _ch_name = data.characterName;
         sprite = data.sprite;
 
-        if (!data.enemy) enemy = GameObject.FindGameObjectWithTag("Enemy");
+        if (gameObject.name == "PLayer") enemy = GameObject.FindGameObjectWithTag("Enemy");
         else enemy = GameObject.FindGameObjectWithTag("Player");
 
         gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
@@ -106,7 +106,7 @@ public class CharacterManager : AttackManager
     public void updateText()
     {
         string hName = "HealthP", mName = "ManaP ", sName = "StaminaP";
-        if (fighterManager.enemy)
+        if (gameObject.name == "Enemy")
         {
             hName = "HealthE";
             mName = "ManaE";
