@@ -36,12 +36,12 @@ public class AttackManager : MonoBehaviour
         specialAttacksManager = GetComponent<SpecialAttacksManager>();
 
         setCharacteristics();
-
-        attackPoint.transform.localPosition += positionToAttack;
     }
 
     public void setCharacteristics()
     {
+        attackPoint.transform.localPosition = Vector3.zero; //Reset the position of the attack point
+
         switch (GetComponent<CharacterManager>().fighterManager.w_Class.name)
         {
             case "LightWeight":
@@ -51,7 +51,8 @@ public class AttackManager : MonoBehaviour
                 break;
             case "MediumWeight":
                 positionToAttack = new Vector2(5.9f, 0);
-                //coll.size = new Vector2(7.15f, 12.42f); 
+                coll.size = new Vector2(10.77f, 16.08f);
+                coll.offset = new Vector2(-0.01f, 0.01f);
                 break;
             case "HeavyWeight":
                 positionToAttack = new Vector2(9.9f, 0);
@@ -60,6 +61,7 @@ public class AttackManager : MonoBehaviour
                 break;
         }
 
+        attackPoint.transform.localPosition += positionToAttack;
     }
 
     protected virtual void Update()
