@@ -10,6 +10,7 @@ public class ChoseCharacterManager : MonoBehaviour
     public FighterManager[] fighterManagersP = new FighterManager[9];
     public FighterManager[] fighterManagersE = new FighterManager[9];
     public TextMeshProUGUI countdownText;
+    public TextMeshProUGUI infoText;
 
     public void characterChoosed(int c)
     {
@@ -21,16 +22,25 @@ public class ChoseCharacterManager : MonoBehaviour
          * these are available to the enemy selection too
          * */
 
-        player.GetComponent<CharacterManager>().fighterManager = fighterManagersP[c - 1];
-        player.GetComponent<CharacterManager>().LoadPlayer(fighterManagersP[c - 1]);
-        player.GetComponent<AttackManager>().setCharacteristics();
+        if (fighterManagersP[c - 1] != null)
+        {
+            player.GetComponent<CharacterManager>().fighterManager = fighterManagersP[c - 1];
+            player.GetComponent<CharacterManager>().LoadPlayer(fighterManagersP[c - 1]);
+            player.GetComponent<AttackManager>().setCharacteristics();
+        }
+
+        showInfo(c);
     }
 
     public void enemyChoosed(int c)
     {
-        enemy.GetComponent<CharacterManager>().fighterManager = fighterManagersE[c - 1];
-        enemy.GetComponent<CharacterManager>().LoadPlayer(fighterManagersE[c - 1]);
-        enemy.GetComponent<AttackManager>().setCharacteristics();
+        if (fighterManagersE[c - 1] != null)
+        {
+            enemy.GetComponent<CharacterManager>().fighterManager = fighterManagersE[c - 1];
+            enemy.GetComponent<CharacterManager>().LoadPlayer(fighterManagersE[c - 1]);
+            enemy.GetComponent<AttackManager>().setCharacteristics();
+        }
+        showInfo(c);
     }
 
     public void startGame()
@@ -40,5 +50,25 @@ public class ChoseCharacterManager : MonoBehaviour
         gameObject.SetActive(false);
         countdownText.GetComponent<Animator>().Play("Countdown");
         countdownText.GetComponentInParent<OffFinghtManager>().startOfFight();
+    }
+
+    public void showInfo(int i)
+    {
+        infoText.text = getInfo(i);
+    }
+
+    private string getInfo(int i)
+    {
+        switch (i)
+        {
+            case 1:
+                return "Prislea (LightWeight)\r\nNA - Bow jab\r\nHa - Bow strike\r\nRA- arrow\r\nMa - Mace trow\r\nSA - arrow rain";
+            case 2:
+                return "Harap Alb (MediumWeight)\r\nNA - Sword Slash\r\nHA - Sword Thrust\r\nRA - Shield Throw\r\nMA - Bear Roar\r\nSA - Sword Lunge";
+            case 6:
+                return "Zmeul (HeavyWeight)\r\nNA - Axe Blow\r\nHA - Axe Smash\r\nRA - Axe Throw\r\nMA - Dark Mist\r\nSA - Axe Rush";
+            default:
+                return "N/A";
+        }
     }
 }
