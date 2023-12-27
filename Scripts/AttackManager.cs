@@ -159,7 +159,7 @@ public class AttackManager : MonoBehaviour
 
     public bool outOfBounds(GameObject gameObj)
     {
-        if (gameObj.transform.position.x > 12f || gameObj.transform.position.x < -12f) return true;
+        if (gameObj.transform.position.x > 14f || gameObj.transform.position.x < -14f) return true;
 
         return false;
     }
