@@ -10,7 +10,7 @@ public class ChoseCharacterManager : MonoBehaviour
     public FighterManager[] fighterManagersP = new FighterManager[9];
     public FighterManager[] fighterManagersE = new FighterManager[9];
     public TextMeshProUGUI countdownText;
-    public TextMeshProUGUI infoText;
+    public TextMeshProUGUI infoTextP, infoTextE;
 
     public void characterChoosed(int c)
     {
@@ -29,7 +29,7 @@ public class ChoseCharacterManager : MonoBehaviour
             player.GetComponent<AttackManager>().setCharacteristics();
         }
 
-        showInfo(c);
+        showInfo(c, 'p');
     }
 
     public void enemyChoosed(int c)
@@ -40,7 +40,7 @@ public class ChoseCharacterManager : MonoBehaviour
             enemy.GetComponent<CharacterManager>().LoadPlayer(fighterManagersE[c - 1]);
             enemy.GetComponent<AttackManager>().setCharacteristics();
         }
-        showInfo(c);
+        showInfo(c, 'e');
     }
 
     public void startGame()
@@ -52,9 +52,17 @@ public class ChoseCharacterManager : MonoBehaviour
         countdownText.GetComponentInParent<OffFinghtManager>().startOfFight();
     }
 
-    public void showInfo(int i)
+    public void showInfo(int i, char c)
     {
-        infoText.text = getInfo(i);
+        switch (c)
+        {
+            case 'p':
+                infoTextP.text = getInfo(i);
+                break;
+            case 'e':
+                infoTextE.text = getInfo(i);
+                break;
+        }
     }
 
     private string getInfo(int i)
