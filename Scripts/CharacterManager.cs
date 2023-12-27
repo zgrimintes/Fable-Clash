@@ -9,8 +9,6 @@ using UnityEngine.SceneManagement;
 public class CharacterManager : AttackManager
 {
     #region All hidden pubilc variables
-    [HideInInspector] public float gravityScale = 4;
-    [HideInInspector] public float fallGravityScale = 5;
     [HideInInspector] public int mana;
     [HideInInspector] public int HP;
     [HideInInspector] public int stamina;
@@ -46,6 +44,8 @@ public class CharacterManager : AttackManager
     private float last_mist_dmg;
     private float jumpForce = 21f;
     private float scaleConstant = .3f;
+    protected float gravityScale = 4;
+    protected float fallGravityScale = 5;
 
     private float[] defaultValues = new float[10]; //For saving the default values of variables ->
                                                    // -> 0 - cooldown; 1 - na; 2 - ra; 3 - ha; 4 - ma; 5 - sa; 6 - speed
@@ -65,6 +65,9 @@ public class CharacterManager : AttackManager
 
         if (transform.localScale.x < 0) horizontalS = -1;
         else horizontalS = 1;
+
+        if (rb.velocity.y > 0) rb.gravityScale = gravityScale;
+        else rb.gravityScale = fallGravityScale;
 
         if (HP <= 0)
         {
@@ -193,9 +196,6 @@ public class CharacterManager : AttackManager
         {
             rb.velocity = new Vector2(rb.velocity.y, jumpForce);
         }
-
-        if (rb.velocity.y > 0) rb.gravityScale = gravityScale;
-        else rb.gravityScale = fallGravityScale;
     }
 
     public void take_damage(float damage)
@@ -213,7 +213,7 @@ public class CharacterManager : AttackManager
 
     public void OnParticleCollision(GameObject other) //For the damage taken by the mist created by Zmeu's MA
     {
-        if (fighterManager.name == "Zmeul") return;
+        if (fighterManager.name == "Zmeul" || fighterManager.name == "ZmeulEnemy") return;
 
         if (Time.time - last_mist_dmg > 1f)
         {
