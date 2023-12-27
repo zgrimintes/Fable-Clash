@@ -14,24 +14,23 @@ public class ChoseCharacterManager : MonoBehaviour
     public void characterChoosed(int c)
     {
         /* c is the parameter recievd from teh buttons to indicate witch character is selected
-         * first of all positive integers represent the player and ther negative pairs represent the enemy, then we have:
+         * we have:
          * 1 - Prislea, 2 - Harap-Alb, 3 - Greuceanul,
          * 4 - Spanul, 5 - Capcaunul, 6 - Zmeul,
          * 7 - Zgripturoaica, 8 - Balaurul, 9 - Crisnicul
+         * these are available to the enemy selection too
          * */
 
-        if (c > 0)
-        {
-            player.GetComponent<CharacterManager>().fighterManager = fighterManagersP[c - 1];
-            player.GetComponent<CharacterManager>().LoadPlayer(fighterManagersP[c - 1]);
-            player.GetComponent<AttackManager>().setCharacteristics();
-        }
-        else
-        {
-            enemy.GetComponent<CharacterManager>().fighterManager = fighterManagersE[Mathf.Abs(c) - 1];
-            enemy.GetComponent<CharacterManager>().LoadPlayer(fighterManagersE[Mathf.Abs(c) - 1]);
-            enemy.GetComponent<AttackManager>().setCharacteristics();
-        }
+        player.GetComponent<CharacterManager>().fighterManager = fighterManagersP[c - 1];
+        player.GetComponent<CharacterManager>().LoadPlayer(fighterManagersP[c - 1]);
+        player.GetComponent<AttackManager>().setCharacteristics();
+    }
+
+    public void enemyChoosed(int c)
+    {
+        enemy.GetComponent<CharacterManager>().fighterManager = fighterManagersE[c - 1];
+        enemy.GetComponent<CharacterManager>().LoadPlayer(fighterManagersE[c - 1]);
+        enemy.GetComponent<AttackManager>().setCharacteristics();
     }
 
     public void startGame()
