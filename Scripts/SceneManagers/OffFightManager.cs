@@ -74,14 +74,14 @@ public class OffFinghtManager : MonoBehaviour
         if (winsEnemy == 2)
         {
             button.SetActive(true);
-            scoreIndicator.text = enemy.GetComponent<CharacterManager>().fighterManager.name + " has won!";
+            scoreIndicator.text = enemy.GetComponent<CharacterManager>().fighterManager.characterName + " has won!";
             startOfFight(); //reset the rounds won by each character
             return;
         }
         else if (winsPlayer == 2)
         {
             button.SetActive(true);
-            scoreIndicator.text = player.GetComponent<CharacterManager>().fighterManager.name + " has won!";
+            scoreIndicator.text = player.GetComponent<CharacterManager>().fighterManager.characterName + " has won!";
             startOfFight(); //reset the rounds won by each character
             return;
         }
