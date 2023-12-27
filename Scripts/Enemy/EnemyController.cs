@@ -53,6 +53,8 @@ public class EnemyController : CharacterManager
         base.Update();
         stateMachine.CurrentEnemyState.FrameUpdate();
 
+        if (transform.position.x - playerInstance.transform.position.x > 10f || transform.position.x - playerInstance.transform.position.x < -10f) tryDash();
+
         if (transform.position.x > playerInstance.transform.position.x && transform.localScale.x > 0) transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y);
         else if (transform.position.x < playerInstance.transform.position.x && transform.localScale.x < 0) transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y);
 
@@ -75,5 +77,15 @@ public class EnemyController : CharacterManager
     {
         if (Physics2D.BoxCast(transform.position + new Vector3(0, 3, 0), new Vector2(.2f, .2f), 0, Vector2.up, .1f, enemyLayer) && !isDashing)
             StartCoroutine(Dashh());
+    }
+
+    protected void tryDash()
+    {
+        if (isDashing || !canAttack) return;
+
+        if (Random.Range(0, 1000) <= 1) //Added a chance to dash to you
+        {
+            StartCoroutine(Dashh());
+        }
     }
 }
