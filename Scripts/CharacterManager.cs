@@ -16,6 +16,9 @@ public class CharacterManager : AttackManager
     [HideInInspector] public string _ch_name;
     [HideInInspector] public float cooldown;
     [HideInInspector] public float lastAttack;
+    [HideInInspector] public float jumpForce = 21f;
+    [HideInInspector] public float fallGravityScale = 5;
+    [HideInInspector] public float gravityScale = 4;
     [HideInInspector] public float horizontalS; //Save the last looking direction
     [HideInInspector] public bool attackDir; //The direction from where the charater was attacked: FALSE meaning from LEFT and TRUE meaning from RIGHT
     [HideInInspector] public float timeSinceTapped;
@@ -43,10 +46,7 @@ public class CharacterManager : AttackManager
     float _SA_dmg;
 
     private float last_mist_dmg;
-    private float jumpForce = 21f;
     private float scaleConstant = .3f;
-    protected float gravityScale = 4;
-    protected float fallGravityScale = 5;
 
     private float[] defaultValues = new float[10]; //For saving the default values of variables ->
                                                    // -> 0 - cooldown; 1 - na; 2 - ra; 3 - ha; 4 - ma; 5 - sa; 6 - speed; 7 - timeToGetRidOfEffects
@@ -62,11 +62,6 @@ public class CharacterManager : AttackManager
 
     protected override void Update()
     {
-        if (fighterManager.characterName == "HarapAlb")
-        {
-            Debug.Log(_NA_dmg + " " + _HA_dmg + " " + _RA_dmg + " " + timeToGetRidOfEffects);
-        }
-
         base.Update();
 
         if (transform.localScale.x < 0) horizontalS = -1;
