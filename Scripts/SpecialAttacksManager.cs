@@ -42,6 +42,32 @@ public class SpecialAttacksManager : MonoBehaviour
         StartCoroutine(charge(dir));
     }
 
+    public void HarapAlb_SA(GameObject character)
+    {
+        GetComponent<CharacterManager>().jumpForce = 25f;
+        GetComponent<CharacterManager>().fallGravityScale = 17f;
+        GetComponent<CharacterManager>().Jump();
+        StartCoroutine(fallLunge(character));
+    }
+
+    public IEnumerator fallLunge(GameObject character)
+    {
+        while (character.GetComponent<CharacterManager>().rb.velocity.y > 0)
+        {
+            yield return 0;
+        }
+
+        while (character.GetComponent<CharacterManager>().rb.velocity.y < 0)
+        {
+            yield return 0;
+        }
+
+        character.GetComponent<CharacterManager>().jumpForce = 21f;
+        character.GetComponent<CharacterManager>().fallGravityScale = 5f;
+
+        attackManager.checkForColls(transform.position, 5f, 0);
+    }
+
     public IEnumerator charge(float dir)
     {
         float speed = 0.001f;
@@ -52,7 +78,7 @@ public class SpecialAttacksManager : MonoBehaviour
             yield return null;
         }
 
-        attackManager.checkForColls(transform.position, 3.5f);
+        attackManager.checkForColls(transform.position, 3.3f, 0);
     }
 
     public IEnumerator fly(GameObject wp)
