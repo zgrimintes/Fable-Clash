@@ -28,6 +28,7 @@ public class CharacterManager : AttackManager
     [HideInInspector] public bool isGrounded; //To check if the player touches the ground
     [HideInInspector] public Sprite sprite; //To set the sprite of the character
     [HideInInspector] public bool hasLost = false;
+    [HideInInspector] public float timeToGetRidOfEffects;
     #endregion
 
     public FighterManager fighterManager;
@@ -48,7 +49,7 @@ public class CharacterManager : AttackManager
     protected float fallGravityScale = 5;
 
     private float[] defaultValues = new float[10]; //For saving the default values of variables ->
-                                                   // -> 0 - cooldown; 1 - na; 2 - ra; 3 - ha; 4 - ma; 5 - sa; 6 - speed
+                                                   // -> 0 - cooldown; 1 - na; 2 - ra; 3 - ha; 4 - ma; 5 - sa; 6 - speed; 7 - timeToGetRidOfEffects
     private float[] inflictedTime = new float[10]; //For saving the time when the effect was inflicted -^
     private bool[] hasEffects = { false, false, false, false, false, false, false, false, false, false }; //For indicating when an individual has effects
     protected override void Start()
@@ -61,6 +62,11 @@ public class CharacterManager : AttackManager
 
     protected override void Update()
     {
+        if (fighterManager.characterName == "HarapAlb")
+        {
+            Debug.Log(_NA_dmg + " " + _HA_dmg + " " + _RA_dmg + " " + timeToGetRidOfEffects);
+        }
+
         base.Update();
 
         if (transform.localScale.x < 0) horizontalS = -1;
@@ -98,6 +104,7 @@ public class CharacterManager : AttackManager
         stamina = data.stamina;
         _ch_name = data.characterName;
         sprite = data.sprite;
+        timeToGetRidOfEffects = data.timeToGetRidOfEffects; defaultValues[7] = timeToGetRidOfEffects;
 
         if (gameObject.name == "Player") enemy = GameObject.FindGameObjectWithTag("Enemy");
         else enemy = GameObject.FindGameObjectWithTag("Player");
@@ -149,12 +156,22 @@ public class CharacterManager : AttackManager
             inflictedTime[effect - 1] = Time.time;
             hasEffects[effect - 1] = true;
         }
+
         switch (effect)
         {
             case 0:
                 break;
             case 1:
                 cooldown += 1f;
+                break;
+            case 2:
+                _NA_dmg *= 2;
+                break;
+            case 3:
+                _HA_dmg *= 2;
+                break;
+            case 4:
+                _RA_dmg *= 2;
                 break;
         }
     }
@@ -163,7 +180,7 @@ public class CharacterManager : AttackManager
     {
         for (int i = 0; i < 10; i++)
         {
-            if (Time.time - inflictedTime[i] > 2f)
+            if (Time.time - inflictedTime[i] > timeToGetRidOfEffects)
             {
                 switch (i)
                 {
@@ -172,8 +189,14 @@ public class CharacterManager : AttackManager
                         break;
                     case 1:
                         _NA_dmg = defaultValues[i];
+                        timeToGetRidOfEffects = defaultValues[7]; //For HarapAlb's MA
                         break;
-                        //Fortsette senere
+                    case 2:
+                        _HA_dmg = defaultValues[i];
+                        break;
+                    case 3:
+                        _RA_dmg = defaultValues[i];
+                        break;
                 }
                 hasEffects[i] = false;
             }
