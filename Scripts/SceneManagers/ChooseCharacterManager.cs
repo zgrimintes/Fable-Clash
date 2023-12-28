@@ -39,6 +39,7 @@ public class ChoseCharacterManager : MonoBehaviour
             enemy.GetComponent<CharacterManager>().fighterManager = fighterManagersE[c - 1];
             enemy.GetComponent<CharacterManager>().LoadPlayer(fighterManagersE[c - 1]);
             enemy.GetComponent<AttackManager>().setCharacteristics();
+            enemy.GetComponent<EnemyController>().choseAIScript();
         }
         showInfo(c, 'e');
     }
