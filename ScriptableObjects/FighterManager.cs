@@ -14,6 +14,7 @@ public class FighterManager : ScriptableObject
     public string characterName;
     public int roundsWon;
     public Sprite sprite;
+    public float timeToGetRidOfEffects;
 
     public void ranged_Attack(GameObject parent)
     {
