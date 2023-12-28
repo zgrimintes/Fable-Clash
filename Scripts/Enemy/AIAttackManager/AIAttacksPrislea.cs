@@ -9,11 +9,23 @@ public class AIAttacksPrislea : MonoBehaviour
     GameObject playerInstance;
 
     float[] attacks = new float[5];
+    float[] allAttacks = new float[3000]; //For storing all attacks made by that character
+    int indxAttacks = 0;
 
     public void Start()
     {
         enemyController = GetComponent<EnemyController>();
         playerInstance = enemyController.playerInstance;
+    }
+
+    public void OnEnable()
+    {
+        //Reset the attacks log
+        indxAttacks = 0;
+        for (int i = 0; i < allAttacks.Length; i++)
+        {
+            allAttacks[i] = 0;
+        }
     }
 
     public void Update()
@@ -105,6 +117,19 @@ public class AIAttacksPrislea : MonoBehaviour
             attacks[4] += .1f;
         }
     }
+
+    protected void checkPreviousAttacks(int attackMade) //For reducing the "spam an attack"
+    {
+        if (attackMade == allAttacks[indxAttacks - 1])
+        {
+            if (indxAttacks >= 2 && allAttacks[indxAttacks - 1] == allAttacks[indxAttacks - 2])
+            {
+                attacks[attackMade] -= Random.Range(0, .7f);
+            }
+            else if (Random.Range(0, 4) <= 1) attacks[attackMade] -= .3f;
+        }
+    }
+
 
     private void chooseAttack() //For choosing the optimal attack in that frame
     {
