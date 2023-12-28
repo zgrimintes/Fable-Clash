@@ -10,11 +10,27 @@ public class AIAttacksZmeu : MonoBehaviour
     GameObject playerInstance;
 
     float[] attacks = new float[5];
+    float[] allAttacks = new float[3000]; //For storing all attacks made by that character
+    int indxAttacks = 0;
+    int chanceToStartDashing; //For diversifying the start of the round against Zmeul
 
     public void Start()
     {
         enemyController = GetComponent<EnemyController>();
         playerInstance = enemyController.playerInstance;
+    }
+
+    public void OnEnable()
+    {
+        chanceToStartDashing = Random.Range(0, 3);
+        Debug.Log(chanceToStartDashing);
+
+        //Reset the attacks log
+        indxAttacks = 0;
+        for (int i = 0; i < allAttacks.Length; i++)
+        {
+            allAttacks[i] = 0;
+        }
     }
 
     public void Update()
@@ -33,6 +49,22 @@ public class AIAttacksZmeu : MonoBehaviour
         checkMana();
 
         chooseAttack();
+    }
+
+    protected void checkPreviousAttacks(int attackMade) //For reducing the "spam an attack"
+    {
+        if (indxAttacks == 0)
+        {
+            if (chanceToStartDashing < 1) attacks[4] = 0;
+        }
+        else if (attackMade == allAttacks[indxAttacks - 1])
+        {
+            if (indxAttacks >= 2 && allAttacks[indxAttacks - 1] == allAttacks[indxAttacks - 2])
+            {
+                attacks[attackMade] -= Random.Range(0, .7f);
+            }
+            else if (Random.Range(0, 4) <= 1) attacks[attackMade] -= .3f;
+        }
     }
 
     protected void checkIfInFront()
@@ -82,16 +114,16 @@ public class AIAttacksZmeu : MonoBehaviour
 
     protected void checkStamina()
     {
-        if (enemyController.stamina == 1) { attacks[2] += .2f; attacks[1] = 0; }
+        if (enemyController.stamina == 1) { attacks[2] += .2f; attacks[1] = -1; }
         else if (enemyController.stamina >= 2) { attacks[1] += .2f; attacks[2] -= .1f; }
-        else attacks[1] = attacks[2] = 0;
+        else attacks[1] = attacks[2] = -1;
     }
 
     protected void checkMana()
     {
-        if (enemyController.mana == 2) { attacks[3] += .2f; attacks[4] = 0; }
+        if (enemyController.mana == 2) { attacks[3] += .2f; attacks[4] = -1; }
         else if (enemyController.mana >= 3) { attacks[3] += .1f; attacks[4] += .35f; }
-        else if (enemyController.mana < 2) attacks[3] = attacks[4] = 0;
+        else if (enemyController.mana < 2) attacks[3] = attacks[4] = -1;
     }
 
     protected void checkYAxis()
@@ -117,6 +149,7 @@ public class AIAttacksZmeu : MonoBehaviour
             }
         }
 
+        checkPreviousAttacks(_indx_max);
         Attack(_indx_max + 1);
     }
 
