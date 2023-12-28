@@ -128,6 +128,9 @@ public class AttackManager : MonoBehaviour
             case "Zmeul":
                 magicAbilitiesManager.Zmeul_MA();
                 break;
+            case "HarapAlb":
+                magicAbilitiesManager.HarapAlb_MA();
+                break;
         }
     }
 
