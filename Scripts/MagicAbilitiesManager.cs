@@ -25,4 +25,15 @@ public class MagicAbilitiesManager : MonoBehaviour
     {
         Instantiate(Mist, new Vector3(transform.position.x + (GetComponent<CharacterManager>().horizontalS * 5), -2f), Quaternion.identity);
     }
+
+    public void HarapAlb_MA()
+    {
+        //Take more time for effects to go out
+        GetComponent<CharacterManager>().timeToGetRidOfEffects = 3f;
+
+        //Double attacks
+        gameObject.GetComponent<CharacterManager>().applyEfects(2);
+        gameObject.GetComponent<CharacterManager>().applyEfects(3);
+        gameObject.GetComponent<CharacterManager>().applyEfects(4);
+    }
 }
