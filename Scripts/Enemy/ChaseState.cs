@@ -33,7 +33,7 @@ public class ChaseState : EnemyState
             stateMachine.Change(enemy.waitState);
         }
 
-        enemy.MoveEnemy(new Vector2(enemy.playerInstance.transform.position.x - enemy.transform.position.x, 0).normalized * (enemy.speed / 2));
+        enemy.MoveEnemy(new Vector2(enemy.playerInstance.transform.position.x - enemy.transform.position.x, enemy.rb.velocity.y).normalized * (enemy.speed / 2));
     }
 
     public override void PhysicsUpdate()
