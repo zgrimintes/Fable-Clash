@@ -146,6 +146,9 @@ public class AttackManager : MonoBehaviour
             case "Zmeul":
                 specialAttacksManager.Zmeul_SA(GetComponent<CharacterManager>().horizontalS);
                 break;
+            case "HarapAlb":
+                specialAttacksManager.HarapAlb_SA(gameObject);
+                break;
         }
     }
 
