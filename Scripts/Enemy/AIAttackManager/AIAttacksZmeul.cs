@@ -23,7 +23,6 @@ public class AIAttacksZmeu : MonoBehaviour
     public void OnEnable()
     {
         chanceToStartDashing = Random.Range(0, 3);
-        Debug.Log(chanceToStartDashing);
 
         //Reset the attacks log
         indxAttacks = 0;
