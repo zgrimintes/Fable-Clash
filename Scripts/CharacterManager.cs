@@ -163,10 +163,10 @@ public class CharacterManager : AttackManager
                 _NA_dmg *= 2;
                 break;
             case 3:
-                _HA_dmg *= 2;
+                _HA_dmg += 1;
                 break;
             case 4:
-                _RA_dmg *= 2;
+                _RA_dmg += 1;
                 break;
         }
     }
