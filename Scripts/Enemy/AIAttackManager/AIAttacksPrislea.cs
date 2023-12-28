@@ -96,16 +96,16 @@ public class AIAttacksPrislea : MonoBehaviour
 
     protected void checkStamina()
     {
-        if (enemyController.stamina == 1) { attacks[2] += .2f; attacks[1] = 0; }
+        if (enemyController.stamina == 1) { attacks[2] += .2f; attacks[1] = -1; }
         else if (enemyController.stamina >= 2) { attacks[1] += .2f; attacks[2] -= .1f; }
-        else attacks[1] = attacks[2] = 0;
+        else attacks[1] = attacks[2] = -1;
     }
 
     protected void checkMana()
     {
-        if (enemyController.mana == 2) { attacks[3] += .2f; attacks[4] = 0; }
+        if (enemyController.mana == 2) { attacks[3] += .2f; attacks[4] = -1; }
         else if (enemyController.mana >= 3) { attacks[3] += .1f; attacks[4] += .35f; }
-        else if (enemyController.mana < 2) attacks[3] = attacks[4] = 0;
+        else if (enemyController.mana < 2) attacks[3] = attacks[4] = -1;
     }
 
     protected void checkYAxis()
