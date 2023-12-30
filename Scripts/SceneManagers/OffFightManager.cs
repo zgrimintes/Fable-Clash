@@ -97,6 +97,8 @@ public class OffFinghtManager : MonoBehaviour
 
     public void rematch()
     {
+        resetEnvironment();
+
         scoreIndicator.enabled = false;
         countdown.text = "3";
         countdown.enabled = true;
@@ -105,11 +107,21 @@ public class OffFinghtManager : MonoBehaviour
         //Reset the stats, position and effects of both characters
         enemy.GetComponent<CharacterManager>().startFight();
         enemy.transform.position = new Vector2(10.58f, -.5f);
+        enemy.transform.localScale = new Vector2(-enemy.transform.localScale.x, enemy.transform.localScale.y);
+        enemy.GetComponent<CharacterManager>().rb.velocity = Vector3.zero;
 
         player.GetComponent<CharacterManager>().startFight();
         player.transform.position = new Vector2(-10.58f, -.5f);
+        player.transform.localScale = new Vector2(player.transform.localScale.x, player.transform.localScale.y);
+        player.GetComponent<CharacterManager>().rb.velocity = Vector3.zero;
 
         GameManager.Instance.updateGameState(GameStates.Fight);
+    }
+
+    public void resetEnvironment()
+    {
+        GameObject darkMist = GameObject.Find("DarkMist(Clone)");
+        if (darkMist != null) Destroy(darkMist);
     }
 
     public void startFight()
