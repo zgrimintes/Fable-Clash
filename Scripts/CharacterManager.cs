@@ -34,6 +34,7 @@ public class CharacterManager : AttackManager
     [HideInInspector] public float timeToGetRidOfEffects;
     #endregion
 
+    public GameObject popUpTextPrefab;
     public FighterManager fighterManager;
     public GameObject textPrfb;
     public LayerMask layer;
@@ -134,6 +135,24 @@ public class CharacterManager : AttackManager
         }
     }
 
+    public void popUpText(string txt)
+    {
+        GameObject clone = Instantiate(popUpTextPrefab, transform.position, Quaternion.identity);
+
+        switch (txt)
+        {
+            case "0":
+                Destroy(clone);
+                break;
+            case "effect":
+                break;
+            default:
+                clone.GetComponentInChildren<TextMeshProUGUI>().text = "-" + txt;
+                clone.GetComponentInChildren<TextMeshProUGUI>().color = Color.red;
+                break;
+        }
+    }
+
     public void startFight()
     {
         getRidOfAllEffects();
@@ -219,6 +238,11 @@ public class CharacterManager : AttackManager
 
     public void take_damage(float damage)
     {
+        //Some visual effects
+        popUpText(damage.ToString());
+        //set the color
+
+        //The logic stuff
         isKnockback = true;
         attackDir = calculateAttackingDir();
         fighterManager.take_damage(gameObject, (int)damage);
