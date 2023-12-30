@@ -13,6 +13,7 @@ public class AIAttacksZmeu : MonoBehaviour
     float[] allAttacks = new float[3000]; //For storing all attacks made by that character
     int indxAttacks = 0;
     int chanceToStartDashing; //For diversifying the start of the round against Zmeul
+    bool hasNotAttacked = true;
 
     public void Start()
     {
@@ -47,7 +48,7 @@ public class AIAttacksZmeu : MonoBehaviour
         checkStamina();
         checkMana();
 
-        chooseAttack();
+        if (hasNotAttacked) chooseAttack();
     }
 
     protected void checkPreviousAttacks(int attackMade) //For reducing the "spam an attack"
@@ -136,8 +137,11 @@ public class AIAttacksZmeu : MonoBehaviour
 
     private void chooseAttack() //For choosing the optimal attack in that frame
     {
+        hasNotAttacked = false;
+
         float _max_flt = 0;
         int _indx_max = -1;
+        checkPreviousAttacks(_indx_max);
 
         for (int i = 0; i < 5; i++)
         {
@@ -148,7 +152,7 @@ public class AIAttacksZmeu : MonoBehaviour
             }
         }
 
-        checkPreviousAttacks(_indx_max);
+        allAttacks[indxAttacks++] = _indx_max; //Add the made attack
         Attack(_indx_max + 1);
     }
 
@@ -172,5 +176,7 @@ public class AIAttacksZmeu : MonoBehaviour
                 gameObject.GetComponent<CharacterManager>().try_SA();
                 break;
         }
+
+        hasNotAttacked = true;
     }
 }
