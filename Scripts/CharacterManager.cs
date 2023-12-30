@@ -52,6 +52,7 @@ public class CharacterManager : AttackManager
                                                    // -> 0 - cooldown; 1 - na; 2 - ra; 3 - ha; 4 - ma; 5 - sa; 6 - speed; 7 - timeToGetRidOfEffects
     private float[] inflictedTime = new float[10]; //For saving the time when the effect was inflicted -^
     private bool[] hasEffects = { false, false, false, false, false, false, false, false, false, false }; //For indicating when an individual has effects
+
     protected override void Start()
     {
         base.Start();
@@ -161,12 +162,12 @@ public class CharacterManager : AttackManager
                 break;
             case 2:
                 _NA_dmg *= 2;
+                _HA_dmg += 1;
+                _RA_dmg += 1;
                 break;
             case 3:
-                _HA_dmg += 1;
                 break;
             case 4:
-                _RA_dmg += 1;
                 break;
         }
     }
@@ -184,13 +185,13 @@ public class CharacterManager : AttackManager
                         break;
                     case 1:
                         _NA_dmg = defaultValues[i];
+                        _HA_dmg = defaultValues[i];
+                        _RA_dmg = defaultValues[i];
                         timeToGetRidOfEffects = defaultValues[7]; //For HarapAlb's MA
                         break;
                     case 2:
-                        _HA_dmg = defaultValues[i];
                         break;
                     case 3:
-                        _RA_dmg = defaultValues[i];
                         break;
                 }
                 hasEffects[i] = false;
