@@ -112,7 +112,8 @@ public class OffFinghtManager : MonoBehaviour
 
         player.GetComponent<CharacterManager>().startFight();
         player.transform.position = new Vector2(-10.58f, -.5f);
-        player.transform.localScale = new Vector2(player.transform.localScale.x, player.transform.localScale.y);
+        player.transform.localScale = new Vector2(Mathf.Abs(player.transform.localScale.x), player.transform.localScale.y);
+        player.GetComponent<CharacterManager>().horizontalS = 1;
         player.GetComponent<CharacterManager>().rb.velocity = Vector3.zero;
 
         GameManager.Instance.updateGameState(GameStates.Fight);
