@@ -31,9 +31,7 @@ public class MagicAbilitiesManager : MonoBehaviour
         //Take more time for effects to go out
         GetComponent<CharacterManager>().timeToGetRidOfEffects = 3f;
 
-        //Double attacks
+        //Double dmg attacks
         gameObject.GetComponent<CharacterManager>().applyEfects(2);
-        gameObject.GetComponent<CharacterManager>().applyEfects(3);
-        gameObject.GetComponent<CharacterManager>().applyEfects(4);
     }
 }
