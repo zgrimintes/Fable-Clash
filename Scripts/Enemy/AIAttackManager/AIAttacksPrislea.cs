@@ -11,6 +11,7 @@ public class AIAttacksPrislea : MonoBehaviour
     float[] attacks = new float[5];
     float[] allAttacks = new float[3000]; //For storing all attacks made by that character
     int indxAttacks = 0;
+    bool hasNotAttacked = true;
 
     public void Start()
     {
@@ -43,7 +44,7 @@ public class AIAttacksPrislea : MonoBehaviour
         checkStamina();
         checkVelocity();
 
-        chooseAttack();
+        if (hasNotAttacked) chooseAttack();
     }
 
     protected void checkVelocity()
@@ -118,23 +119,25 @@ public class AIAttacksPrislea : MonoBehaviour
         }
     }
 
-    protected void checkPreviousAttacks(int attackMade) //For reducing the "spam an attack"
+    protected void checkPreviousAttacks() //For reducing the "spam an attack"
     {
-        if (attackMade == allAttacks[indxAttacks - 1])
+        if (indxAttacks > 0) //First check if there have been attacks
         {
-            if (indxAttacks >= 2 && allAttacks[indxAttacks - 1] == allAttacks[indxAttacks - 2])
-            {
-                attacks[attackMade] -= Random.Range(0, .7f);
-            }
-            else if (Random.Range(0, 4) <= 1) attacks[attackMade] -= .3f;
+            if (indxAttacks > 1 && allAttacks[indxAttacks] == allAttacks[indxAttacks - 1]) //Then if the last two attacks were the same reduce the chance of it happening again
+                attacks[(int)allAttacks[indxAttacks]] -= Random.Range(0, 1);
+            else
+                 if (Random.Range(0, 4) <= 1) attacks[(int)allAttacks[indxAttacks]] -= .25f;
         }
     }
 
 
     private void chooseAttack() //For choosing the optimal attack in that frame
     {
+        hasNotAttacked = false;
+
         float _max_flt = 0;
         int _indx_max = -1;
+        checkPreviousAttacks();
 
         for (int i = 0; i < 5; i++)
         {
@@ -145,6 +148,7 @@ public class AIAttacksPrislea : MonoBehaviour
             }
         }
 
+        allAttacks[indxAttacks++] = _indx_max;
         Attack(_indx_max + 1);
     }
 
@@ -168,5 +172,7 @@ public class AIAttacksPrislea : MonoBehaviour
                 gameObject.GetComponent<CharacterManager>().try_SA();
                 break;
         }
+
+        hasNotAttacked = true;
     }
 }
