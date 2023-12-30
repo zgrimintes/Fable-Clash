@@ -58,13 +58,11 @@ public class AIAttacksHarapAlb : MonoBehaviour
         {
             //if (chanceToStartDashing < 1) attacks[4] = 0;
         }
-        else if (attackMade == allAttacks[indxAttacks - 1])
+        else //If there has been at least one attack
         {
-            if (indxAttacks >= 2 && allAttacks[indxAttacks - 1] == allAttacks[indxAttacks - 2])
-            {
-                attacks[attackMade] -= Random.Range(0, .7f);
-            }
-            else if (Random.Range(0, 4) <= 1) attacks[attackMade] -= .3f;
+            if (indxAttacks > 1 && allAttacks[indxAttacks] == allAttacks[indxAttacks - 1]) //Then if the last two attacks were the same reduce the chance of it happening again
+                attacks[(int)allAttacks[indxAttacks]] -= Random.Range(0, 1);
+            else if (Random.Range(0, 4) <= 1) attacks[(int)allAttacks[indxAttacks]] -= .25f;
         }
     }
 
