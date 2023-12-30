@@ -39,7 +39,9 @@ public class SpecialAttacksManager : MonoBehaviour
 
     public void Zmeul_SA(float dir)
     {
+        if (gameObject.name == "Enemy") GetComponent<EnemyController>().isSpecial = true;
         StartCoroutine(charge(dir));
+
     }
 
     public void HarapAlb_SA(GameObject character)
@@ -78,6 +80,7 @@ public class SpecialAttacksManager : MonoBehaviour
             yield return null;
         }
 
+        if (gameObject.name == "Enemy") GetComponent<EnemyController>().isSpecial = false;
         attackManager.checkForColls(transform.position, 3.3f, 0);
     }
 
