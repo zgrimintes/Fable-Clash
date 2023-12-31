@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerManager : CharacterManager
 {
@@ -35,6 +36,12 @@ public class PlayerManager : CharacterManager
             rb.velocity = new Vector2(movement2.x * 2.5f, movement2.y);
             StartCoroutine(Knockback());
         }
+    }
+
+    public void changeIcon()
+    {
+        GameObject iconP = GameObject.Find("CharacterIconPlayer");//Set the icon in UI
+        iconP.GetComponent<Image>().sprite = icon;
     }
 
     private int getKnHor()
