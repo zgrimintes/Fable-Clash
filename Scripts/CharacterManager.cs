@@ -34,6 +34,10 @@ public class CharacterManager : AttackManager
     [HideInInspector] public float timeToGetRidOfEffects;
     #endregion
 
+    public BarsManager healthBar;
+    public BarsManager manaBar;
+    public BarsManager staminaBar;
+    //public BarsManager healthBar;
     public GameObject popUpTextPrefab;
     public FighterManager fighterManager;
     public GameObject textPrfb;
@@ -59,6 +63,11 @@ public class CharacterManager : AttackManager
         base.Start();
 
         LoadPlayer(fighterManager);
+
+        if (healthBar != null) healthBar.setMaxValue(HP);
+        if (healthBar != null) manaBar.setMaxValue(mana);
+        if (healthBar != null) staminaBar.setMaxValue(stamina);
+
         updateText();
     }
 
@@ -110,9 +119,15 @@ public class CharacterManager : AttackManager
         gameObject.transform.localScale = new Vector2(scaleConstant, scaleConstant);
     }
 
-    public void updateText()
+    public void updateText() //Sould be called updateBars 
     {
-        string hName = "HealthP", mName = "ManaP ", sName = "StaminaP";
+        if (healthBar != null) healthBar.setValue(HP);
+        if (healthBar != null) manaBar.setValue(mana);
+        if (healthBar != null) staminaBar.setValue(stamina);
+        //if (healthBar != null) healthBar.setValue(HP);
+
+        //There is no use for text since now all stats are shown up on bars
+        /*string hName = "HealthP", mName = "ManaP ", sName = "StaminaP";
         if (gameObject.name == "Enemy")
         {
             hName = "HealthE";
@@ -132,7 +147,7 @@ public class CharacterManager : AttackManager
                 child.text = "Mana: " + mana;
             else if (child.name == sName)
                 child.text = "Stamina: " + stamina;
-        }
+        }*/
     }
 
     public void popUpText(string txt)
