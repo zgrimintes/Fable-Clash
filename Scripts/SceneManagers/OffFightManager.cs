@@ -12,6 +12,7 @@ public class OffFinghtManager : MonoBehaviour
     GameObject enemy, player;
 
     public GameObject button;
+    public GameObject roundsWonTextP, roundsWonTextE;
 
     private void Awake()
     {
@@ -75,6 +76,7 @@ public class OffFinghtManager : MonoBehaviour
         {
             button.SetActive(true);
             scoreIndicator.text = enemy.GetComponent<CharacterManager>().fighterManager.characterName + " has won!";
+            roundsWonTextE.GetComponent<TextMeshProUGUI>().text = "2";
             startOfFight(); //reset the rounds won by each character
             return;
         }
@@ -82,6 +84,7 @@ public class OffFinghtManager : MonoBehaviour
         {
             button.SetActive(true);
             scoreIndicator.text = player.GetComponent<CharacterManager>().fighterManager.characterName + " has won!";
+            roundsWonTextP.GetComponent<TextMeshProUGUI>().text = "2";
             startOfFight(); //reset the rounds won by each character
             return;
         }
