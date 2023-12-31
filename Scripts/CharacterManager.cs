@@ -138,6 +138,7 @@ public class CharacterManager : AttackManager
     public void popUpText(string txt)
     {
         GameObject clone = Instantiate(popUpTextPrefab, transform.position, Quaternion.identity);
+        clone.GetComponent<SignalTurnBackColor>().character = gameObject;
 
         switch (txt)
         {
@@ -240,6 +241,7 @@ public class CharacterManager : AttackManager
     {
         //Some visual effects
         popUpText(damage.ToString());
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 0.4941176f, 0.4941176f, 1f);
         //set the color
 
         //The logic stuff
@@ -247,6 +249,11 @@ public class CharacterManager : AttackManager
         attackDir = calculateAttackingDir();
         fighterManager.take_damage(gameObject, (int)damage);
         updateText();
+    }
+
+    public void turnBackColor()
+    {
+        GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
     }
 
     private bool calculateAttackingDir()
