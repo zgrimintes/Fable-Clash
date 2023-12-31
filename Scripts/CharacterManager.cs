@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking.Types;
 using UnityEngine.SceneManagement;
@@ -30,6 +31,7 @@ public class CharacterManager : AttackManager
     [HideInInspector] public bool isKnockback = false;
     [HideInInspector] public bool isGrounded; //To check if the player touches the ground
     [HideInInspector] public Sprite sprite; //To set the sprite of the character
+    [HideInInspector] public Sprite icon; //To set the icon of the character
     [HideInInspector] public bool hasLost = false;
     [HideInInspector] public float timeToGetRidOfEffects;
     #endregion
@@ -38,6 +40,7 @@ public class CharacterManager : AttackManager
     public BarsManager manaBar;
     public BarsManager staminaBar;
     //public BarsManager healthBar;
+    public GameObject roundsWonText;
     public GameObject popUpTextPrefab;
     public FighterManager fighterManager;
     public GameObject textPrfb;
@@ -110,6 +113,7 @@ public class CharacterManager : AttackManager
         stamina = data.stamina;
         _ch_name = data.characterName;
         sprite = data.sprite;
+        icon = data.characterIcon;
         timeToGetRidOfEffects = data.timeToGetRidOfEffects; defaultValues[7] = timeToGetRidOfEffects;
 
         if (gameObject.name == "Player") enemy = GameObject.FindGameObjectWithTag("Enemy");
@@ -171,11 +175,17 @@ public class CharacterManager : AttackManager
 
     public void startFight()
     {
+        //Reset all stats
         getRidOfAllEffects();
         fighterManager.startOfFight();
         HP = fighterManager.HP;
         stamina = fighterManager.stamina;
         mana = fighterManager.mana;
+
+        //Update score
+        roundsWonText.GetComponent<TextMeshProUGUI>().text = fighterManager.roundsWon.ToString();
+
+        //Update the rest of the stuffs
         updateText();
         hasLost = false;
     }
