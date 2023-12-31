@@ -67,6 +67,7 @@ public class SpecialAttacksManager : MonoBehaviour
         character.GetComponent<CharacterManager>().jumpForce = 21f;
         character.GetComponent<CharacterManager>().fallGravityScale = 5f;
 
+        attackManager.dmg = 4;
         attackManager.checkForColls(transform.position, 5f, 0);
     }
 
