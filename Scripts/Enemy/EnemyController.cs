@@ -4,6 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyController : CharacterManager
 {
@@ -50,6 +51,9 @@ public class EnemyController : CharacterManager
 
     public void choseAIScript()
     {
+        GameObject iconE = GameObject.Find("CharacterIconEnemy");//Set the icon in UI
+        iconE.GetComponent<Image>().sprite = icon;
+
         GetComponent<AIAttacksPrislea>().enabled = (prisleaAI.nameToHave == _ch_name);
         GetComponent<AIAttacksZmeu>().enabled = (zmeuAI.nameToHave == _ch_name);
         GetComponent<AIAttacksHarapAlb>().enabled = (harapalbAI.nameToHave == _ch_name);
