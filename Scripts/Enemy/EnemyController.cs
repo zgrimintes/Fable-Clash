@@ -8,9 +8,9 @@ using UnityEngine;
 public class EnemyController : CharacterManager
 {
     #region References to AI scritps
-    public AIAttacksZmeu zmeuAI;
-    public AIAttacksPrislea prisleaAI;
-    public AIAttacksHarapAlb harapalbAI;
+    [HideInInspector] public AIAttacksZmeu zmeuAI;
+    [HideInInspector] public AIAttacksPrislea prisleaAI;
+    [HideInInspector] public AIAttacksHarapAlb harapalbAI;
     #endregion
 
     public GameObject playerInstance;
@@ -18,6 +18,7 @@ public class EnemyController : CharacterManager
     public bool canAttack = false;
     public bool isAbove = false;
     [HideInInspector] public bool isJumping = false; //Remove if not use later
+    [HideInInspector] public bool isSpecial = false;
 
     #region State Machine Variables
 
@@ -92,9 +93,10 @@ public class EnemyController : CharacterManager
 
     protected void tryDash()
     {
+        if (isSpecial) return;
         if (isDashing || !canAttack) return; //Don't try if you are not allowed
 
-        if ((int)Random.Range(0, 1000) <= 2) //Added a chance to dash to you
+        if ((int)Random.Range(0, 550) <= 2) //Added a chance to dash to you
         {
             StartCoroutine(Dashh());
         }
@@ -104,8 +106,8 @@ public class EnemyController : CharacterManager
     {
         if (isDashing || !canAttack) return;
 
-        int r = (int)Random.Range(0, 1000);
-        if (r <= 1)
+        int r = (int)Random.Range(0, 550);
+        if (r <= 2)
         {
             Jump();
             StartCoroutine(Dashh());
