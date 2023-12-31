@@ -27,6 +27,7 @@ public class ChoseCharacterManager : MonoBehaviour
             player.GetComponent<CharacterManager>().fighterManager = fighterManagersP[c - 1];
             player.GetComponent<CharacterManager>().LoadPlayer(fighterManagersP[c - 1]);
             player.GetComponent<AttackManager>().setCharacteristics();
+            player.GetComponent<PlayerManager>().changeIcon();
         }
 
         showInfo(c, 'p');
