@@ -52,6 +52,34 @@ public class SpecialAttacksManager : MonoBehaviour
         StartCoroutine(fallLunge(character));
     }
 
+    public void Spinul_SA()
+    {
+        GetComponent<CharacterManager>().speed -= 6f;
+        GetComponent<CharacterManager>().canDash = false;
+        Debug.Log("Start Rotating");
+        StartCoroutine(rotate());
+    }
+
+    public IEnumerator rotate()
+    {
+        float startTime = Time.time;
+        while (Time.time - startTime < 5f && !enemy.GetComponent<CharacterManager>().hasLost)
+        {
+            if (Physics2D.CircleCast(transform.position, 2.5f, Vector2.zero, 0, layer))
+            {
+                GetComponent<CharacterManager>().isKnockback = true;
+                StartCoroutine(GetComponent<CharacterManager>().Knockback());
+                attackManager.checkForColls(transform.position, 2.5f, 0);
+                yield return new WaitForSeconds(.5f);
+            }
+            yield return 0;
+        }
+
+        Debug.Log("Finish Rotating");
+        GetComponent<CharacterManager>().speed += 6;
+        GetComponent<CharacterManager>().canDash = true;
+    }
+
     public IEnumerator fallLunge(GameObject character)
     {
         while (character.GetComponent<CharacterManager>().rb.velocity.y > 0)
