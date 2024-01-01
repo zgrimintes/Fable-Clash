@@ -9,9 +9,8 @@ public class AIAttacksHarapAlb : MonoBehaviour
     GameObject playerInstance;
 
     float[] attacks = new float[5];
-    float[] allAttacks = new float[3000]; //For storing all attacks made by that character
+    float[] allAttacks = new float[1000]; //For storing all attacks made by that character
     int indxAttacks = 0;
-    bool hasNotAttacked = true;
 
     public void Start()
     {
@@ -44,7 +43,7 @@ public class AIAttacksHarapAlb : MonoBehaviour
         checkStamina();
         checkMana();
 
-        if (hasNotAttacked) chooseAttack();
+        chooseAttack();
     }
 
     protected void checkHealth()
@@ -127,8 +126,6 @@ public class AIAttacksHarapAlb : MonoBehaviour
 
     private void chooseAttack() //For choosing the optimal attack in that frame
     {
-        hasNotAttacked = false;
-
         float _max_flt = 0;
         int _indx_max = -1;
         checkPreviousAttacks(_indx_max);
@@ -166,7 +163,6 @@ public class AIAttacksHarapAlb : MonoBehaviour
                 gameObject.GetComponent<CharacterManager>().try_SA();
                 break;
         }
-
-        hasNotAttacked = true;
+        enemyController.lastAttack = Time.time;
     }
 }
