@@ -10,10 +10,9 @@ public class AIAttacksZmeu : MonoBehaviour
     GameObject playerInstance;
 
     float[] attacks = new float[5];
-    float[] allAttacks = new float[3000]; //For storing all attacks made by that character
+    float[] allAttacks = new float[1000]; //For storing all attacks made by that character
     int indxAttacks = 0;
     int chanceToStartDashing; //For diversifying the start of the round against Zmeul
-    bool hasNotAttacked = true;
 
     public void Start()
     {
@@ -48,7 +47,7 @@ public class AIAttacksZmeu : MonoBehaviour
         checkStamina();
         checkMana();
 
-        if (hasNotAttacked) chooseAttack();
+        chooseAttack();
     }
 
     protected void checkPreviousAttacks(int attackMade) //For reducing the "spam an attack"
@@ -135,8 +134,6 @@ public class AIAttacksZmeu : MonoBehaviour
 
     private void chooseAttack() //For choosing the optimal attack in that frame
     {
-        hasNotAttacked = false;
-
         float _max_flt = 0;
         int _indx_max = -1;
         checkPreviousAttacks(_indx_max);
@@ -175,6 +172,6 @@ public class AIAttacksZmeu : MonoBehaviour
                 break;
         }
 
-        hasNotAttacked = true;
+        enemyController.lastAttack = Time.time;
     }
 }
