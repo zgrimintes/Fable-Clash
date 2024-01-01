@@ -9,9 +9,8 @@ public class AIAttacksPrislea : MonoBehaviour
     GameObject playerInstance;
 
     float[] attacks = new float[5];
-    float[] allAttacks = new float[3000]; //For storing all attacks made by that character
+    float[] allAttacks = new float[1000]; //For storing all attacks made by that character
     int indxAttacks = 0;
-    bool hasNotAttacked = true;
 
     public void Start()
     {
@@ -34,6 +33,7 @@ public class AIAttacksPrislea : MonoBehaviour
         if (!enemyController.canAttack) return;
 
         if (Time.time - enemyController.lastAttack < enemyController.cooldown) return;
+        //Debug.Log(enemyController.lastAttack); 
 
         attacks[0] = attacks[1] = attacks[2] = attacks[3] = attacks[4] = 0;
 
@@ -44,7 +44,7 @@ public class AIAttacksPrislea : MonoBehaviour
         checkStamina();
         checkVelocity();
 
-        if (hasNotAttacked) chooseAttack();
+        chooseAttack();
     }
 
     protected void checkVelocity()
@@ -97,16 +97,16 @@ public class AIAttacksPrislea : MonoBehaviour
 
     protected void checkStamina()
     {
-        if (enemyController.stamina == 1) { attacks[2] += .2f; attacks[1] = -1; }
+        if (enemyController.stamina == 1) { attacks[2] += .2f; attacks[1] = -10; }
         else if (enemyController.stamina >= 2) { attacks[1] += .2f; attacks[2] -= .1f; }
-        else attacks[1] = attacks[2] = -1;
+        else attacks[1] = attacks[2] = -10;
     }
 
     protected void checkMana()
     {
-        if (enemyController.mana == 2) { attacks[3] += .2f; attacks[4] = -1; }
+        if (enemyController.mana == 2) { attacks[3] += .2f; attacks[4] = -10; }
         else if (enemyController.mana >= 3) { attacks[3] += .1f; attacks[4] += .35f; }
-        else if (enemyController.mana < 2) attacks[3] = attacks[4] = -1;
+        else if (enemyController.mana < 2) attacks[3] = attacks[4] = -10;
     }
 
     protected void checkYAxis()
@@ -133,8 +133,6 @@ public class AIAttacksPrislea : MonoBehaviour
 
     private void chooseAttack() //For choosing the optimal attack in that frame
     {
-        hasNotAttacked = false;
-
         float _max_flt = 0;
         int _indx_max = -1;
         checkPreviousAttacks();
@@ -148,7 +146,8 @@ public class AIAttacksPrislea : MonoBehaviour
             }
         }
 
-        allAttacks[indxAttacks++] = _indx_max;
+        if (_indx_max != -1) allAttacks[indxAttacks++] = _indx_max;
+
         Attack(_indx_max + 1);
     }
 
@@ -173,6 +172,6 @@ public class AIAttacksPrislea : MonoBehaviour
                 break;
         }
 
-        hasNotAttacked = true;
+        enemyController.lastAttack = Time.time;
     }
 }
