@@ -7,14 +7,12 @@ public class MainMenuManager : MonoBehaviour
 {
     public void FreePlay() //Start the free play mode
     {
+        GameManager.Instance.updateGameState(GameStates.Start);
         SceneManager.LoadScene("SampleScene");
-        StartCoroutine(WaitAFrame());
     }
 
-    IEnumerator WaitAFrame()
+    public void exitGame() //Close the game
     {
-        yield return 0;
-
-        GameManager.Instance.updateGameState(GameStates.Start);
+        Application.Quit();
     }
 }
