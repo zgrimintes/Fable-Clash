@@ -30,6 +30,7 @@ public class CharacterManager : AttackManager
     [HideInInspector] public bool isDashing = false;
     [HideInInspector] public bool isKnockback = false;
     [HideInInspector] public bool isGrounded; //To check if the player touches the ground
+    [HideInInspector] public bool canDash = true;
     [HideInInspector] public Sprite sprite; //To set the sprite of the character
     [HideInInspector] public Sprite icon; //To set the icon of the character
     [HideInInspector] public bool hasLost = false;
@@ -254,6 +255,8 @@ public class CharacterManager : AttackManager
 
     public void Jump()
     {
+        if (!canDash) return; //Don't jump if you can't
+
         isGrounded = Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, .1f, layer);
 
         if (isGrounded == true)
@@ -342,11 +345,15 @@ public class CharacterManager : AttackManager
 
     public IEnumerator Dashh()
     {
-        isDashing = true;
-        lastKey = 0;
-        rb.velocity = new Vector2(horizontalS * speed * 3, rb.velocity.y);
-        yield return new WaitForSeconds(0.2f);
-        isDashing = false;
+        if (canDash) //Don't dash if the circumstances don't let you
+        {
+            isDashing = true;
+            lastKey = 0;
+            rb.velocity = new Vector2(horizontalS * speed * 3, rb.velocity.y);
+            yield return new WaitForSeconds(0.2f);
+            isDashing = false;
+        }
+        else yield return null;
     }
 
     public IEnumerator Knockback()
