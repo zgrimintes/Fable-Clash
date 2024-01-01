@@ -149,6 +149,10 @@ public class AttackManager : MonoBehaviour
             case "HarapAlb":
                 specialAttacksManager.HarapAlb_SA(gameObject);
                 break;
+            case "Spinul":
+                dmg = 1;
+                specialAttacksManager.Spinul_SA();
+                break;
         }
     }
 
