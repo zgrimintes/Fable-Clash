@@ -33,5 +33,31 @@ public class MagicAbilitiesManager : MonoBehaviour
 
         //Double dmg attacks
         gameObject.GetComponent<CharacterManager>().applyEfects(2);
+
+        GetComponent<CharacterManager>().lastAttack -= 1f; //Reset the lastAttack because it isn't an attack
+    }
+
+    public void Spinul_MA()
+    {
+        Vector2 teleportTo = new Vector2(-transform.position.x, transform.position.y);
+        if (canTeleportTo(teleportTo))
+        {
+            transform.position = teleportTo;
+        }
+        else
+        {
+            Debug.Log("Failed to Teleport");
+            GetComponent<CharacterManager>().fighterManager.mana += 2;
+        }
+
+        GetComponent<CharacterManager>().lastAttack -= 1f; //Reset the lastAttack because it isn't an attack
+    }
+
+    public bool canTeleportTo(Vector2 teleportPos)
+    {
+        Vector2 teleportPosChcek = new Vector2(teleportPos.x, teleportPos.y + .5f);
+        if (Physics2D.BoxCast(teleportPosChcek, GetComponent<CharacterManager>().coll.bounds.size, 0f, Vector2.up))
+            return false;
+        return true;
     }
 }
