@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class MagicAbilitiesManager : MonoBehaviour
 {
+    public GameObject enemy;
     public GameObject Mace;
     public GameObject Mist;
     AttackManager attackManager;
@@ -39,7 +40,8 @@ public class MagicAbilitiesManager : MonoBehaviour
 
     public void Spinul_MA()
     {
-        Vector2 teleportTo = new Vector2(-transform.position.x, transform.position.y);
+        attackManager.normalNextAttack = false;
+        Vector2 teleportTo = new Vector2(enemy.transform.position.x + -4f * enemy.GetComponent<CharacterManager>().horizontalS, enemy.transform.position.y);
         if (canTeleportTo(teleportTo))
         {
             transform.position = teleportTo;
@@ -55,8 +57,8 @@ public class MagicAbilitiesManager : MonoBehaviour
 
     public bool canTeleportTo(Vector2 teleportPos)
     {
-        Vector2 teleportPosChcek = new Vector2(teleportPos.x, teleportPos.y + .5f);
-        if (Physics2D.BoxCast(teleportPosChcek, GetComponent<CharacterManager>().coll.bounds.size, 0f, Vector2.up))
+        Vector2 teleportPosCheck = new Vector2(teleportPos.x, teleportPos.y + .5f);
+        if (Physics2D.BoxCast(teleportPosCheck, GetComponent<CharacterManager>().coll.bounds.size, 0f, Vector2.up, 0f, LayerMask.GetMask("Default")))
             return false;
         return true;
     }
