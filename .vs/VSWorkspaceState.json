@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\ScriptableObjects",
+    "\\Scripts",
+    "\\Scripts\\Enemy",
+    "\\Scripts\\Enemy\\AIAttackManager",
+    "\\Scripts\\SceneManagers"
+  ],
+  "SelectedNode": "\\Scripts\\AttackManager.cs",
+  "PreviewInSolutionExplorer": false
+}

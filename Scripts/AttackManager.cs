@@ -16,6 +16,7 @@ public class AttackManager : MonoBehaviour
 
     [HideInInspector] public GameObject wp;
     [HideInInspector] public bool hasHit; //So you can't hit more than once per attack
+    [HideInInspector] public bool normalNextAttack = true;
     [HideInInspector] public float dmg;
     [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public BoxCollider2D coll;
@@ -82,7 +83,8 @@ public class AttackManager : MonoBehaviour
 
     public void normal_Attack(float _NA_dmg)
     {
-        dmg = _NA_dmg;
+        if (normalNextAttack) dmg = _NA_dmg;
+
         wp = Instantiate(Weapon, transform.position, Quaternion.identity);
         animator = wp.GetComponent<Animator>();
         wp.AddComponent<FollowPlayer>().toFollow = gameObject; //Adding the FollowPlayer
@@ -93,7 +95,7 @@ public class AttackManager : MonoBehaviour
 
     public void ranged_Attack(float _RA_dmg)
     {
-        dmg = _RA_dmg;
+        if (normalNextAttack) dmg = _RA_dmg;
         float dir = GetComponent<CharacterManager>().horizontalS;
 
         if (dir >= 0) wp = Instantiate(Projectile, transform.position, Quaternion.Euler(0, 0, 270));
@@ -104,7 +106,7 @@ public class AttackManager : MonoBehaviour
 
     public void heavy_Attack(float _HA_dmg)
     {
-        dmg = _HA_dmg;
+        if (normalNextAttack) dmg = _HA_dmg;
         wp = Instantiate(Weapon, transform.position, Quaternion.identity);
         animator = wp.GetComponent<Animator>();
         wp.AddComponent<FollowPlayer>().toFollow = gameObject; //Adding the FollowPlayer
@@ -116,7 +118,7 @@ public class AttackManager : MonoBehaviour
 
     public void magic_Attack(float _MA_dmg, string _ch_name)
     {
-        dmg = _MA_dmg;
+        if (normalNextAttack) dmg = _MA_dmg;
 
         switch (_ch_name)
         {
@@ -139,7 +141,7 @@ public class AttackManager : MonoBehaviour
 
     public void special_Attack(float _SA_dmg, string _ch_name)
     {
-        dmg = _SA_dmg;
+        if (normalNextAttack) dmg = _SA_dmg;
 
         switch (_ch_name)
         {
@@ -188,6 +190,7 @@ public class AttackManager : MonoBehaviour
             enemy.GetComponent<CharacterManager>().take_damage(dmg);
             enemy.GetComponent<CharacterManager>().applyEfects(effect);
             hasHit = true;
+            normalNextAttack = true;
         }
     }
 }
