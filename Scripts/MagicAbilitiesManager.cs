@@ -41,6 +41,7 @@ public class MagicAbilitiesManager : MonoBehaviour
     public void Spinul_MA()
     {
         attackManager.normalNextAttack = false;
+        attackManager.dmg += 1;
         Vector2 teleportTo = new Vector2(enemy.transform.position.x + -4f * enemy.GetComponent<CharacterManager>().horizontalS, enemy.transform.position.y);
         if (canTeleportTo(teleportTo))
         {
