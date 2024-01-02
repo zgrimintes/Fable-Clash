@@ -131,6 +131,9 @@ public class AttackManager : MonoBehaviour
             case "HarapAlb":
                 magicAbilitiesManager.HarapAlb_MA();
                 break;
+            case "Spinul":
+                magicAbilitiesManager.Spinul_MA();
+                break;
         }
     }
 
