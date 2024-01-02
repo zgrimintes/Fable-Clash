@@ -41,10 +41,20 @@ public class AIAttacksSpinul : MonoBehaviour
         checkYAxis();
         checkEnemyStats();
         checkDanger();
+        checkClose(); //Check if the enemy is close and can't go far
         checkMana();
         checkStamina();
 
         chooseAttack();
+    }
+
+    protected void checkClose()
+    {
+        if (playerInstance.transform.position.y > 1) return; //The player can escape
+
+        Debug.Log(transform.position.x < -7f && transform.position.x - playerInstance.transform.position.x > 0);
+        if ((transform.position.x < -7f && transform.position.x - playerInstance.transform.position.x > 0) || (transform.position.x > 7f && transform.position.x - playerInstance.transform.position.x < 0))
+            attacks[4] += 1f;
     }
 
     protected void checkDanger()
