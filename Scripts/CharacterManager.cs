@@ -5,6 +5,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking.Types;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
 public class CharacterManager : AttackManager
@@ -157,7 +158,13 @@ public class CharacterManager : AttackManager
 
     public void popUpText(string txt, int amount)
     {
-        GameObject clone = Instantiate(popUpTextPrefab, transform.position, Quaternion.identity);
+        GameObject checkClone = GameObject.Find("PopUpText(Clone)");
+        GameObject clone;
+
+        if (checkClone == null) //Don't write text over another
+            clone = Instantiate(popUpTextPrefab, transform.position, Quaternion.identity);
+        else clone = Instantiate(popUpTextPrefab, new Vector3(transform.position.x + 2f, transform.position.y, 0), Quaternion.identity);
+
         clone.GetComponent<SignalTurnBackColor>().character = gameObject;
 
         switch (txt)
@@ -171,6 +178,13 @@ public class CharacterManager : AttackManager
                 {
                     clone.GetComponentInChildren<TextMeshProUGUI>().text = "+1 DMG";
                     clone.GetComponentInChildren<TextMeshProUGUI>().color = Color.blue;
+                }
+                break;
+            case "nerf":
+                if (amount == 1)//Prislea's MA
+                {
+                    clone.GetComponentInChildren<TextMeshProUGUI>().text = "+1s cooldown";
+                    clone.GetComponentInChildren<TextMeshProUGUI>().color = Color.gray;
                 }
                 break;
             case "dmg":
@@ -212,6 +226,7 @@ public class CharacterManager : AttackManager
             case 0:
                 break;
             case 1:
+                popUpText("nerf", 1);
                 cooldown += 1f;
                 break;
             case 2:
