@@ -212,6 +212,9 @@ public class CharacterManager : AttackManager
                 _RA_dmg += 1;
                 break;
             case 3:
+                if (name == "Player") GetComponent<PlayerManager>().canMove = false;
+                else GetComponent<EnemyController>().stateMachine.Change(GetComponent<EnemyController>().waitState);
+                timeToGetRidOfEffects = 4.5f;
                 break;
             case 4:
                 break;
@@ -224,6 +227,7 @@ public class CharacterManager : AttackManager
         {
             if (Time.time - inflictedTime[i] > timeToGetRidOfEffects)
             {
+
                 switch (i)
                 {
                     case 0:
@@ -236,6 +240,17 @@ public class CharacterManager : AttackManager
                         timeToGetRidOfEffects = defaultValues[7]; //For HarapAlb's MA
                         break;
                     case 2:
+                        if (!hasEffects[i]) return;
+
+                        if (name == "Player") GetComponent<PlayerManager>().canMove = true;
+                        else GetComponent<EnemyController>().stateMachine.Change(GetComponent<EnemyController>().chaseState);
+                        timeToGetRidOfEffects = defaultValues[7];
+
+                        //Reset the mana and stamina after "sleep"
+                        fighterManager.stamina = 5;
+                        fighterManager.mana = 4;
+                        stamina = 5;
+                        mana = 4;
                         break;
                     case 3:
                         break;
@@ -249,6 +264,27 @@ public class CharacterManager : AttackManager
     {
         for (int i = 0; i < 10; i++)
         {
+            switch (i)
+            {
+                case 0:
+                    cooldown = defaultValues[i];
+                    break;
+                case 1:
+                    _NA_dmg = defaultValues[i];
+                    _HA_dmg = defaultValues[i];
+                    _RA_dmg = defaultValues[i];
+                    timeToGetRidOfEffects = defaultValues[7]; //For HarapAlb's MA
+                    break;
+                case 2:
+                    if (!hasEffects[i]) return;
+
+                    if (name == "Player") GetComponent<PlayerManager>().canMove = true;
+                    else GetComponent<EnemyController>().stateMachine.Change(GetComponent<EnemyController>().chaseState);
+                    timeToGetRidOfEffects = defaultValues[7];
+                    break;
+                case 3:
+                    break;
+            }
             hasEffects[i] = false;
         }
     }
@@ -296,8 +332,10 @@ public class CharacterManager : AttackManager
         if (Time.time - last_mist_dmg > 1f)
         {
             last_mist_dmg = Time.time;
-            // take_damage(1);
             fighterManager.take_damage(gameObject, 1);
+            popUpText("1");
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 0.4941176f, 0.4941176f, 1f);
+
             updateText();
         }
     }
@@ -364,6 +402,7 @@ public class CharacterManager : AttackManager
 
     public void try_NA()
     {
+        if (!canDash || isDashing) return;
         if (Time.time - lastAttack < cooldown) return;
 
         lastAttack = Time.time;
@@ -373,6 +412,7 @@ public class CharacterManager : AttackManager
 
     public void try_RA()
     {
+        if (!canDash || isDashing) return;
         if (Time.time - lastAttack < cooldown) return;
 
         if (stamina > 0)
@@ -386,6 +426,7 @@ public class CharacterManager : AttackManager
 
     public void try_HA()
     {
+        if (!canDash || isDashing) return;
         if (Time.time - lastAttack < cooldown) return;
 
         if (stamina > 1)
@@ -399,6 +440,7 @@ public class CharacterManager : AttackManager
 
     public void try_MA()
     {
+        if (!canDash || isDashing) return;
         if (Time.time - lastAttack < cooldown) return;
 
         if (mana >= 2)
@@ -412,6 +454,7 @@ public class CharacterManager : AttackManager
 
     public void try_SA()
     {
+        if (!canDash || isDashing) return;
         if (Time.time - lastAttack < cooldown) return;
 
         if (mana >= 3)
