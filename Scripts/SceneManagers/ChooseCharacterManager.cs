@@ -75,6 +75,8 @@ public class ChoseCharacterManager : MonoBehaviour
                 return "Prislea (LightWeight)\r\nNA - Bow jab\r\nHa - Bow strike\r\nRA- arrow\r\nMa - Mace trow\r\nSA - arrow rain";
             case 2:
                 return "Harap Alb (MediumWeight)\r\nNA - Sword Slash\r\nHA - Sword Thrust\r\nRA - Shield Toss\r\nMA - Bear Roar\r\nSA - Sword Lunge";
+            case 3:
+                return "Greuceanul (HeavyWeight)\r\nNA - Bludgeon Slap\r\nHA - Bludgeon Slam\r\nRA - Sun Blast/Moon Blast\r\nMA - Sleep Bringer\r\nSA - Raven Water Drop";
             case 4:
                 return "Spinul (LightWeight)\r\nNA - Sickle Cut\r\nHA - Sickle Gash\r\nRA - Sickle Shy\r\nMA - Shadow Teleport\r\nSA - Sickle Hurricane";
             case 6:
