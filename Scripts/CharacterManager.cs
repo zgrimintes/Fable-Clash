@@ -166,6 +166,13 @@ public class CharacterManager : AttackManager
                 clone.GetComponentInChildren<TextMeshProUGUI>().text = "+" + amount;
                 clone.GetComponentInChildren<TextMeshProUGUI>().color = Color.green;
                 break;
+            case "boost":
+                if (amount == 3)//HarapAlb's MA
+                {
+                    clone.GetComponentInChildren<TextMeshProUGUI>().text = "+1 DMG";
+                    clone.GetComponentInChildren<TextMeshProUGUI>().color = Color.blue;
+                }
+                break;
             case "dmg":
                 if (amount == 0) { Destroy(clone); return; }
 
