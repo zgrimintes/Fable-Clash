@@ -34,8 +34,11 @@ public class MagicAbilitiesManager : MonoBehaviour
         //Take more time for effects to go out
         characterManager.timeToGetRidOfEffects = 3f;
 
-        //Double dmg attacks
+        //Double dmg for attacks
         characterManager.applyEfects(2);
+
+        //Visual effects
+        characterManager.popUpText("boost", 3);
 
         characterManager.lastAttack -= 1f; //Reset the lastAttack because it isn't an attack
     }
