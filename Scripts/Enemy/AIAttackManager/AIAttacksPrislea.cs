@@ -90,8 +90,8 @@ public class AIAttacksPrislea : MonoBehaviour
         }
         else
         {
-            if (attacks[3] != 0) attacks[3] += .2f;
-            if (attacks[1] != 0) attacks[1] += .3f;
+            if (attacks[3] > 0) attacks[3] += .2f;
+            if (attacks[1] > 0) attacks[1] += .3f;
         }
     }
 
