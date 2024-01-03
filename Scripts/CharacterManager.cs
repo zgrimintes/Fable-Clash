@@ -352,6 +352,16 @@ public class CharacterManager : AttackManager
         updateText();
     }
 
+    public void groundShake()
+    {
+        isGrounded = Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, .1f, layer);
+        if (isGrounded)
+        {
+            Debug.Log("Ground Shake");
+            take_damage(1);
+        }
+    }
+
     public void turnBackColor()
     {
         GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
