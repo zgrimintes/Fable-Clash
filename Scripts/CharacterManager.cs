@@ -186,6 +186,12 @@ public class CharacterManager : AttackManager
                     clone.GetComponentInChildren<TextMeshProUGUI>().text = "+1s cooldown";
                     clone.GetComponentInChildren<TextMeshProUGUI>().color = Color.gray;
                 }
+                else if (amount == 3)
+                {
+                    clone.GetComponentInChildren<TextMeshProUGUI>().text = "-1 DMG";
+                    clone.GetComponentInChildren<TextMeshProUGUI>().color = Color.gray;
+                }
+
                 break;
             case "dmg":
                 if (amount == 0) { Destroy(clone); return; }
@@ -240,6 +246,11 @@ public class CharacterManager : AttackManager
                 timeToGetRidOfEffects = 4.5f;
                 break;
             case 4:
+                _NA_dmg -= 1;
+                _HA_dmg -= 1;
+                _RA_dmg -= 1;
+                popUpText("nerf", 3);
+                GetComponent<SpriteRenderer>().color = new Color(.7f, .7f, .7f, 1);
                 break;
         }
     }
@@ -257,9 +268,9 @@ public class CharacterManager : AttackManager
                         cooldown = defaultValues[i];
                         break;
                     case 1:
-                        _NA_dmg = defaultValues[i];
-                        _HA_dmg = defaultValues[i];
-                        _RA_dmg = defaultValues[i];
+                        _NA_dmg = defaultValues[1];
+                        _RA_dmg = defaultValues[2];
+                        _HA_dmg = defaultValues[3];
                         timeToGetRidOfEffects = defaultValues[7]; //For HarapAlb's MA
                         break;
                     case 2:
@@ -276,6 +287,9 @@ public class CharacterManager : AttackManager
                         mana = 4;
                         break;
                     case 3:
+                        _NA_dmg = defaultValues[1];
+                        _RA_dmg = defaultValues[2];
+                        _HA_dmg = defaultValues[3];
                         break;
                 }
                 hasEffects[i] = false;
@@ -293,9 +307,9 @@ public class CharacterManager : AttackManager
                     cooldown = defaultValues[i];
                     break;
                 case 1:
-                    _NA_dmg = defaultValues[i];
-                    _HA_dmg = defaultValues[i];
-                    _RA_dmg = defaultValues[i];
+                    _NA_dmg = defaultValues[1];
+                    _RA_dmg = defaultValues[2];
+                    _HA_dmg = defaultValues[3];
                     timeToGetRidOfEffects = defaultValues[7]; //For HarapAlb's MA
                     break;
                 case 2:
