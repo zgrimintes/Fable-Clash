@@ -40,10 +40,21 @@ public class AIAttacksHarapAlb : MonoBehaviour
         checkLookingDir();
         checkIfInFront();
         checkHealth();
+        checkForMA();
         checkStamina();
         checkMana();
 
         chooseAttack();
+    }
+    protected void checkForMA()
+    {
+        for (int i = indxAttacks - 1; i >= 0; i--)
+        {
+            if (indxAttacks - i < 6) break;
+
+            if (allAttacks[i] == 3)
+                attacks[3] -= .5f;
+        }
     }
 
     protected void checkHealth()
