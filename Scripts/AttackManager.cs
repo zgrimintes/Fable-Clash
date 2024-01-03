@@ -136,6 +136,9 @@ public class AttackManager : MonoBehaviour
             case "Spinul":
                 magicAbilitiesManager.Spinul_MA();
                 break;
+            case "Greuceanul":
+                magicAbilitiesManager.Greuceanul_MA();
+                break;
         }
     }
 
@@ -157,6 +160,9 @@ public class AttackManager : MonoBehaviour
             case "Spinul":
                 dmg = 1;
                 specialAttacksManager.Spinul_SA();
+                break;
+            case "Greuceanul":
+                specialAttacksManager.Greuceanul_SA();
                 break;
         }
     }
