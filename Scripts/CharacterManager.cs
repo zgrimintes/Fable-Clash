@@ -155,20 +155,21 @@ public class CharacterManager : AttackManager
         }*/
     }
 
-    public void popUpText(string txt)
+    public void popUpText(string txt, int amount)
     {
         GameObject clone = Instantiate(popUpTextPrefab, transform.position, Quaternion.identity);
         clone.GetComponent<SignalTurnBackColor>().character = gameObject;
 
         switch (txt)
         {
-            case "0":
-                Destroy(clone);
+            case "heal":
+                clone.GetComponentInChildren<TextMeshProUGUI>().text = "+" + amount;
+                clone.GetComponentInChildren<TextMeshProUGUI>().color = Color.green;
                 break;
-            case "effect":
-                break;
-            default:
-                clone.GetComponentInChildren<TextMeshProUGUI>().text = "-" + txt;
+            case "dmg":
+                if (amount == 0) { Destroy(clone); return; }
+
+                clone.GetComponentInChildren<TextMeshProUGUI>().text = "-" + amount;
                 clone.GetComponentInChildren<TextMeshProUGUI>().color = Color.red;
                 break;
         }
@@ -304,7 +305,7 @@ public class CharacterManager : AttackManager
     public void take_damage(float damage)
     {
         //Some visual effects
-        popUpText(damage.ToString());
+        popUpText("dmg", (int)damage);
         gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 0.4941176f, 0.4941176f, 1f);
         //set the color
 
@@ -333,7 +334,7 @@ public class CharacterManager : AttackManager
         {
             last_mist_dmg = Time.time;
             fighterManager.take_damage(gameObject, 1);
-            popUpText("1");
+            popUpText("dmg", 1);
             gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 0.4941176f, 0.4941176f, 1f);
 
             updateText();
