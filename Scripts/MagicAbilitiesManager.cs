@@ -66,6 +66,11 @@ public class MagicAbilitiesManager : MonoBehaviour
         enemy.GetComponent<CharacterManager>().applyEfects(3);//Make him sleep
     }
 
+    public void Capcaunul_MA()
+    {
+        enemy.GetComponent<CharacterManager>().applyEfects(4);
+    }
+
     public bool canTeleportTo(Vector2 teleportPos)
     {
         Vector2 teleportPosCheck = new Vector2(teleportPos.x, teleportPos.y + .5f);
