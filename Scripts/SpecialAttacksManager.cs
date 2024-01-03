@@ -64,15 +64,19 @@ public class SpecialAttacksManager : MonoBehaviour
 
     public void Greuceanul_SA()
     {
-
-        characterManager.fighterManager.HP += 5;
-        characterManager.HP += 5;
+        int hpGained = 5;
+        characterManager.fighterManager.HP += hpGained;
+        characterManager.HP += hpGained;
 
         if (characterManager.HP > 15)
         {
+            hpGained = 5 - (characterManager.HP - 15);
             characterManager.fighterManager.HP = 15;
             characterManager.HP = 15;
         }
+
+        characterManager.popUpText("heal", hpGained);
+        GetComponent<SpriteRenderer>().color = new Color(0.5279903f, 1f, 0.5279903f, 1f);
     }
 
     public IEnumerator rotate()
