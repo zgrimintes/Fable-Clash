@@ -10,6 +10,7 @@ public class SpecialAttacksManager : MonoBehaviour
     public LayerMask layer;
     GameObject[] projectiles = new GameObject[7];
     float[] rainStartPoints = new float[7];
+    float timeSinceLastHit = 0f;
 
     int hits_Praslea = 0;
     int index;
@@ -77,6 +78,31 @@ public class SpecialAttacksManager : MonoBehaviour
 
         characterManager.popUpText("heal", hpGained);
         GetComponent<SpriteRenderer>().color = new Color(0.5279903f, 1f, 0.5279903f, 1f);
+    }
+
+    public void Capcaunul_SA()
+    {
+        characterManager.canDash = false;
+        characterManager.speed -= 6;
+        StartCoroutine(hitTheGround());
+    }
+
+    public IEnumerator hitTheGround()
+    {
+        int hitsCapcaunul = 0;
+        while (hitsCapcaunul < 4)
+        {
+            if (Time.time - timeSinceLastHit > .5f)
+            {
+                timeSinceLastHit = Time.time;
+                hitsCapcaunul++;
+                enemy.GetComponent<CharacterManager>().groundShake();
+            }
+            yield return null;
+        }
+
+        characterManager.canDash = true;
+        characterManager.speed += 6;
     }
 
     public IEnumerator rotate()
