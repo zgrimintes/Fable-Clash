@@ -9,10 +9,12 @@ public class MagicAbilitiesManager : MonoBehaviour
     public GameObject Mace;
     public GameObject Mist;
     AttackManager attackManager;
+    CharacterManager characterManager;
 
     private void Start()
     {
         attackManager = GetComponent<AttackManager>();
+        characterManager = GetComponent<CharacterManager>();
     }
 
     public void Praslea_MA(GameObject wp)
@@ -24,18 +26,18 @@ public class MagicAbilitiesManager : MonoBehaviour
 
     public void Zmeul_MA()
     {
-        Instantiate(Mist, new Vector3(transform.position.x + (GetComponent<CharacterManager>().horizontalS * 5), -2f), Quaternion.identity);
+        Instantiate(Mist, new Vector3(transform.position.x + (characterManager.horizontalS * 5), -2f), Quaternion.identity);
     }
 
     public void HarapAlb_MA()
     {
         //Take more time for effects to go out
-        GetComponent<CharacterManager>().timeToGetRidOfEffects = 3f;
+        characterManager.timeToGetRidOfEffects = 3f;
 
         //Double dmg attacks
-        gameObject.GetComponent<CharacterManager>().applyEfects(2);
+        characterManager.applyEfects(2);
 
-        GetComponent<CharacterManager>().lastAttack -= 1f; //Reset the lastAttack because it isn't an attack
+        characterManager.lastAttack -= 1f; //Reset the lastAttack because it isn't an attack
     }
 
     public void Spinul_MA()
@@ -54,6 +56,11 @@ public class MagicAbilitiesManager : MonoBehaviour
         }
 
         GetComponent<CharacterManager>().lastAttack -= 1f; //Reset the lastAttack because it isn't an attack
+    }
+
+    public void Greuceanul_MA()
+    {
+        enemy.GetComponent<CharacterManager>().applyEfects(3);//Make him sleep
     }
 
     public bool canTeleportTo(Vector2 teleportPos)
