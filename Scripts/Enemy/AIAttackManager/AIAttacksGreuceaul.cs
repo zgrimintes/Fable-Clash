@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AIAttacksGreuceanu : MonoBehaviour
 {
-    public string nameToHave = "Greuceanu"; //for checking if the enemy shoudl inherit this script
+    public string nameToHave = "Greuceanul"; //for checking if the enemy shoudl inherit this script
     public EnemyController enemyController;
     GameObject playerInstance;
 
