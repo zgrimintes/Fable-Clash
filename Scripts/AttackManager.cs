@@ -57,6 +57,14 @@ public class AttackManager : MonoBehaviour
                 break;
             case "HeavyWeight":
                 positionToAttack = new Vector2(9.9f, 0);
+
+                if (GetComponent<CharacterManager>()._ch_name == "Greuceanul") //Due to uneven proportions Greuceanu has a different hitbox
+                {
+                    coll.size = new Vector2(16.63f, 16.99f);
+                    coll.offset = new Vector2(1.02f, -0.06f);
+                    break;
+                }
+
                 coll.size = new Vector2(18.09f, 16.30f);
                 coll.offset = new Vector2(1.75f, 0.28f);
                 break;
