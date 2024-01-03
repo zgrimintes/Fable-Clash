@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpecialAttacksManager : MonoBehaviour
 {
     AttackManager attackManager;
+    CharacterManager characterManager;
     public GameObject enemy;
     public LayerMask layer;
     GameObject[] projectiles = new GameObject[7];
@@ -17,6 +18,7 @@ public class SpecialAttacksManager : MonoBehaviour
     private void Start()
     {
         attackManager = GetComponent<AttackManager>();
+        characterManager = GetComponent<CharacterManager>();
     }
 
     public void Praslea_SA(GameObject wp, GameObject projectile)
@@ -46,18 +48,31 @@ public class SpecialAttacksManager : MonoBehaviour
 
     public void HarapAlb_SA(GameObject character)
     {
-        GetComponent<CharacterManager>().jumpForce = 25f;
-        GetComponent<CharacterManager>().fallGravityScale = 17f;
-        GetComponent<CharacterManager>().Jump();
+        characterManager.jumpForce = 25f;
+        characterManager.fallGravityScale = 17f;
+        characterManager.Jump();
         StartCoroutine(fallLunge(character));
     }
 
     public void Spinul_SA()
     {
-        GetComponent<CharacterManager>().speed -= 6f;
-        GetComponent<CharacterManager>().canDash = false;
+        characterManager.speed -= 6f;
+        characterManager.canDash = false;
         Debug.Log("Start Rotating");
         StartCoroutine(rotate());
+    }
+
+    public void Greuceanul_SA()
+    {
+
+        characterManager.fighterManager.HP += 5;
+        characterManager.HP += 5;
+
+        if (characterManager.HP > 15)
+        {
+            characterManager.fighterManager.HP = 15;
+            characterManager.HP = 15;
+        }
     }
 
     public IEnumerator rotate()
