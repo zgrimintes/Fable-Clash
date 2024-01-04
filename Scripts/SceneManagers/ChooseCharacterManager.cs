@@ -76,11 +76,15 @@ public class ChoseCharacterManager : MonoBehaviour
             case 2:
                 return "Harap Alb (MediumWeight)\r\nNA - Sword Slash\r\nHA - Sword Thrust\r\nRA - Shield Toss\r\nMA - Bear Roar\r\nSA - Sword Lunge";
             case 3:
-                return "Greuceanul (HeavyWeight)\r\nNA - Bludgeon Slap\r\nHA - Bludgeon Slam\r\nRA - Sun Blast/Moon Blast\r\nMA - Sleep Bringer\r\nSA - Raven Water Drop";
+                return "Greuceanu (HeavyWeight)\r\nNA - Bludgeon Slap\r\nHA - Bludgeon Slam\r\nRA - Sun Blast/Moon Blast\r\nMA - Sleep Bringer\r\nSA - Raven Water Drop";
             case 4:
                 return "Spinul (LightWeight)\r\nNA - Sickle Cut\r\nHA - Sickle Gash\r\nRA - Sickle Shy\r\nMA - Shadow Teleport\r\nSA - Sickle Hurricane";
+            case 5:
+                return "Capcaunul (MediumWeight)\r\nNA - Claw Slash\r\nHA - Claw Hack\r\nRA - Stone Hurl\r\nMA - Deafening Howl\r\nSA - Ground Smash";
             case 6:
                 return "Zmeul (HeavyWeight)\r\nNA - Axe Blow\r\nHA - Axe Smash\r\nRA - Axe Throw\r\nMA - Dark Mist\r\nSA - Axe Rush";
+            case 7:
+                return "Zgripturoaica (lightWeight)\r\nNA - Wing Flap\r\nHA - Claw Maul\r\nRA - Wind Slash\r\nMA - Atropa Blow\r\nSA - Wind Shield";
             default:
                 return "N/A";
         }
