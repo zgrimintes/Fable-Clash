@@ -32,6 +32,7 @@ public class CharacterManager : AttackManager
     [HideInInspector] public bool isKnockback = false;
     [HideInInspector] public bool isGrounded; //To check if the player touches the ground
     [HideInInspector] public bool canDash = true;
+    [HideInInspector] public bool canTakeDamage = true;
     [HideInInspector] public Sprite sprite; //To set the sprite of the character
     [HideInInspector] public Sprite icon; //To set the icon of the character
     [HideInInspector] public bool hasLost = false;
@@ -60,8 +61,8 @@ public class CharacterManager : AttackManager
     private float last_mist_dmg;
     private float scaleConstant = .3f;
 
-    private float[] defaultValues = new float[10]; //For saving the default values of variables ->
-                                                   // -> 0 - cooldown; 1 - na; 2 - ra; 3 - ha; 4 - ma; 5 - sa; 6 - speed; 7 - timeToGetRidOfEffects
+    public float[] defaultValues = new float[10]; //For saving the default values of variables ->
+                                                  // -> 0 - cooldown; 1 - na; 2 - ra; 3 - ha; 4 - ma; 5 - sa; 6 - speed; 7 - timeToGetRidOfEffects
     private float[] inflictedTime = new float[10]; //For saving the time when the effect was inflicted -^
     private bool[] hasEffects = { false, false, false, false, false, false, false, false, false, false }; //For indicating when an individual has effects
 
@@ -260,12 +261,18 @@ public class CharacterManager : AttackManager
                 GetComponent<SpriteRenderer>().color = new Color(.7f, .7f, .7f, 1);
                 break;
             case 5:
+                fighterManager.mana = mana = 0;
+                updateText();
                 cooldown += 1.5f;
                 speed -= 3.5f;
                 timeToGetRidOfEffects += 1f;
 
                 popUpText("nerf", 2);
                 GetComponent<SpriteRenderer>().color = new Color(.7f, .7f, .7f, 1);
+                break;
+            case 6:
+                Debug.Log("Shield Up!");
+                canTakeDamage = false;
                 break;
         }
     }
@@ -325,6 +332,13 @@ public class CharacterManager : AttackManager
 
                     hasEffects[4] = false;
                     break;
+                case 5:
+                    if (!hasEffects[5]) return;
+
+                    canTakeDamage = true;
+
+                    hasEffects[5] = false;
+                    break;
             }
         }
     }
@@ -345,13 +359,20 @@ public class CharacterManager : AttackManager
                     timeToGetRidOfEffects = defaultValues[7]; //For HarapAlb's MA
                     break;
                 case 2:
-                    if (!hasEffects[i]) return;
-
-                    if (name == "Player") GetComponent<PlayerManager>().canMove = true;
-                    else GetComponent<EnemyController>().stateMachine.Change(GetComponent<EnemyController>().chaseState);
                     timeToGetRidOfEffects = defaultValues[7];
                     break;
                 case 3:
+                    _NA_dmg = defaultValues[1];
+                    _RA_dmg = defaultValues[2];
+                    _HA_dmg = defaultValues[3];
+                    break;
+                case 4:
+                    cooldown = defaultValues[0];
+                    speed = defaultValues[6];
+                    timeToGetRidOfEffects = defaultValues[7];
+                    break;
+                case 5:
+                    canTakeDamage = true;
                     break;
             }
             hasEffects[i] = false;
@@ -372,6 +393,8 @@ public class CharacterManager : AttackManager
 
     public void take_damage(float damage)
     {
+        if (!canTakeDamage) return;
+
         //Some visual effects
         popUpText("dmg", (int)damage);
 
