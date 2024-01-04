@@ -49,11 +49,13 @@ public class CharacterManager : AttackManager
     public LayerMask layer;
     [HideInInspector] public GameObject enemy;
 
-    float _NA_dmg;
+    [HideInInspector] public float _NA_dmg;
     float _RA_dmg;
     float _HA_dmg;
     float _MA_dmg;
     float _SA_dmg;
+
+    int indxEffects = 0; //For going trough every effect
 
     private float last_mist_dmg;
     private float scaleConstant = .3f;
@@ -95,7 +97,7 @@ public class CharacterManager : AttackManager
             GameManager.Instance.updateGameState(GameStates.EndOfRound);
         }
 
-        getRidOfEffects();
+        getRidOfEffects(indxEffects++ % 10);
     }
 
     public void LoadPlayer(FighterManager data) //Function for loading the data from the ScriptableObject into the GameObject
@@ -184,13 +186,17 @@ public class CharacterManager : AttackManager
                 if (amount == 1)//Prislea's MA
                 {
                     clone.GetComponentInChildren<TextMeshProUGUI>().text = "+1s cooldown";
-                    clone.GetComponentInChildren<TextMeshProUGUI>().color = Color.gray;
                 }
-                else if (amount == 3)
+                else if (amount == 2) //Zgripturoaica's MA
+                {
+                    clone.GetComponentInChildren<TextMeshProUGUI>().text = "Slowed!";
+                }
+                else if (amount == 3) //Capcaunu's MA
                 {
                     clone.GetComponentInChildren<TextMeshProUGUI>().text = "-1 DMG";
-                    clone.GetComponentInChildren<TextMeshProUGUI>().color = Color.gray;
                 }
+
+                clone.GetComponentInChildren<TextMeshProUGUI>().color = Color.gray;
 
                 break;
             case "dmg":
@@ -198,6 +204,7 @@ public class CharacterManager : AttackManager
 
                 clone.GetComponentInChildren<TextMeshProUGUI>().text = "-" + amount;
                 clone.GetComponentInChildren<TextMeshProUGUI>().color = Color.red;
+                GetComponent<SpriteRenderer>().color = new Color(1f, 0.4941176f, 0.4941176f, 1f);
                 break;
         }
     }
@@ -252,47 +259,68 @@ public class CharacterManager : AttackManager
                 popUpText("nerf", 3);
                 GetComponent<SpriteRenderer>().color = new Color(.7f, .7f, .7f, 1);
                 break;
+            case 5:
+                cooldown += 1f;
+                speed -= 3f;
+                popUpText("nerf", 2);
+                break;
         }
     }
 
-    public void getRidOfEffects()
+    public void getRidOfEffects(int i)
     {
-        for (int i = 0; i < 10; i++)
+        if (Time.time - inflictedTime[i] > timeToGetRidOfEffects)
         {
-            if (Time.time - inflictedTime[i] > timeToGetRidOfEffects)
+            switch (i)
             {
+                case 0:
+                    if (!hasEffects[0]) return;
 
-                switch (i)
-                {
-                    case 0:
-                        cooldown = defaultValues[i];
-                        break;
-                    case 1:
-                        _NA_dmg = defaultValues[1];
-                        _RA_dmg = defaultValues[2];
-                        _HA_dmg = defaultValues[3];
-                        timeToGetRidOfEffects = defaultValues[7]; //For HarapAlb's MA
-                        break;
-                    case 2:
-                        if (!hasEffects[i]) return;
+                    cooldown = defaultValues[i];
 
-                        if (name == "Player") GetComponent<PlayerManager>().canMove = true;
-                        else GetComponent<EnemyController>().stateMachine.Change(GetComponent<EnemyController>().chaseState);
-                        timeToGetRidOfEffects = defaultValues[7];
+                    hasEffects[0] = false;
+                    break;
+                case 1:
 
-                        //Reset the mana and stamina after "sleep"
-                        fighterManager.stamina = 5;
-                        fighterManager.mana = 4;
-                        stamina = 5;
-                        mana = 4;
-                        break;
-                    case 3:
-                        _NA_dmg = defaultValues[1];
-                        _RA_dmg = defaultValues[2];
-                        _HA_dmg = defaultValues[3];
-                        break;
-                }
-                hasEffects[i] = false;
+                    _NA_dmg = defaultValues[1];
+                    _RA_dmg = defaultValues[2];
+                    _HA_dmg = defaultValues[3];
+                    timeToGetRidOfEffects = defaultValues[7]; //For HarapAlb's MA
+
+                    hasEffects[1] = false;
+                    break;
+                case 2:
+                    if (!hasEffects[2]) return;
+
+                    if (name == "Player") GetComponent<PlayerManager>().canMove = true;
+                    else GetComponent<EnemyController>().stateMachine.Change(GetComponent<EnemyController>().chaseState);
+                    timeToGetRidOfEffects = defaultValues[7];
+
+                    //Reset the mana and stamina after "sleep"
+                    fighterManager.stamina = 5;
+                    fighterManager.mana = 4;
+                    stamina = 5;
+                    mana = 4;
+
+                    hasEffects[2] = false;
+                    break;
+                case 3:
+                    if (!hasEffects[3]) return;
+
+                    _NA_dmg = defaultValues[1];
+                    _RA_dmg = defaultValues[2];
+                    _HA_dmg = defaultValues[3];
+
+                    hasEffects[3] = false;
+                    break;
+                case 4:
+                    if (!hasEffects[4]) return;
+
+                    cooldown = defaultValues[0];
+                    speed = defaultValues[6];
+
+                    hasEffects[4] = false;
+                    break;
             }
         }
     }
@@ -342,8 +370,6 @@ public class CharacterManager : AttackManager
     {
         //Some visual effects
         popUpText("dmg", (int)damage);
-        gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 0.4941176f, 0.4941176f, 1f);
-        //set the color
 
         //The logic stuff
         isKnockback = true;
@@ -357,7 +383,7 @@ public class CharacterManager : AttackManager
         isGrounded = Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, .1f, layer);
         if (isGrounded)
         {
-            Debug.Log("Ground Shake");
+            CameraShake.Shake(.5f, .3f);
             take_damage(1);
         }
     }
