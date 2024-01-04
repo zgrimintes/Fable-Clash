@@ -168,7 +168,9 @@ public class AttackManager : MonoBehaviour
                 magicAbilitiesManager.Capcaunul_MA();
                 break;
             case "Zgripturoaica":
+                float dirZ = GetComponent<CharacterManager>().horizontalS;
                 magicAbilitiesManager.Zgripturoaica_MA();
+                StartCoroutine(ranged(dirZ, 5));
                 break;
         }
     }
@@ -206,6 +208,9 @@ public class AttackManager : MonoBehaviour
 
     public IEnumerator ranged(float dir, int effect)
     {
+        float _initial_Flying_Speed = flying_speed;
+        if (effect == 5) { flying_speed -= 8f; dmg = 0; } //For Zgripturoaica's MA
+
         while (Physics2D.OverlapBox(wp.transform.position, wp.transform.localScale, 0, enemyLayer) == null && !outOfBounds(wp))
         {
             wp.transform.position = wp.transform.position + new Vector3(flying_speed * dir * Time.deltaTime, 0, 0);
@@ -214,6 +219,7 @@ public class AttackManager : MonoBehaviour
 
         checkForColls(wp.transform.position, 1f, effect);
 
+        flying_speed = _initial_Flying_Speed; //Reset to the initial value
         Destroy(wp);
     }
 
