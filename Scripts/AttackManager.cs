@@ -46,12 +46,29 @@ public class AttackManager : MonoBehaviour
         switch (GetComponent<CharacterManager>().fighterManager.w_Class.name)
         {
             case "LightWeight":
-                positionToAttack = new Vector2(1.9f, 0);
+                positionToAttack = new Vector2(2.9f, 0);
+
+                if (GetComponent<CharacterManager>()._ch_name == "Zgripturoaica")
+                {
+                    positionToAttack = new Vector2(3.9f, 0);
+                    coll.size = new Vector2(7.3f, 12.42f);
+                    coll.offset = new Vector2(1.22f, 0.09f);
+                    break;
+                }
+
                 coll.size = new Vector2(7.15f, 12.42f);
                 coll.offset = new Vector2(-0.63f, 0.10f);
                 break;
             case "MediumWeight":
                 positionToAttack = new Vector2(5.9f, 0);
+
+                if (GetComponent<CharacterManager>()._ch_name == "Capcaunul")
+                {
+                    coll.size = new Vector2(11.48f, 14.66f);
+                    coll.offset = new Vector2(-0.36f, 0.04f);
+                    break;
+                }
+
                 coll.size = new Vector2(10.77f, 16.08f);
                 coll.offset = new Vector2(-0.01f, 0.01f);
                 break;
@@ -147,6 +164,12 @@ public class AttackManager : MonoBehaviour
             case "Greuceanul":
                 magicAbilitiesManager.Greuceanul_MA();
                 break;
+            case "Capcaunul":
+                magicAbilitiesManager.Capcaunul_MA();
+                break;
+            case "Zgripturoaica":
+                magicAbilitiesManager.Zgripturoaica_MA();
+                break;
         }
     }
 
@@ -171,6 +194,12 @@ public class AttackManager : MonoBehaviour
                 break;
             case "Greuceanul":
                 specialAttacksManager.Greuceanul_SA();
+                break;
+            case "Capcaunul":
+                specialAttacksManager.Capcaunul_SA();
+                break;
+            case "Zgripturoaica":
+                specialAttacksManager.Zgripturoaica_SA();
                 break;
         }
     }
