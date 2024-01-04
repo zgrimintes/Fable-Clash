@@ -50,7 +50,7 @@ public class AIAttacksHarapAlb : MonoBehaviour
     {
         for (int i = indxAttacks - 1; i >= 0; i--)
         {
-            if (indxAttacks - i < 6) break;
+            if (indxAttacks - i > 6) break;
 
             if (allAttacks[i] == 3)
                 attacks[3] -= .5f;
