@@ -260,9 +260,12 @@ public class CharacterManager : AttackManager
                 GetComponent<SpriteRenderer>().color = new Color(.7f, .7f, .7f, 1);
                 break;
             case 5:
-                cooldown += 1f;
-                speed -= 3f;
+                cooldown += 1.5f;
+                speed -= 3.5f;
+                timeToGetRidOfEffects += 1f;
+
                 popUpText("nerf", 2);
+                GetComponent<SpriteRenderer>().color = new Color(.7f, .7f, .7f, 1);
                 break;
         }
     }
@@ -318,6 +321,7 @@ public class CharacterManager : AttackManager
 
                     cooldown = defaultValues[0];
                     speed = defaultValues[6];
+                    timeToGetRidOfEffects = defaultValues[7];
 
                     hasEffects[4] = false;
                     break;
