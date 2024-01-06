@@ -60,7 +60,9 @@ public class FighterManager : ScriptableObject
 
     public void startOfFight()
     {
-        HP = 15;
+        if (characterName == "Zgripturoaica") HP = 40;
+        else HP = 15;
+
         mana = 4;
         stamina = 5;
     }
