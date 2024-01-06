@@ -68,6 +68,12 @@ public class AttackManager : MonoBehaviour
                     coll.offset = new Vector2(-0.36f, 0.04f);
                     break;
                 }
+                else if (GetComponent<CharacterManager>()._ch_name == "Balaurul")
+                {
+                    coll.size = new Vector2(10.77f, 15.72f);
+                    coll.offset = new Vector2(-0.01f, 0.18f);
+                    break;
+                }
 
                 coll.size = new Vector2(10.77f, 16.08f);
                 coll.offset = new Vector2(-0.01f, 0.01f);
@@ -172,6 +178,9 @@ public class AttackManager : MonoBehaviour
                 magicAbilitiesManager.Zgripturoaica_MA();
                 StartCoroutine(ranged(dirZ, 5));
                 break;
+            case "Balaurul":
+                magicAbilitiesManager.Balaurul_MA();
+                break;
         }
     }
 
@@ -202,6 +211,9 @@ public class AttackManager : MonoBehaviour
                 break;
             case "Zgripturoaica":
                 specialAttacksManager.Zgripturoaica_SA();
+                break;
+            case "Balaurul":
+                specialAttacksManager.Balaurul_SA();
                 break;
         }
     }
