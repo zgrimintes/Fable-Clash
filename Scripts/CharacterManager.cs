@@ -33,6 +33,7 @@ public class CharacterManager : AttackManager
     [HideInInspector] public bool isGrounded; //To check if the player touches the ground
     [HideInInspector] public bool canDash = true;
     [HideInInspector] public bool canTakeDamage = true;
+    [HideInInspector] public bool isDangerous = false; //For attentioning the enemy whenm it should run
     [HideInInspector] public Sprite sprite; //To set the sprite of the character
     [HideInInspector] public Sprite icon; //To set the icon of the character
     [HideInInspector] public bool hasLost = false;
@@ -234,6 +235,8 @@ public class CharacterManager : AttackManager
 
     public void applyEfects(int effect) //For applying effects inflicted by attacks to characters
     {
+        if (!canTakeDamage) return;
+
         if (effect != 0)
         {
             inflictedTime[effect - 1] = Time.time;
@@ -277,6 +280,7 @@ public class CharacterManager : AttackManager
                 break;
             case 6:
                 Debug.Log("Shield Up!");
+                timeToGetRidOfEffects = 4f;
                 canTakeDamage = false;
                 break;
         }
@@ -296,6 +300,7 @@ public class CharacterManager : AttackManager
                     hasEffects[0] = false;
                     break;
                 case 1:
+                    if (!hasEffects[1]) return;
 
                     _NA_dmg = defaultValues[1];
                     _RA_dmg = defaultValues[2];
@@ -341,6 +346,7 @@ public class CharacterManager : AttackManager
                     if (!hasEffects[5]) return;
 
                     canTakeDamage = true;
+                    timeToGetRidOfEffects = defaultValues[7];
 
                     hasEffects[5] = false;
                     break;
@@ -378,6 +384,7 @@ public class CharacterManager : AttackManager
                     break;
                 case 5:
                     canTakeDamage = true;
+                    timeToGetRidOfEffects = defaultValues[7];
                     break;
             }
             hasEffects[i] = false;
