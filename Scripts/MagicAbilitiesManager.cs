@@ -8,8 +8,12 @@ public class MagicAbilitiesManager : MonoBehaviour
     public GameObject enemy;
     public GameObject Mace;
     public GameObject Mist;
+    public GameObject Powder;
+    public GameObject Boomerang;
     AttackManager attackManager;
     CharacterManager characterManager;
+
+    bool damageTaken = false;
 
     private void Start()
     {
@@ -69,6 +73,51 @@ public class MagicAbilitiesManager : MonoBehaviour
     public void Capcaunul_MA()
     {
         enemy.GetComponent<CharacterManager>().applyEfects(4);
+    }
+
+    public void Zgripturoaica_MA()
+    {
+        GameObject projectile = Instantiate(Powder, transform.position, Quaternion.identity);
+
+        attackManager.wp = projectile;
+    }
+
+    public void Balaurul_MA()
+    {
+        GameObject boomerang = Instantiate(Boomerang, transform.position, Quaternion.identity);
+        StartCoroutine(blazingBoomerang(boomerang, characterManager.horizontalS));
+    }
+
+    IEnumerator blazingBoomerang(GameObject obj, float dir)
+    {
+        int turns = 0;
+
+        while (turns < 4)
+        {
+            if (obj == null) break;
+
+            obj.transform.position += new Vector3(20f * dir * Time.deltaTime, 0);
+
+            if (!damageTaken)
+            {
+                if (Physics2D.OverlapCircle(obj.transform.position, .4f, LayerMask.GetMask("Enemies")))
+                {
+                    damageTaken = true;
+                    enemy.GetComponent<CharacterManager>().take_damage(2);
+                }
+            }
+
+            if (obj.transform.position.x < -12f || obj.transform.position.x > 12f)
+            {
+                dir *= -1;
+                turns++;
+                damageTaken = false;
+            }
+
+            yield return null;
+        }
+
+        Destroy(obj);
     }
 
     public bool canTeleportTo(Vector2 teleportPos)
