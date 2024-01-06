@@ -6,6 +6,7 @@ using UnityEngine;
 public class MagicAbilitiesManager : MonoBehaviour
 {
     public GameObject enemy;
+    public LayerMask enemyLayer;
     public GameObject Mace;
     public GameObject Mist;
     public GameObject Powder;
@@ -100,7 +101,7 @@ public class MagicAbilitiesManager : MonoBehaviour
 
             if (!damageTaken)
             {
-                if (Physics2D.OverlapCircle(obj.transform.position, .4f, LayerMask.GetMask("Enemies")))
+                if (Physics2D.OverlapCircle(obj.transform.position, .4f, enemyLayer))
                 {
                     damageTaken = true;
                     enemy.GetComponent<CharacterManager>().take_damage(2);
