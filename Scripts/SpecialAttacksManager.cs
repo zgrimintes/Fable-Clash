@@ -59,6 +59,7 @@ public class SpecialAttacksManager : MonoBehaviour
     {
         characterManager.speed -= 6f;
         characterManager.canDash = false;
+        characterManager.isDangerous = true;
         Debug.Log("Start Rotating");
         StartCoroutine(rotate());
     }
@@ -85,6 +86,41 @@ public class SpecialAttacksManager : MonoBehaviour
         characterManager.canDash = false;
         characterManager.speed -= 6;
         StartCoroutine(hitTheGround());
+    }
+
+    public void Zgripturoaica_SA()
+    {
+        characterManager.applyEfects(6);
+    }
+
+    public void Balaurul_SA()
+    {
+        characterManager.speed -= 8f;
+        characterManager.canDash = false;
+        characterManager.isDangerous = true;
+        Debug.Log("Start Blasting");
+        StartCoroutine(fireSpit());
+    }
+
+    public IEnumerator fireSpit()
+    {
+
+        float startTime = Time.time;
+        while (Time.time - startTime < 4.5f && !enemy.GetComponent<CharacterManager>().hasLost)
+        {
+            if (Physics2D.CircleCast(GetComponent<AttackManager>().attackPoint.transform.position, 2f, Vector2.zero, 0, layer))
+            {
+                attackManager.dmg = 2;
+                attackManager.checkForColls(GetComponent<AttackManager>().attackPoint.transform.position, 2, 0);
+                yield return new WaitForSeconds(.5f);
+            }
+            yield return null;
+        }
+
+        Debug.Log("Finish Blasting");
+        characterManager.speed += 8;
+        characterManager.canDash = true;
+        characterManager.isDangerous = false;
     }
 
     public IEnumerator hitTheGround()
@@ -121,8 +157,9 @@ public class SpecialAttacksManager : MonoBehaviour
         }
 
         Debug.Log("Finish Rotating");
-        GetComponent<CharacterManager>().speed += 6;
-        GetComponent<CharacterManager>().canDash = true;
+        characterManager.speed += 6;
+        characterManager.canDash = true;
+        characterManager.isDangerous = false;
     }
 
     public IEnumerator fallLunge(GameObject character)
@@ -142,6 +179,7 @@ public class SpecialAttacksManager : MonoBehaviour
 
         attackManager.dmg = 4;
         attackManager.checkForColls(transform.position, 5f, 0);
+        CameraShake.Shake(.3f, .3f);
     }
 
     public IEnumerator charge(float dir)
@@ -156,6 +194,7 @@ public class SpecialAttacksManager : MonoBehaviour
 
         if (gameObject.name == "Enemy") GetComponent<EnemyController>().isSpecial = false;
         attackManager.checkForColls(transform.position, 3.3f, 0);
+        CameraShake.Shake(.2f, .2f);
     }
 
     public IEnumerator fly(GameObject wp)
