@@ -86,7 +86,7 @@ public class ChoseCharacterManager : MonoBehaviour
             case 7:
                 return "Zgripturoaica (lightWeight)\r\nNA - Wing Flap\r\nHA - Claw Maul\r\nRA - Wind Slash\r\nMA - Atropa Blow\r\nSA - Wind Shield";
             case 8:
-                return "Balaurul (MediumWeight)\r\nNA - Claws Strike\r\nHA - Hard Bite\r\nRA - Fire Projectile\r\nMA - Blazing Boomerang\r\nSA - Fire Breath";
+                return "Balaurul (MediumWeight)\r\nNA - Claws Strike\r\nHA - Hard Bite\r\nRA - Fire Blast\r\nMA - Blazing Boomerang\r\nSA - Fire Breath";
             default:
                 return "N/A";
         }
