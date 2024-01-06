@@ -125,7 +125,10 @@ public class OffFinghtManager : MonoBehaviour
     public void resetEnvironment()
     {
         GameObject darkMist = GameObject.Find("DarkMist(Clone)");
+        GameObject boomerang = GameObject.Find("Boomerang(Clone)");
+
         if (darkMist != null) Destroy(darkMist);
+        if (boomerang != null) Destroy(boomerang);
     }
 
     public void startFight()
