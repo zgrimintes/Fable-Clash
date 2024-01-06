@@ -72,11 +72,14 @@ public class CharacterManager : AttackManager
 
         LoadPlayer(fighterManager);
 
+        updateText();
+    }
+
+    public void setMaxValueBars()
+    {
         if (healthBar != null) healthBar.setMaxValue(HP);
         if (healthBar != null) manaBar.setMaxValue(mana);
         if (healthBar != null) staminaBar.setMaxValue(stamina);
-
-        updateText();
     }
 
     protected override void Update()
@@ -126,6 +129,8 @@ public class CharacterManager : AttackManager
 
         gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
         gameObject.transform.localScale = new Vector2(scaleConstant, scaleConstant);
+
+        setMaxValueBars();
     }
 
     public void updateText() //Sould be called updateBars 
