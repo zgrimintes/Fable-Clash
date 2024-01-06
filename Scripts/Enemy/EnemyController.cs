@@ -12,8 +12,13 @@ public class EnemyController : CharacterManager
     [HideInInspector] public AIAttacksZmeu zmeuAI;
     [HideInInspector] public AIAttacksPrislea prisleaAI;
     [HideInInspector] public AIAttacksHarapAlb harapalbAI;
+    [HideInInspector] public AIAttacksSpinul spinulAI;
+    [HideInInspector] public AIAttacksGreuceanu greuceanuAI;
+    [HideInInspector] public AIAttacksCapcaunul capcaunuAI;
+    [HideInInspector] public AIAttacksZgripturoaica zgripturoaciaAI;
     #endregion
 
+    float dirToKnock = -5;
     public GameObject playerInstance;
     public bool isTooFar = true;
     public bool canAttack = false;
@@ -39,6 +44,10 @@ public class EnemyController : CharacterManager
         zmeuAI = GetComponent<AIAttacksZmeu>();
         prisleaAI = GetComponent<AIAttacksPrislea>();
         harapalbAI = GetComponent<AIAttacksHarapAlb>();
+        spinulAI = GetComponent<AIAttacksSpinul>();
+        greuceanuAI = GetComponent<AIAttacksGreuceanu>();
+        capcaunuAI = GetComponent<AIAttacksCapcaunul>();
+        zgripturoaciaAI = GetComponent<AIAttacksZgripturoaica>();
     }
 
     protected override void Start()
@@ -57,6 +66,10 @@ public class EnemyController : CharacterManager
         GetComponent<AIAttacksPrislea>().enabled = (prisleaAI.nameToHave == _ch_name);
         GetComponent<AIAttacksZmeu>().enabled = (zmeuAI.nameToHave == _ch_name);
         GetComponent<AIAttacksHarapAlb>().enabled = (harapalbAI.nameToHave == _ch_name);
+        GetComponent<AIAttacksSpinul>().enabled = (spinulAI.nameToHave == _ch_name);
+        GetComponent<AIAttacksGreuceanu>().enabled = (greuceanuAI.nameToHave == _ch_name);
+        GetComponent<AIAttacksCapcaunul>().enabled = (capcaunuAI.nameToHave == _ch_name);
+        GetComponent<AIAttacksZgripturoaica>().enabled = (zgripturoaciaAI.nameToHave == _ch_name);
     }
 
     protected override void Update()
@@ -81,11 +94,14 @@ public class EnemyController : CharacterManager
         //if (isJumping) return; //If jumping stop the wrinting of velocity
         if (isDashing) return; //If dashing stop the wrinting of velocity
 
+        if (enemy.GetComponent<CharacterManager>().isDangerous) { velocity = new Vector2(-velocity.x, velocity.y); dirToKnock = 5; Debug.Log("is dangerous"); }
+
         if (!isKnockback) rb.velocity = velocity;//Stop writing the velocity if you are getting knockbacked
         else
         {
-            rb.velocity = new Vector2(velocity.x * -5, velocity.y);
+            rb.velocity = new Vector2(velocity.x * dirToKnock, velocity.y);
             StartCoroutine(Knockback());
+            dirToKnock = -5;
         }
     }
 
@@ -97,6 +113,7 @@ public class EnemyController : CharacterManager
 
     protected void tryDash()
     {
+        if (playerInstance.GetComponent<CharacterManager>().isDangerous) return; //Don't go near the dangerous enemy
         if (isSpecial) return;
         if (isDashing || !canAttack) return; //Don't try if you are not allowed
 
