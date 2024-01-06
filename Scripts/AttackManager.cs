@@ -236,6 +236,7 @@ public class AttackManager : MonoBehaviour
 
         foreach (Collider2D enemy in hitEnemies)
         {
+            if (wp != null) Destroy(wp);
             enemy.GetComponent<CharacterManager>().take_damage(dmg);
             enemy.GetComponent<CharacterManager>().applyEfects(effect);
             hasHit = true;
