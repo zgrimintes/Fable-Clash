@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -64,8 +65,8 @@ public class CharacterManager : AttackManager
 
     public float[] defaultValues = new float[10]; //For saving the default values of variables ->
                                                   // -> 0 - cooldown; 1 - na; 2 - ra; 3 - ha; 4 - ma; 5 - sa; 6 - speed; 7 - timeToGetRidOfEffects
-    private float[] inflictedTime = new float[10]; //For saving the time when the effect was inflicted -^
-    private bool[] hasEffects = { false, false, false, false, false, false, false, false, false, false }; //For indicating when an individual has effects
+    private float[] inflictedTime = new float[11]; //For saving the time when the effect was inflicted -^
+    private bool[] hasEffects = { false, false, false, false, false, false, false, false, false, false, false }; //For indicating when an individual has effects
 
     protected override void Start()
     {
@@ -102,7 +103,8 @@ public class CharacterManager : AttackManager
             GameManager.Instance.updateGameState(GameStates.EndOfRound);
         }
 
-        getRidOfEffects(indxEffects++ % 10);
+        getRidOfEffects(indxEffects);
+        indxEffects = (indxEffects + 1) % 11;
     }
 
     public void LoadPlayer(FighterManager data) //Function for loading the data from the ScriptableObject into the GameObject
@@ -188,6 +190,11 @@ public class CharacterManager : AttackManager
                     clone.GetComponentInChildren<TextMeshProUGUI>().text = "+1 DMG";
                     clone.GetComponentInChildren<TextMeshProUGUI>().color = Color.blue;
                 }
+                else if (amount == 4)//Crisnicu's SA
+                {
+                    clone.GetComponentInChildren<TextMeshProUGUI>().text = "x2 DMG";
+                    clone.GetComponentInChildren<TextMeshProUGUI>().color = Color.blue;
+                }
                 break;
             case "nerf":
                 if (amount == 1)//Prislea's MA
@@ -201,6 +208,11 @@ public class CharacterManager : AttackManager
                 else if (amount == 3) //Capcaunu's MA
                 {
                     clone.GetComponentInChildren<TextMeshProUGUI>().text = "-1 DMG";
+                }
+                else if (amount == 4) //Crisnicu's MA
+                {
+                    clone.GetComponentInChildren<TextMeshProUGUI>().fontSize = 2;
+                    clone.GetComponentInChildren<TextMeshProUGUI>().text = "Drained!";
                 }
 
                 clone.GetComponentInChildren<TextMeshProUGUI>().color = Color.gray;
@@ -237,7 +249,7 @@ public class CharacterManager : AttackManager
     {
         if (!canTakeDamage) return;
 
-        if (effect != 0)
+        if (effect != 0 && effect != 8 && effect != 9)
         {
             inflictedTime[effect - 1] = Time.time;
             hasEffects[effect - 1] = true;
@@ -282,6 +294,33 @@ public class CharacterManager : AttackManager
                 Debug.Log("Shield Up!");
                 timeToGetRidOfEffects = 4f;
                 canTakeDamage = false;
+                break;
+            case 7:
+                timeToGetRidOfEffects = 5f;
+                _NA_dmg *= 2;
+                _RA_dmg *= 2;
+                _HA_dmg *= 2;
+                break;
+            case 8:
+                Vector3 newPos = new Vector3(enemy.transform.position.x + 3 * enemy.GetComponent<CharacterManager>().horizontalS, enemy.transform.position.y);
+
+                if (GetComponent<MagicAbilitiesManager>().canTeleportTo(newPos))
+                {
+                    transform.position = newPos;
+                }
+
+                break;
+            case 9:
+                fighterManager.mana = mana = 0;
+                fighterManager.stamina = stamina = 0;
+                updateText();
+
+                popUpText("nerf", 4);
+                break;
+            case 10:
+                if (name == "Player") GetComponent<PlayerManager>().canMove = false;
+                else GetComponent<EnemyController>().stateMachine.Change(GetComponent<EnemyController>().waitState);
+                timeToGetRidOfEffects += .5f;
                 break;
         }
     }
@@ -350,6 +389,29 @@ public class CharacterManager : AttackManager
 
                     hasEffects[5] = false;
                     break;
+                case 6:
+                    if (!hasEffects[6]) return;
+
+                    timeToGetRidOfEffects = defaultValues[7];
+                    _NA_dmg = defaultValues[1];
+                    _RA_dmg = defaultValues[2];
+                    _HA_dmg = defaultValues[3];
+
+                    hasEffects[5] = false;
+                    break;
+                case 7:
+                    break;
+                case 8:
+                    break;
+                case 9:
+                    if (!hasEffects[9]) return;
+
+                    if (name == "Player") GetComponent<PlayerManager>().canMove = true;
+                    else GetComponent<EnemyController>().stateMachine.Change(GetComponent<EnemyController>().chaseState);
+                    timeToGetRidOfEffects = defaultValues[7];
+
+                    hasEffects[6] = false;
+                    break;
             }
         }
     }
@@ -384,6 +446,15 @@ public class CharacterManager : AttackManager
                     break;
                 case 5:
                     canTakeDamage = true;
+                    timeToGetRidOfEffects = defaultValues[7];
+                    break;
+                case 6:
+                    timeToGetRidOfEffects = defaultValues[7];
+                    _NA_dmg = defaultValues[1];
+                    _RA_dmg = defaultValues[2];
+                    _HA_dmg = defaultValues[3];
+                    break;
+                case 9:
                     timeToGetRidOfEffects = defaultValues[7];
                     break;
             }
