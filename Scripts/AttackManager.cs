@@ -87,6 +87,12 @@ public class AttackManager : MonoBehaviour
                     coll.offset = new Vector2(1.02f, -0.06f);
                     break;
                 }
+                else if (GetComponent<CharacterManager>()._ch_name == "Crisnicul")
+                {
+                    coll.size = new Vector2(17.84f, 16.30f);
+                    coll.offset = new Vector2(-0.02f, 0.27f);
+                    break;
+                }
 
                 coll.size = new Vector2(18.09f, 16.30f);
                 coll.offset = new Vector2(1.75f, 0.28f);
@@ -181,6 +187,12 @@ public class AttackManager : MonoBehaviour
             case "Balaurul":
                 magicAbilitiesManager.Balaurul_MA();
                 break;
+            case "Crisnicul":
+                float dirC = GetComponent<CharacterManager>().horizontalS;
+                magicAbilitiesManager.Crisnicul_MA();
+                int rEffect = Random.Range(8, 11);
+                StartCoroutine(ranged(dirC, rEffect));
+                break;
         }
     }
 
@@ -215,6 +227,9 @@ public class AttackManager : MonoBehaviour
             case "Balaurul":
                 specialAttacksManager.Balaurul_SA();
                 break;
+            case "Crisnicul":
+                specialAttacksManager.Crisnicul_SA();
+                break;
         }
     }
 
@@ -222,16 +237,21 @@ public class AttackManager : MonoBehaviour
     {
         float _initial_Flying_Speed = flying_speed;
         if (effect == 5) { flying_speed -= 7f; dmg = 0; } //For Zgripturoaica's MA
+        if (effect == 8) dmg = 0; //For Crisnicu's MA 
+        if (effect == 11) effect--;
 
-        while (Physics2D.OverlapBox(wp.transform.position, wp.transform.localScale, 0, enemyLayer) == null && !outOfBounds(wp))
+        while (wp != null && Physics2D.OverlapBox(wp.transform.position, wp.transform.localScale, 0, enemyLayer) == null && !outOfBounds(wp))
         {
             wp.transform.position = wp.transform.position + new Vector3(flying_speed * dir * Time.deltaTime, 0, 0);
             yield return null;
         }
 
-        checkForColls(wp.transform.position, 1f, effect);
+        if (wp != null)
+        {
+            checkForColls(wp.transform.position, 1f, effect);
+            Destroy(wp);
+        }
 
-        Destroy(wp);
         flying_speed = _initial_Flying_Speed; //Reset to the initial value
     }
 
