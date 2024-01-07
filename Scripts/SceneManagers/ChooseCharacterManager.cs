@@ -78,15 +78,17 @@ public class ChoseCharacterManager : MonoBehaviour
             case 3:
                 return "Greuceanu (HeavyWeight)\r\nNA - Bludgeon Slap\r\nHA - Bludgeon Slam\r\nRA - Sun Blast/Moon Blast\r\nMA - Sleep Bringer\r\nSA - Raven Water Drop";
             case 4:
-                return "Spinul (LightWeight)\r\nNA - Sickle Cut\r\nHA - Sickle Gash\r\nRA - Sickle Shy\r\nMA - Shadow Teleport\r\nSA - Sickle Hurricane";
+                return "Spinul (LightWeight)\r\nNA - Sickle Graze\r\nHA - Sickle Gash\r\nRA - Sickle Shy\r\nMA - Shadow Teleport\r\nSA - Sickle Hurricane";
             case 5:
-                return "Capcaunul (MediumWeight)\r\nNA - Claw Slash\r\nHA - Claw Hack\r\nRA - Stone Hurl\r\nMA - Deafening Howl\r\nSA - Ground Smash";
+                return "Capcaunul (MediumWeight)\r\nNA - Claw Tear\r\nHA - Claw Hack\r\nRA - Stone Hurl\r\nMA - Deafening Howl\r\nSA - Ground Smash";
             case 6:
                 return "Zmeul (HeavyWeight)\r\nNA - Axe Blow\r\nHA - Axe Smash\r\nRA - Axe Throw\r\nMA - Dark Mist\r\nSA - Axe Rush";
             case 7:
                 return "Zgripturoaica (lightWeight)\r\nNA - Wing Flap\r\nHA - Claw Maul\r\nRA - Wind Slash\r\nMA - Atropa Blow\r\nSA - Wind Shield";
             case 8:
                 return "Balaurul (MediumWeight)\r\nNA - Claws Strike\r\nHA - Hard Bite\r\nRA - Fire Blast\r\nMA - Blazing Boomerang\r\nSA - Fire Breath";
+            case 9:
+                return "Crisnicul (HeavyWeight)\t\nNA - Cleaver Cut\t\nHA - Cleaver Rend\r\nRA - Cleaver Heave\r\nMA - Hexed Pigs\r\nSA - Devil Trust";
             default:
                 return "N/A";
         }
