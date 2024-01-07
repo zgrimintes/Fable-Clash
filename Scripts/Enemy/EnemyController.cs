@@ -16,6 +16,8 @@ public class EnemyController : CharacterManager
     [HideInInspector] public AIAttacksGreuceanu greuceanuAI;
     [HideInInspector] public AIAttacksCapcaunul capcaunuAI;
     [HideInInspector] public AIAttacksZgripturoaica zgripturoaciaAI;
+    [HideInInspector] public AIAttacksBalaurul balaurulAI;
+    [HideInInspector] public AIAttacksCrisnicul crisniculAI;
     #endregion
 
     float dirToKnock = -5;
@@ -48,6 +50,8 @@ public class EnemyController : CharacterManager
         greuceanuAI = GetComponent<AIAttacksGreuceanu>();
         capcaunuAI = GetComponent<AIAttacksCapcaunul>();
         zgripturoaciaAI = GetComponent<AIAttacksZgripturoaica>();
+        balaurulAI = GetComponent<AIAttacksBalaurul>();
+        crisniculAI = GetComponent<AIAttacksCrisnicul>();
     }
 
     protected override void Start()
@@ -70,6 +74,8 @@ public class EnemyController : CharacterManager
         GetComponent<AIAttacksGreuceanu>().enabled = (greuceanuAI.nameToHave == _ch_name);
         GetComponent<AIAttacksCapcaunul>().enabled = (capcaunuAI.nameToHave == _ch_name);
         GetComponent<AIAttacksZgripturoaica>().enabled = (zgripturoaciaAI.nameToHave == _ch_name);
+        GetComponent<AIAttacksBalaurul>().enabled = (balaurulAI.nameToHave == _ch_name);
+        GetComponent<AIAttacksCrisnicul>().enabled = (crisniculAI.nameToHave == _ch_name);
     }
 
     protected override void Update()
