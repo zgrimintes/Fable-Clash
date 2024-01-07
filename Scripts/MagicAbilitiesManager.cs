@@ -11,6 +11,7 @@ public class MagicAbilitiesManager : MonoBehaviour
     public GameObject Mist;
     public GameObject Powder;
     public GameObject Boomerang;
+    public GameObject PigsH;
     AttackManager attackManager;
     CharacterManager characterManager;
 
@@ -87,6 +88,13 @@ public class MagicAbilitiesManager : MonoBehaviour
     {
         GameObject boomerang = Instantiate(Boomerang, transform.position, Quaternion.identity);
         StartCoroutine(blazingBoomerang(boomerang, characterManager.horizontalS));
+    }
+
+    public void Crisnicul_MA()
+    {
+        GameObject hexedPig = Instantiate(PigsH, transform.position, Quaternion.identity);
+
+        attackManager.wp = hexedPig;
     }
 
     IEnumerator blazingBoomerang(GameObject obj, float dir)
