@@ -93,6 +93,7 @@ public class EnemyController : CharacterManager
         else if (transform.position.x < playerInstance.transform.position.x && transform.localScale.x < 0) transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y);
 
         checkIfAbove();
+        checkIfUnder();
     }
 
     public void MoveEnemy(Vector2 velocity)
@@ -114,6 +115,12 @@ public class EnemyController : CharacterManager
     protected void checkIfAbove() //Check if the player is above so that can change states if so
     {
         if (Physics2D.BoxCast(transform.position + new Vector3(0, 3, 0), new Vector2(.2f, .2f), 0, Vector2.up, .1f, enemyLayer) && !isDashing)
+            StartCoroutine(Dashh());
+    }
+
+    protected void checkIfUnder() //Check if the player is under so that can change states if so
+    {
+        if (Physics2D.BoxCast(transform.position + new Vector3(0, -3, 0), new Vector2(.2f, .2f), 0, Vector2.down, .1f, enemyLayer) && !isDashing)
             StartCoroutine(Dashh());
     }
 
