@@ -102,6 +102,12 @@ public class SpecialAttacksManager : MonoBehaviour
         StartCoroutine(fireSpit());
     }
 
+    public void Crisnicul_SA()
+    {
+        characterManager.applyEfects(7);
+        characterManager.popUpText("boost", 4);
+    }
+
     public IEnumerator fireSpit()
     {
 
