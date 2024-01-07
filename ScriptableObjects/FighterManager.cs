@@ -16,6 +16,7 @@ public class FighterManager : ScriptableObject
     public Sprite sprite;
     public Sprite characterIcon;
     public float timeToGetRidOfEffects;
+    public bool isBoss;
 
     public void ranged_Attack(GameObject parent)
     {
@@ -60,7 +61,7 @@ public class FighterManager : ScriptableObject
 
     public void startOfFight()
     {
-        if (characterName == "Zgripturoaica") HP = 40;
+        if (isBoss) HP = 40;
         else HP = 15;
 
         mana = 4;
