@@ -88,7 +88,7 @@ public class ChoseCharacterManager : MonoBehaviour
             case 8:
                 return "Balaurul (MediumWeight)\r\nNA - Claws Strike\r\nHA - Hard Bite\r\nRA - Fire Blast\r\nMA - Blazing Boomerang\r\nSA - Fire Breath";
             case 9:
-                return "Crisnicul (HeavyWeight)\t\nNA - Cleaver Cut\t\nHA - Cleaver Rend\r\nRA - Cleaver Heave\r\nMA - Hexed Pigs\r\nSA - Devil Trust";
+                return "Crisnicul (HeavyWeight)\r\nNA - Cleaver Cut\t\nHA - Cleaver Rend\r\nRA - Cleaver Heave\r\nMA - Hexed Pigs\r\nSA - Devil Trust";
             default:
                 return "N/A";
         }
