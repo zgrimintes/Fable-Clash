@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class OffFinghtManager : MonoBehaviour
 {
+    public static OffFinghtManager Instance;
+
     TextMeshProUGUI countdown, scoreIndicator;
     GameObject enemy, player;
 
@@ -17,6 +19,7 @@ public class OffFinghtManager : MonoBehaviour
     private void Awake()
     {
         initializeCanvas();
+        Instance = this;
 
         enemy = GameObject.Find("Enemy");
         player = GameObject.Find("Player");
