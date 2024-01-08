@@ -10,7 +10,7 @@ public class ChoseCharacterManager : MonoBehaviour
     public FighterManager[] fighterManagersP = new FighterManager[9];
     public FighterManager[] fighterManagersE = new FighterManager[9];
     public TextMeshProUGUI countdownText;
-    public TextMeshProUGUI infoTextP, infoTextE;
+    public TextMeshProUGUI infoTextP, infoTextNameP, infoTextE, infoTextNameE;
 
     public void characterChoosed(int c)
     {
@@ -59,11 +59,40 @@ public class ChoseCharacterManager : MonoBehaviour
         switch (c)
         {
             case 'p':
+                infoTextNameP.text = getName(i);
                 infoTextP.text = getInfo(i);
                 break;
             case 'e':
+                infoTextNameE.text = getName(i);
                 infoTextE.text = getInfo(i);
                 break;
+        }
+    }
+
+    private string getName(int i)
+    {
+        switch (i)
+        {
+            case 1:
+                return "Prislea (LightWeight)";
+            case 2:
+                return "Harap Alb (MediumWeight)\r\n";
+            case 3:
+                return "Greuceanu (HeavyWeight)\r\n";
+            case 4:
+                return "Spinul (LightWeight)\r\n";
+            case 5:
+                return "Capcaunul (MediumWeight)\r\n";
+            case 6:
+                return "Zmeul (HeavyWeight)\r\n";
+            case 7:
+                return "Zgripturoaica (lightWeight)";
+            case 8:
+                return "Balaurul (MediumWeight)\r\n";
+            case 9:
+                return "Crisnicul (HeavyWeight)\r\n";
+            default:
+                return "N/A";
         }
     }
 
@@ -72,23 +101,23 @@ public class ChoseCharacterManager : MonoBehaviour
         switch (i)
         {
             case 1:
-                return "Prislea (LightWeight)\r\nNA - Bow jab\r\nHa - Bow strike\r\nRA- arrow\r\nMa - Mace trow\r\nSA - arrow rain";
+                return "NA - Bow jab\r\nHa - Bow strike\r\nRA- arrow\r\nMa - Mace trow\r\nSA - arrow rain";
             case 2:
-                return "Harap Alb (MediumWeight)\r\nNA - Sword Slash\r\nHA - Sword Thrust\r\nRA - Shield Toss\r\nMA - Bear Roar\r\nSA - Sword Lunge";
+                return "NA - Sword Slash\r\nHA - Sword Thrust\r\nRA - Shield Toss\r\nMA - Bear Roar\r\nSA - Sword Lunge";
             case 3:
-                return "Greuceanu (HeavyWeight)\r\nNA - Bludgeon Slap\r\nHA - Bludgeon Slam\r\nRA - Sun Blast/Moon Blast\r\nMA - Sleep Bringer\r\nSA - Raven Water Drop";
+                return "NA - Bludgeon Slap\r\nHA - Bludgeon Slam\r\nRA - Sun Blast/Moon Blast\r\nMA - Sleep Bringer\r\nSA - Raven Water Drop";
             case 4:
-                return "Spinul (LightWeight)\r\nNA - Sickle Graze\r\nHA - Sickle Gash\r\nRA - Sickle Shy\r\nMA - Shadow Teleport\r\nSA - Sickle Hurricane";
+                return "NA - Sickle Graze\r\nHA - Sickle Gash\r\nRA - Sickle Shy\r\nMA - Shadow Teleport\r\nSA - Sickle Hurricane";
             case 5:
-                return "Capcaunul (MediumWeight)\r\nNA - Claw Tear\r\nHA - Claw Hack\r\nRA - Stone Hurl\r\nMA - Deafening Howl\r\nSA - Ground Smash";
+                return "NA - Claw Tear\r\nHA - Claw Hack\r\nRA - Stone Hurl\r\nMA - Deafening Howl\r\nSA - Ground Smash";
             case 6:
-                return "Zmeul (HeavyWeight)\r\nNA - Axe Blow\r\nHA - Axe Smash\r\nRA - Axe Throw\r\nMA - Dark Mist\r\nSA - Axe Rush";
+                return "NA - Axe Blow\r\nHA - Axe Smash\r\nRA - Axe Throw\r\nMA - Dark Mist\r\nSA - Axe Rush";
             case 7:
-                return "Zgripturoaica (lightWeight)\r\nNA - Wing Flap\r\nHA - Claw Maul\r\nRA - Wind Slash\r\nMA - Atropa Blow\r\nSA - Wind Shield";
+                return "NA - Wing Flap\r\nHA - Claw Maul\r\nRA - Wind Slash\r\nMA - Atropa Blow\r\nSA - Wind Shield";
             case 8:
-                return "Balaurul (MediumWeight)\r\nNA - Claws Strike\r\nHA - Hard Bite\r\nRA - Fire Blast\r\nMA - Blazing Boomerang\r\nSA - Fire Breath";
+                return "NA - Claws Strike\r\nHA - Hard Bite\r\nRA - Fire Blast\r\nMA - Blazing Boomerang\r\nSA - Fire Breath";
             case 9:
-                return "Crisnicul (HeavyWeight)\r\nNA - Cleaver Cut\t\nHA - Cleaver Rend\r\nRA - Cleaver Heave\r\nMA - Hexed Pigs\r\nSA - Devil Trust";
+                return "NA - Cleaver Cut\t\nHA - Cleaver Rend\r\nRA - Cleaver Heave\r\nMA - Hexed Pigs\r\nSA - Devil Trust";
             default:
                 return "N/A";
         }
