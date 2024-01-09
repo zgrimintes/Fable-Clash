@@ -16,6 +16,8 @@ public class OffFinghtManager : MonoBehaviour
     public GameObject button;
     public GameObject roundsWonTextP, roundsWonTextE;
 
+    public bool game = false;
+
     private void Awake()
     {
         initializeCanvas();
@@ -77,6 +79,8 @@ public class OffFinghtManager : MonoBehaviour
 
         if (winsEnemy == 2)
         {
+            Time.timeScale = 0;
+            game = false;
             button.SetActive(true);
             scoreIndicator.text = enemy.GetComponent<CharacterManager>().fighterManager.characterName + " has won!";
             roundsWonTextE.GetComponent<TextMeshProUGUI>().text = "2";
@@ -85,6 +89,8 @@ public class OffFinghtManager : MonoBehaviour
         }
         else if (winsPlayer == 2)
         {
+            Time.timeScale = 0;
+            game = false;
             button.SetActive(true);
             scoreIndicator.text = player.GetComponent<CharacterManager>().fighterManager.characterName + " has won!";
             roundsWonTextP.GetComponent<TextMeshProUGUI>().text = "2";
@@ -136,6 +142,7 @@ public class OffFinghtManager : MonoBehaviour
 
     public void startFight()
     {
+        Time.timeScale = 1;
         enemy.GetComponent<EnemyController>().waitState.StartFight();
         player.GetComponent<PlayerManager>().canMove = true;
         gameObject.SetActive(false);
@@ -143,6 +150,8 @@ public class OffFinghtManager : MonoBehaviour
 
     public void startOfFight()
     {
+        Time.timeScale = 1; //Reset the flowing of time
+        game = true;
         enemy.GetComponent<CharacterManager>().fighterManager.roundsWon = 0;
         player.GetComponent<CharacterManager>().fighterManager.roundsWon = 0;
     }
