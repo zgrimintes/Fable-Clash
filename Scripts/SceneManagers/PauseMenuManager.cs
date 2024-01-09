@@ -9,6 +9,8 @@ public class PauseMenuManager : MonoBehaviour
 
     private void Update()
     {
+        if (!OffFinghtManager.Instance.game) return;
+
         if (Input.GetKeyUp(KeyCode.Escape))
         {
             onPause();
