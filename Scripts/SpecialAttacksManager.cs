@@ -139,6 +139,7 @@ public class SpecialAttacksManager : MonoBehaviour
                 timeSinceLastHit = Time.time;
                 hitsCapcaunul++;
                 enemy.GetComponent<CharacterManager>().groundShake();
+                CameraShake.Shake(.5f, .3f);
             }
             yield return null;
         }
