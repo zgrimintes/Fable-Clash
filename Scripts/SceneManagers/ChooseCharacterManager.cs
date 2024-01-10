@@ -60,13 +60,20 @@ public class ChoseCharacterManager : MonoBehaviour
         switch (c)
         {
             case 'p':
+                if (i == 9) MAInfoP.fontSize = 11.5f;
+                else MAInfoP.fontSize = 12;
+
                 AbilitiesInfoNameP.text = getName(i);
                 MAInfoP.text = "Magic Ability: " + getMAInfo(i);
                 infoTextNameP.text = getName(i);
                 infoTextP.text = getInfo(i);
                 break;
             case 'e':
+                if (i == 9) MAInfoP.fontSize = 11.5f;
+                else MAInfoP.fontSize = 12;
+
                 AbilitiesInfoNameE.text = getName(i);
+                MAInfoE.text = "Magic Ability: " + getMAInfo(i);
                 infoTextNameE.text = getName(i);
                 infoTextE.text = getInfo(i);
                 break;
@@ -144,11 +151,11 @@ public class ChoseCharacterManager : MonoBehaviour
             case 6:
                 return "The mist created by the Zmeu is the result of experience in tormenting men. It deals one damage for each second spent in it.";
             case 7:
-                return "Atropa, also known as deadly nightshade, a deadly plant, is known for it's toxicity. A bit will ";
+                return "Atropa, also known as deadly nightshade, is known for it's toxicity. Even one blow can lower your speed and raise your attack cooldown.";
             case 8:
-                return "NA - Claws Strike\r\nHA - Hard Bite\r\nRA - Fire Blast\r\nMA - Blazing Boomerang\r\nSA - Fire Breath";
+                return "His fire mastery is like no other's. Balaurul can create a boomerang that travels the screen four times and deals two damage upon impact.";
             case 9:
-                return "NA - Cleaver Cut\t\nHA - Cleaver Rend\r\nRA - Cleaver Heave\r\nMA - Hexed Pigs\r\nSA - Devil Trust";
+                return "Crisnicu's hexed pigs will inflict, random, one of three effects: 1.Teleport the enemy in front of him. 2.Drain all his mana and stamina. 3.Paralyze the enemy for 2 seconds.";
             default:
                 return "N/A";
         }
