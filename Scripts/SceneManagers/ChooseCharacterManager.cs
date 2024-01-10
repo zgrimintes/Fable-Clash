@@ -11,6 +11,7 @@ public class ChoseCharacterManager : MonoBehaviour
     public FighterManager[] fighterManagersE = new FighterManager[9];
     public TextMeshProUGUI countdownText;
     public TextMeshProUGUI infoTextP, infoTextNameP, infoTextE, infoTextNameE;
+    public TextMeshProUGUI AbilitiesInfoNameP, AbilitiesInfoNameE, MAInfoP, MAInfoE, SAInfoP, SAInfoE;
 
     public void characterChoosed(int c)
     {
@@ -59,10 +60,13 @@ public class ChoseCharacterManager : MonoBehaviour
         switch (c)
         {
             case 'p':
+                AbilitiesInfoNameP.text = getName(i);
+                MAInfoP.text = "Magic Ability: " + getMAInfo(i);
                 infoTextNameP.text = getName(i);
                 infoTextP.text = getInfo(i);
                 break;
             case 'e':
+                AbilitiesInfoNameE.text = getName(i);
                 infoTextNameE.text = getName(i);
                 infoTextE.text = getInfo(i);
                 break;
@@ -114,6 +118,33 @@ public class ChoseCharacterManager : MonoBehaviour
                 return "NA - Axe Blow\r\nHA - Axe Smash\r\nRA - Axe Throw\r\nMA - Dark Mist\r\nSA - Axe Rush";
             case 7:
                 return "NA - Wing Flap\r\nHA - Claw Maul\r\nRA - Wind Slash\r\nMA - Atropa Blow\r\nSA - Wind Shield";
+            case 8:
+                return "NA - Claws Strike\r\nHA - Hard Bite\r\nRA - Fire Blast\r\nMA - Blazing Boomerang\r\nSA - Fire Breath";
+            case 9:
+                return "NA - Cleaver Cut\t\nHA - Cleaver Rend\r\nRA - Cleaver Heave\r\nMA - Hexed Pigs\r\nSA - Devil Trust";
+            default:
+                return "N/A";
+        }
+    }
+
+    private string getMAInfo(int i)
+    {
+        switch (i)
+        {
+            case 1:
+                return "Prislea's intelligence helped him in making a weapon that can deal damage and raise one's attack cooldown.";
+            case 2:
+                return "By winning the bear pelt from his father, HarapAlb's bear roar gives him strenght and increases his damage by one.";
+            case 3:
+                return "Using his magical knowledge, Greuceanu inflicts a state of sleep that paralyzes the enemy but recharges his mana and stamina.";
+            case 4:
+                return "Spinu's trickery is clearly present here. He teleports behind the enemy if possible and deals plus one damage to his next attack.";
+            case 5:
+                return "Capcaunul was a feared creature. His Deafening Howl frightens his enemyes and lowers their damage by one.";
+            case 6:
+                return "The mist created by the Zmeu is the result of experience in tormenting men. It deals one damage for each second spent in it.";
+            case 7:
+                return "Atropa, also known as deadly nightshade, a deadly plant, is known for it's toxicity. A bit will ";
             case 8:
                 return "NA - Claws Strike\r\nHA - Hard Bite\r\nRA - Fire Blast\r\nMA - Blazing Boomerang\r\nSA - Fire Breath";
             case 9:
