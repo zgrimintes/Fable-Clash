@@ -63,7 +63,7 @@ public class ChoseCharacterManager : MonoBehaviour
                 if (i == 9) MAInfoP.fontSize = 11.5f;
                 else MAInfoP.fontSize = 12;
 
-                AbilitiesInfoNameP.text = getName(i);
+                AbilitiesInfoNameP.text = getName(i + 10);
                 MAInfoP.text = "Magic Ability: " + getMAInfo(i);
                 infoTextNameP.text = getName(i);
                 infoTextP.text = getInfo(i);
@@ -72,7 +72,7 @@ public class ChoseCharacterManager : MonoBehaviour
                 if (i == 9) MAInfoP.fontSize = 11.5f;
                 else MAInfoP.fontSize = 12;
 
-                AbilitiesInfoNameE.text = getName(i);
+                AbilitiesInfoNameE.text = getName(i + 10);
                 MAInfoE.text = "Magic Ability: " + getMAInfo(i);
                 infoTextNameE.text = getName(i);
                 infoTextE.text = getInfo(i);
@@ -102,6 +102,15 @@ public class ChoseCharacterManager : MonoBehaviour
                 return "Balaurul (MediumWeight)\r\n";
             case 9:
                 return "Crisnicul (HeavyWeight)\r\n";
+            case 11: return "Prislea \r\n(LightWeight)";
+            case 12: return "Harap Alb \r\n(MediumWeight)\r\n";
+            case 13: return "Greuceanu \r\n(HeavyWeight)\r\n";
+            case 14: return "Spinul \r\n(LightWeight)\r\n";
+            case 15: return "Capcaunul \r\n(MediumWeight)\r\n";
+            case 16: return "Zmeul \r\n(HeavyWeight)\r\n";
+            case 17: return "Zgripturoaica \r\n(lightWeight)";
+            case 18: return "Balaurul \r\n(MediumWeight)\r\n";
+            case 19: return "Crisnicul \r\n(HeavyWeight)\r\n";
             default:
                 return "N/A";
         }
@@ -151,7 +160,7 @@ public class ChoseCharacterManager : MonoBehaviour
             case 6:
                 return "The mist created by the Zmeu is the result of experience in tormenting men. It deals one damage for each second spent in it.";
             case 7:
-                return "Atropa, also known as deadly nightshade, is known for it's toxicity. Even one blow can lower your speed and raise your attack cooldown.";
+                return "Atropa, also known as deadly nightshade, is famous for it's toxicity. Even one blow can lower your speed and raise your attack cooldown.";
             case 8:
                 return "His fire mastery is like no other's. Balaurul can create a boomerang that travels the screen four times and deals two damage upon impact.";
             case 9:
