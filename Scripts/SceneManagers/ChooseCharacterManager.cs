@@ -48,7 +48,7 @@ public class ChoseCharacterManager : MonoBehaviour
 
     public void startGame()
     {
-        if (player.GetComponent<CharacterManager>().fighterManager == null || enemy.GetComponent<CharacterManager>().fighterManager == null) return;
+        if (player.GetComponent<CharacterManager>().fighterManager.characterName == "NULL" || enemy.GetComponent<CharacterManager>().fighterManager.characterName == "NULL") return;
 
         gameObject.SetActive(false);
         countdownText.GetComponent<Animator>().Play("Countdown");
@@ -60,20 +60,22 @@ public class ChoseCharacterManager : MonoBehaviour
         switch (c)
         {
             case 'p':
-                if (i == 9) MAInfoP.fontSize = 11.5f;
+                if (i == 9) MAInfoP.fontSize = 11f;
                 else MAInfoP.fontSize = 12;
 
                 AbilitiesInfoNameP.text = getName(i + 10);
                 MAInfoP.text = "Magic Ability: " + getMAInfo(i);
+                SAInfoP.text = "Special Ability: " + getSAInfo(i);
                 infoTextNameP.text = getName(i);
                 infoTextP.text = getInfo(i);
                 break;
             case 'e':
-                if (i == 9) MAInfoP.fontSize = 11.5f;
-                else MAInfoP.fontSize = 12;
+                if (i == 9) MAInfoE.fontSize = 11f;
+                else MAInfoE.fontSize = 12;
 
                 AbilitiesInfoNameE.text = getName(i + 10);
                 MAInfoE.text = "Magic Ability: " + getMAInfo(i);
+                SAInfoE.text = "Special Ability: " + getSAInfo(i);
                 infoTextNameE.text = getName(i);
                 infoTextE.text = getInfo(i);
                 break;
@@ -165,6 +167,33 @@ public class ChoseCharacterManager : MonoBehaviour
                 return "His fire mastery is like no other's. Balaurul can create a boomerang that travels the screen four times and deals two damage upon impact.";
             case 9:
                 return "Crisnicu's hexed pigs will inflict, random, one of three effects: 1.Teleport the enemy in front of him. 2.Drain all his mana and stamina. 3.Paralyze the enemy for 2 seconds.";
+            default:
+                return "N/A";
+        }
+    }
+
+    private string getSAInfo(int i)
+    {
+        switch (i)
+        {
+            case 1:
+                return "Arrows are his best friends so why not make good use of them? The enemy will be surprised by 7 falling arrows each dealing one damage.";
+            case 2:
+                return "The lunge is the evidence of his courage. Harap Alb will jump and deal four damage upon falling to the ground.";
+            case 3:
+                return "Greuceanu is the one people always rely on, therefore his healing will restore five hit points in order for him to continue the fight.";
+            case 4:
+                return "His enemies will be frightened when they'll see Spinu's rotating ability. For 5 seconds if they get close to him one damage will be dealt to them.";
+            case 5:
+                return "Blinded by anger, Capcaunul will do four gorund shaking hits. If his enemy happens to be on the ground they'll take one damage.";
+            case 6:
+                return "Manace is his second name. Zmeul won't stop dashing head-first until he hits something dealing four damage to it.";
+            case 7:
+                return "Zgripturoaica has found a way to use the wind to her advantage. The shield will last four seconds and it will prevent all damage.";
+            case 8:
+                return "By breathing fire Balaurul will show his dominance ad fierce. Not only that but it will burn anyone that stands in front of it, dealing 2 damage.";
+            case 9:
+                return "His desire to rule over every realm will show Crisnicu's enemies that they have no chance of winning against his double damage.";
             default:
                 return "N/A";
         }
