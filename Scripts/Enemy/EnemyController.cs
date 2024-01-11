@@ -22,6 +22,7 @@ public class EnemyController : CharacterManager
 
     float dirToKnock = -5;
     public GameObject playerInstance;
+    public GameObject enemyInfoIcon;
     public bool isTooFar = true;
     public bool canAttack = false;
     public bool isAbove = false;
@@ -66,6 +67,7 @@ public class EnemyController : CharacterManager
     {
         GameObject iconE = GameObject.Find("CharacterIconEnemy");//Set the icon in UI
         iconE.GetComponent<Image>().sprite = icon;
+        enemyInfoIcon.GetComponent<Image>().sprite = icon;
 
         GetComponent<AIAttacksPrislea>().enabled = (prisleaAI.nameToHave == _ch_name);
         GetComponent<AIAttacksZmeu>().enabled = (zmeuAI.nameToHave == _ch_name);
