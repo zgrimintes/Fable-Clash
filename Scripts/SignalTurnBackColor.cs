@@ -9,6 +9,8 @@ public class SignalTurnBackColor : MonoBehaviour
 
     public void signal()
     {
+        if (character == null) return;
+
         character.GetComponent<CharacterManager>().turnBackColor();
         GetComponentInChildren<TextMeshProUGUI>().fontSize = 3;
     }
