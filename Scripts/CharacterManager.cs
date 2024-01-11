@@ -271,7 +271,7 @@ public class CharacterManager : AttackManager
             case 3:
                 if (name == "Player") GetComponent<PlayerManager>().canMove = false;
                 else GetComponent<EnemyController>().stateMachine.Change(GetComponent<EnemyController>().waitState);
-                timeToGetRidOfEffects = 4.5f;
+                timeToGetRidOfEffects = 3.5f;
                 break;
             case 4:
                 _NA_dmg -= 1;
