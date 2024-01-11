@@ -84,7 +84,7 @@ public class OffFinghtManager : MonoBehaviour
             button.SetActive(true);
             scoreIndicator.text = enemy.GetComponent<CharacterManager>().fighterManager.characterName + " has won!";
             roundsWonTextE.GetComponent<TextMeshProUGUI>().text = "2";
-            startOfFight(); //reset the rounds won by each character
+            //startOfFight(); //reset the rounds won by each character
             return;
         }
         else if (winsPlayer == 2)
@@ -94,7 +94,7 @@ public class OffFinghtManager : MonoBehaviour
             button.SetActive(true);
             scoreIndicator.text = player.GetComponent<CharacterManager>().fighterManager.characterName + " has won!";
             roundsWonTextP.GetComponent<TextMeshProUGUI>().text = "2";
-            startOfFight(); //reset the rounds won by each character
+            //startOfFight(); //reset the rounds won by each character
             return;
         }
         else
