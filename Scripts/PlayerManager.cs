@@ -11,6 +11,7 @@ public class PlayerManager : CharacterManager
     private float playerYScale;
     private float playerXScale;
     public bool canMove;
+    public GameObject playerInfoIcon;
 
     protected override void Start()
     {
@@ -42,6 +43,7 @@ public class PlayerManager : CharacterManager
     {
         GameObject iconP = GameObject.Find("CharacterIconPlayer");//Set the icon in UI
         iconP.GetComponent<Image>().sprite = icon;
+        playerInfoIcon.GetComponent<Image>().sprite = icon;
     }
 
     private int getKnHor()
@@ -57,9 +59,9 @@ public class PlayerManager : CharacterManager
 
     protected override void Update()
     {
-        if (!canMove) return;
-
         base.Update();
+
+        if (!canMove) return;
 
         Dash();
         if (!isDashing && Input.GetKeyDown(KeyCode.Space)) Jump();
