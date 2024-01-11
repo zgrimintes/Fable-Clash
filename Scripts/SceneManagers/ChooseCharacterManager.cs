@@ -6,6 +6,7 @@ using UnityEngine;
 public class ChoseCharacterManager : MonoBehaviour
 {
     public GameObject player, enemy;
+    public GameObject popUpTextPrefab;
 
     public FighterManager[] fighterManagersP = new FighterManager[9];
     public FighterManager[] fighterManagersE = new FighterManager[9];
@@ -48,7 +49,16 @@ public class ChoseCharacterManager : MonoBehaviour
 
     public void startGame()
     {
-        if (player.GetComponent<CharacterManager>().fighterManager.characterName == "NULL" || enemy.GetComponent<CharacterManager>().fighterManager.characterName == "NULL") return;
+        if (player.GetComponent<CharacterManager>().fighterManager.characterName == "NULL" || enemy.GetComponent<CharacterManager>().fighterManager.characterName == "NULL")
+        {
+            GameObject clone = Instantiate(popUpTextPrefab, new Vector2(0, 2.5f), Quaternion.identity);
+            clone.GetComponentInChildren<TextMeshProUGUI>().text = "Choose both characters!";
+            clone.GetComponentInChildren<TextMeshProUGUI>().color = Color.blue;
+            clone.GetComponentInChildren<TextMeshProUGUI>().fontSize = 2;
+
+
+            return;
+        }
 
         gameObject.SetActive(false);
         countdownText.GetComponent<Animator>().Play("Countdown");
@@ -191,7 +201,7 @@ public class ChoseCharacterManager : MonoBehaviour
             case 7:
                 return "Zgripturoaica has found a way to use the wind to her advantage. The shield will last four seconds and it will prevent all damage.";
             case 8:
-                return "By breathing fire Balaurul will show his dominance ad fierce. Not only that but it will burn anyone that stands in front of it, dealing 2 damage.";
+                return "By breathing fire, Balaurul will show his dominance and fierce. Not only that but it will burn anyone that stands in front of it, dealing 2 damage.";
             case 9:
                 return "His desire to rule over every realm will show Crisnicu's enemies that they have no chance of winning against his double damage.";
             default:
