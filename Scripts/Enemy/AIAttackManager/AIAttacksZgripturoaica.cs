@@ -61,7 +61,7 @@ public class AIAttacksZgripturoaica : MonoBehaviour
 
             if (allAttacks[i] == 3)
             {
-                attacks[3] -= .5f;
+                attacks[3] = -5f;
             }
         }
     }
