@@ -20,6 +20,7 @@ public class OffFinghtManager : MonoBehaviour
 
     private void Awake()
     {
+        Time.timeScale = 1;
         initializeCanvas();
         Instance = this;
 
