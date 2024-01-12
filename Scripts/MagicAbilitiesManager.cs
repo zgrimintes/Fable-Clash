@@ -116,7 +116,7 @@ public class MagicAbilitiesManager : MonoBehaviour
                 }
             }
 
-            if (obj.transform.position.x < -12f || obj.transform.position.x > 12f)
+            if (obj.transform.position.x < -13f || obj.transform.position.x > 13f)
             {
                 dir *= -1;
                 turns++;
