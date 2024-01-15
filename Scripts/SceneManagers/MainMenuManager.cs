@@ -15,4 +15,9 @@ public class MainMenuManager : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void StoryMode()
+    {
+        SceneManager.LoadScene("StoryMode");
+    }
 }
