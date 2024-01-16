@@ -26,5 +26,6 @@ public class TutorialManager : MonoBehaviour
         gBasics1.SetActive(false);
         gBasics2.SetActive(false);
         gControls.SetActive(false);
+        UI.SetActive(false);
     }
 }
