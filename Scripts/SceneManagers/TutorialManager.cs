@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TutorialManager : MonoBehaviour
 {
-    public GameObject gBasics1, gBasics2, gControls;
+    public GameObject gBasics1, gBasics2, gControls, UI;
 
     public void GameBasics(int infos)
     {
@@ -14,6 +14,11 @@ public class TutorialManager : MonoBehaviour
     public void Controls()
     {
         gControls.SetActive(true);
+    }
+
+    public void showUI()
+    {
+        UI.SetActive(true);
     }
 
     public void backToTutorial()
