@@ -20,4 +20,9 @@ public class MainMenuManager : MonoBehaviour
     {
         SceneManager.LoadScene("StoryMode");
     }
+
+    public void Tutorial()
+    {
+        SceneManager.LoadScene("TutorialScene");
+    }
 }
