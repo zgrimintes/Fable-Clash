@@ -97,5 +97,9 @@ public class PlayerManager : CharacterManager
         {
             try_SA();
         }
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            Block();
+        }
     }
 }
