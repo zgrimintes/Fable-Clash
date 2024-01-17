@@ -29,6 +29,8 @@ public class EnemyController : CharacterManager
     [HideInInspector] public bool isJumping = false; //Remove if not use later
     [HideInInspector] public bool isSpecial = false;
 
+    float chanceToBlock = .5f;
+
     #region State Machine Variables
 
     public EnemyStateMachine stateMachine;
@@ -85,8 +87,11 @@ public class EnemyController : CharacterManager
         base.Update();
         stateMachine.CurrentEnemyState.FrameUpdate();
 
-        if (transform.position.x - playerInstance.transform.position.x > 10f || transform.position.x - playerInstance.transform.position.x < -10f) tryDash();
-        if (playerInstance.GetComponent<CharacterManager>().isDashing) tryDashingOver();
+        if (HP < 7) chanceToBlock += 1f;
+        if (HP < 4) chanceToBlock += .5f;
+
+        if (transform.position.x - playerInstance.transform.position.x > 10f || transform.position.x - playerInstance.transform.position.x < -10f) //tryDash();
+            if (playerInstance.GetComponent<CharacterManager>().isDashing) tryDashingOver();
 
         if (rb.velocity.y != 0) isJumping = true;
         else isJumping = false;
@@ -94,8 +99,30 @@ public class EnemyController : CharacterManager
         if (transform.position.x > playerInstance.transform.position.x && transform.localScale.x > 0) transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y);
         else if (transform.position.x < playerInstance.transform.position.x && transform.localScale.x < 0) transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y);
 
+        if (Random.Range(0, 4) < chanceToBlock) decideToBlock(1);
+
         checkIfAbove();
         checkIfUnder();
+    }
+
+    public void decideToBlock(int i)
+    {
+        if (!canAttack) return;
+        if (!canTakeDamage) return;
+
+        if (Time.time - playerInstance.GetComponent<CharacterManager>().lastAttack > playerInstance.GetComponent<CharacterManager>().cooldown)
+            return;
+
+        switch (i)
+        {
+            case 1:
+                if (Physics2D.CircleCast(GetComponent<AttackManager>().attackPoint.position, 5f, Vector2.one, 0f, LayerMask.GetMask("Player")))
+                    Block();
+                break;
+            case 2:
+                Block();
+                break;
+        }
     }
 
     public void MoveEnemy(Vector2 velocity)
