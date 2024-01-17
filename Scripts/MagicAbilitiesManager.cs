@@ -23,9 +23,17 @@ public class MagicAbilitiesManager : MonoBehaviour
         characterManager = GetComponent<CharacterManager>();
     }
 
+    public void setTag(GameObject obj)
+    {
+        if (gameObject.name == "Player") obj.tag = "Player";
+        if (gameObject.name == "Enemy") obj.tag = "Enemy";
+    }
+
     public void Praslea_MA(GameObject wp)
     {
         wp = Instantiate(Mace, transform.position, Quaternion.identity);
+
+        setTag(wp);
 
         attackManager.wp = wp;
     }
@@ -80,6 +88,7 @@ public class MagicAbilitiesManager : MonoBehaviour
     public void Zgripturoaica_MA()
     {
         GameObject projectile = Instantiate(Powder, transform.position, Quaternion.identity);
+        setTag(projectile);
 
         attackManager.wp = projectile;
     }
@@ -87,12 +96,14 @@ public class MagicAbilitiesManager : MonoBehaviour
     public void Balaurul_MA()
     {
         GameObject boomerang = Instantiate(Boomerang, transform.position, Quaternion.identity);
+        setTag(boomerang);
         StartCoroutine(blazingBoomerang(boomerang, characterManager.horizontalS));
     }
 
     public void Crisnicul_MA()
     {
         GameObject hexedPig = Instantiate(PigsH, transform.position, Quaternion.identity);
+        setTag(hexedPig);
 
         attackManager.wp = hexedPig;
     }
