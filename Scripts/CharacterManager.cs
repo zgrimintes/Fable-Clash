@@ -410,7 +410,7 @@ public class CharacterManager : AttackManager
                     else GetComponent<EnemyController>().stateMachine.Change(GetComponent<EnemyController>().chaseState);
                     timeToGetRidOfEffects = defaultValues[7];
 
-                    hasEffects[6] = false;
+                    hasEffects[9] = false;
                     break;
             }
         }
