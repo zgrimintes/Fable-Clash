@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -15,6 +16,7 @@ public class CharacterManager : AttackManager
     [HideInInspector] public int mana;
     [HideInInspector] public int HP;
     [HideInInspector] public int stamina;
+    [HideInInspector] public int blocks = 3;
     [HideInInspector] public float speed;
     [HideInInspector] public string _ch_name;
     [HideInInspector] public float cooldown;
@@ -44,7 +46,7 @@ public class CharacterManager : AttackManager
     public BarsManager healthBar;
     public BarsManager manaBar;
     public BarsManager staminaBar;
-    //public BarsManager healthBar;
+    public BarsManager blockBar;
     public GameObject roundsWonText;
     public GameObject popUpTextPrefab;
     public FighterManager fighterManager;
@@ -80,8 +82,9 @@ public class CharacterManager : AttackManager
     public void setMaxValueBars()
     {
         if (healthBar != null) healthBar.setMaxValue(HP);
-        if (healthBar != null) manaBar.setMaxValue(mana);
+        if (manaBar != null) manaBar.setMaxValue(mana);
         if (healthBar != null) staminaBar.setMaxValue(stamina);
+        if (blockBar != null) blockBar.setMaxValue(blocks);
     }
 
     protected override void Update()
@@ -139,9 +142,9 @@ public class CharacterManager : AttackManager
     public void updateText() //Sould be called updateBars 
     {
         if (healthBar != null) healthBar.setValue(HP);
-        if (healthBar != null) manaBar.setValue(mana);
-        if (healthBar != null) staminaBar.setValue(stamina);
-        //if (healthBar != null) healthBar.setValue(HP);
+        if (manaBar != null) manaBar.setValue(mana);
+        if (staminaBar != null) staminaBar.setValue(stamina);
+        if (blockBar != null) blockBar.setValue(blocks);
 
         //There is no use for text since now all stats are shown up on bars
         /*string hName = "HealthP", mName = "ManaP ", sName = "StaminaP";
@@ -236,6 +239,7 @@ public class CharacterManager : AttackManager
         HP = fighterManager.HP;
         stamina = fighterManager.stamina;
         mana = fighterManager.mana;
+        blocks = 3;
 
         //Update score
         roundsWonText.GetComponent<TextMeshProUGUI>().text = fighterManager.roundsWon.ToString();
@@ -472,6 +476,22 @@ public class CharacterManager : AttackManager
         {
             rb.velocity = new Vector2(rb.velocity.y, jumpForce);
         }
+    }
+
+    public async void Block()
+    {
+        if (blocks < 1) return;
+
+        blocks--;
+        updateText();
+
+        canTakeDamage = false;
+        Debug.Log("Blocks");
+
+        await Task.Delay(800);
+
+        Debug.Log("Doesn't block");
+        canTakeDamage = true;
     }
 
     public void take_damage(float damage)
