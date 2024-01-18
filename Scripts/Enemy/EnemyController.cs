@@ -30,6 +30,7 @@ public class EnemyController : CharacterManager
     [HideInInspector] public bool isSpecial = false;
 
     float chanceToBlock = .5f;
+    float lastBlock = 0;
 
     #region State Machine Variables
 
@@ -87,8 +88,8 @@ public class EnemyController : CharacterManager
         base.Update();
         stateMachine.CurrentEnemyState.FrameUpdate();
 
-        if (HP < 7) chanceToBlock += 1f;
-        if (HP < 4) chanceToBlock += .5f;
+        if (HP < 7) chanceToBlock = 1f;
+        if (HP < 4) chanceToBlock = 2f;
 
         if (transform.position.x - playerInstance.transform.position.x > 10f || transform.position.x - playerInstance.transform.position.x < -10f) //tryDash();
             if (playerInstance.GetComponent<CharacterManager>().isDashing) tryDashingOver();
@@ -108,12 +109,14 @@ public class EnemyController : CharacterManager
     public void decideToBlock(int i)
     {
         if (!canAttack) return;
-        if (!canTakeDamage) return;
+        if (Time.time - lastBlock < 2f) return; //So it doesn't block to often
+
+        lastBlock = Time.time;
 
         if (Time.time - playerInstance.GetComponent<CharacterManager>().lastAttack > playerInstance.GetComponent<CharacterManager>().cooldown)
             return;
 
-        switch (i)
+        switch (i) //Two cases for short and long range
         {
             case 1:
                 if (Physics2D.CircleCast(GetComponent<AttackManager>().attackPoint.position, 5f, Vector2.one, 0f, LayerMask.GetMask("Player")))
