@@ -143,7 +143,7 @@ public class MagicAbilitiesManager : MonoBehaviour
     public bool canTeleportTo(Vector2 teleportPos)
     {
         Vector2 teleportPosCheck = new Vector2(teleportPos.x, teleportPos.y + .5f);
-        if (Physics2D.BoxCast(teleportPosCheck, GetComponent<CharacterManager>().coll.bounds.size, 0f, Vector2.up, 0f, LayerMask.GetMask("Default")))
+        if (Physics2D.BoxCast(teleportPosCheck, GetComponent<CharacterManager>().coll.bounds.size, 0f, Vector2.up, 0f, LayerMask.GetMask("Ground")))
             return false;
         return true;
     }
