@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ChoseCharacterManager : MonoBehaviour
 {
+    public TMP_FontAsset fontToChange;
     public GameObject player, enemy;
     public GameObject popUpTextPrefab;
 
@@ -56,6 +58,7 @@ public class ChoseCharacterManager : MonoBehaviour
             clone.GetComponentInChildren<TextMeshProUGUI>().color = Color.blue;
             clone.GetComponentInChildren<TextMeshProUGUI>().fontSize = 2;
 
+            CameraShake.Shake(.2f, .1f);
 
             return;
         }
@@ -77,6 +80,8 @@ public class ChoseCharacterManager : MonoBehaviour
                 MAInfoP.text = "Magic Ability: " + getMAInfo(i);
                 SAInfoP.text = "Special Ability: " + getSAInfo(i);
                 infoTextNameP.text = getName(i);
+                infoTextNameP.font = fontToChange;
+                infoTextP.font = fontToChange;
                 infoTextP.text = getInfo(i);
                 break;
             case 'e':
@@ -87,6 +92,8 @@ public class ChoseCharacterManager : MonoBehaviour
                 MAInfoE.text = "Magic Ability: " + getMAInfo(i);
                 SAInfoE.text = "Special Ability: " + getSAInfo(i);
                 infoTextNameE.text = getName(i);
+                infoTextNameE.font = fontToChange;
+                infoTextE.font = fontToChange;
                 infoTextE.text = getInfo(i);
                 break;
         }
@@ -133,7 +140,7 @@ public class ChoseCharacterManager : MonoBehaviour
         switch (i)
         {
             case 1:
-                return "NA - Bow jab\r\nHa - Bow strike\r\nRA- arrow\r\nMa - Mace trow\r\nSA - arrow rain";
+                return "NA - Bow jab\r\nHa - Bow strike\r\nRA - arrow\r\nMa - Mace trow\r\nSA - arrow rain";
             case 2:
                 return "NA - Sword Slash\r\nHA - Sword Thrust\r\nRA - Shield Toss\r\nMA - Bear Roar\r\nSA - Sword Lunge";
             case 3:
@@ -207,5 +214,21 @@ public class ChoseCharacterManager : MonoBehaviour
             default:
                 return "N/A";
         }
+    }
+
+    public void pickMatch()
+    {
+        int Rch = Random.Range(1, 10), Ren = Random.Range(1, 10);
+
+        if (Rch == 10) Rch = 9;
+        if (Ren == 10) Ren = 9;
+
+        characterChoosed(Rch);
+        enemyChoosed(Ren);
+    }
+
+    public void backToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 }
