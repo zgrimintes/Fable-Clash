@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -31,6 +32,7 @@ public class EnemyController : CharacterManager
 
     float chanceToBlock = .5f;
     float lastBlock = 0;
+    float lastWaited = 0;
 
     #region State Machine Variables
 
@@ -72,6 +74,11 @@ public class EnemyController : CharacterManager
         iconE.GetComponent<Image>().sprite = icon;
         enemyInfoIcon.GetComponent<Image>().sprite = icon;
 
+        setAIScripts();
+    }
+
+    private void setAIScripts()
+    {
         GetComponent<AIAttacksPrislea>().enabled = (prisleaAI.nameToHave == _ch_name);
         GetComponent<AIAttacksZmeu>().enabled = (zmeuAI.nameToHave == _ch_name);
         GetComponent<AIAttacksHarapAlb>().enabled = (harapalbAI.nameToHave == _ch_name);
@@ -102,30 +109,34 @@ public class EnemyController : CharacterManager
 
         if (Random.Range(0, 4) < chanceToBlock) decideToBlock(1);
 
+        if (Time.time - lastWaited > 4f + Random.Range(-1, 1))
+        {
+            waitToAttack();
+            lastWaited = Time.time;
+        }
+
         checkIfAbove();
         checkIfUnder();
     }
 
     public void decideToBlock(int i)
     {
-        if (!canAttack) return;
-        if (Time.time - lastBlock < 2f) return; //So it doesn't block to often
-
-        lastBlock = Time.time;
-
         if (Time.time - playerInstance.GetComponent<CharacterManager>().lastAttack > playerInstance.GetComponent<CharacterManager>().cooldown)
             return;
 
-        switch (i) //Two cases for short and long range
+        if (i == 2)
         {
-            case 1:
-                if (Physics2D.CircleCast(GetComponent<AttackManager>().attackPoint.position, 5f, Vector2.one, 0f, LayerMask.GetMask("Player")))
-                    Block();
-                break;
-            case 2:
-                Block();
-                break;
+            Block();
+            return;
         }
+
+        if (!canAttack) return;
+        if (Time.time - lastBlock < 3f) return; //So it doesn't block to often
+
+        lastBlock = Time.time;
+
+        if (Physics2D.CircleCast(GetComponent<AttackManager>().attackPoint.position, 5f, Vector2.one, 0f, LayerMask.GetMask("Player")))
+            Block();
     }
 
     public void MoveEnemy(Vector2 velocity)
@@ -177,6 +188,40 @@ public class EnemyController : CharacterManager
         {
             Jump();
             StartCoroutine(Dashh());
+        }
+    }
+
+    protected async void waitToAttack()
+    {
+        if (!canAttack) return;
+
+        float chanceToWait = Random.Range(0, 2.5f);
+
+        if (chanceToWait < 1)
+        {
+            stateMachine.Change(waitState);
+
+            await Task.Delay(1000);
+
+            stateMachine.Change(chaseState);
+        }
+        else if (chanceToWait < 2)
+        {
+            GetComponent<AIAttacksPrislea>().enabled =
+            GetComponent<AIAttacksZmeu>().enabled =
+            GetComponent<AIAttacksHarapAlb>().enabled =
+            GetComponent<AIAttacksSpinul>().enabled =
+            GetComponent<AIAttacksGreuceanu>().enabled =
+            GetComponent<AIAttacksCapcaunul>().enabled =
+            GetComponent<AIAttacksZgripturoaica>().enabled =
+            GetComponent<AIAttacksBalaurul>().enabled =
+            GetComponent<AIAttacksCrisnicul>().enabled = false;
+            Debug.Log("Stopped attacking");
+
+            await Task.Delay(1400); //Wait a second until can attack again
+
+            Debug.Log("Back to attack");
+            setAIScripts();
         }
     }
 }
