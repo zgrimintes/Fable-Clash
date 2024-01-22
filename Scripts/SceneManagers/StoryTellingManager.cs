@@ -81,8 +81,13 @@ public class StoryTellingManager : MonoBehaviour
                 return "Praslea vs Zmeul\r\n";
             case 17:
                 setFight(1);
+                storyText1.GetComponent<TextMeshProUGUI>().font = arhaicFont;
+                return "2nd fight:";
+            case 18: return "Harap-Alb vs Spinul\r\n";
+            case 19:
                 return "";
-            case 18: return "";
+            case 20:
+                return "test";
             default:
                 return "N/A";
         }
