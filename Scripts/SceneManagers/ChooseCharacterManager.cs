@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class ChoseCharacterManager : MonoBehaviour
 {
+    public static ChoseCharacterManager instance;
+
     public TMP_FontAsset fontToChange;
     public GameObject player, enemy;
     public GameObject popUpTextPrefab;
@@ -15,6 +17,11 @@ public class ChoseCharacterManager : MonoBehaviour
     public TextMeshProUGUI countdownText;
     public TextMeshProUGUI infoTextP, infoTextNameP, infoTextE, infoTextNameE;
     public TextMeshProUGUI AbilitiesInfoNameP, AbilitiesInfoNameE, MAInfoP, MAInfoE, SAInfoP, SAInfoE;
+
+    private void Start()
+    {
+        instance = this;
+    }
 
     public void characterChoosed(int c)
     {
@@ -34,7 +41,7 @@ public class ChoseCharacterManager : MonoBehaviour
             player.GetComponent<PlayerManager>().changeIcon();
         }
 
-        showInfo(c, 'p');
+        if (!StoryTellingManager.story) showInfo(c, 'p');
     }
 
     public void enemyChoosed(int c)
@@ -46,7 +53,7 @@ public class ChoseCharacterManager : MonoBehaviour
             enemy.GetComponent<AttackManager>().setCharacteristics();
             enemy.GetComponent<EnemyController>().choseAIScript();
         }
-        showInfo(c, 'e');
+        if (!StoryTellingManager.story) showInfo(c, 'e');
     }
 
     public void startGame()
