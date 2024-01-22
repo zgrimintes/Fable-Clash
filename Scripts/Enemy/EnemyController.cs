@@ -203,6 +203,7 @@ public class EnemyController : CharacterManager
 
             await Task.Delay(1000);
 
+            if (hasLost || playerInstance.GetComponent<CharacterManager>().hasLost) return;
             stateMachine.Change(chaseState);
         }
         else if (chanceToWait < 2)
