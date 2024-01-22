@@ -43,7 +43,7 @@ public class PlayerManager : CharacterManager
     {
         GameObject iconP = GameObject.Find("CharacterIconPlayer");//Set the icon in UI
         iconP.GetComponent<Image>().sprite = icon;
-        playerInfoIcon.GetComponent<Image>().sprite = icon;
+        if (playerInfoIcon) playerInfoIcon.GetComponent<Image>().sprite = icon;
     }
 
     private int getKnHor()
