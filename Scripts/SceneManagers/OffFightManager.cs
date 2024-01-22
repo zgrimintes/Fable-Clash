@@ -15,6 +15,7 @@ public class OffFinghtManager : MonoBehaviour
 
     public GameObject button;
     public GameObject roundsWonTextP, roundsWonTextE;
+    public GameObject dialogueCanvas, dialogueP, dialogueE;
 
     public bool game = false;
 
@@ -52,6 +53,9 @@ public class OffFinghtManager : MonoBehaviour
     {
         switch (n)
         {
+            case 4:
+                countdown.text = "3";
+                break;
             case 3:
                 countdown.text = "2";
                 break;
@@ -80,21 +84,38 @@ public class OffFinghtManager : MonoBehaviour
 
         if (winsEnemy == 2)
         {
-            Time.timeScale = 0;
             game = false;
-            button.SetActive(true);
             scoreIndicator.text = enemy.GetComponent<CharacterManager>().fighterManager.characterName + " has won!";
             roundsWonTextE.GetComponent<TextMeshProUGUI>().text = "2";
+            Time.timeScale = 0;
+
+            if (StoryTellingManager.story)
+            {
+                await Task.Delay(2000);
+                fadeText(0);
+                return;
+            }
+
+            button.SetActive(true);
             //startOfFight(); //reset the rounds won by each character
             return;
         }
         else if (winsPlayer == 2)
         {
-            Time.timeScale = 0;
             game = false;
-            button.SetActive(true);
             scoreIndicator.text = player.GetComponent<CharacterManager>().fighterManager.characterName + " has won!";
             roundsWonTextP.GetComponent<TextMeshProUGUI>().text = "2";
+            Time.timeScale = 0;
+
+            if (StoryTellingManager.story)
+            {
+                await Task.Delay(2000);
+                fadeText(1);
+                return;
+            }
+
+
+            button.SetActive(true);
             //startOfFight(); //reset the rounds won by each character
             return;
         }
@@ -103,9 +124,30 @@ public class OffFinghtManager : MonoBehaviour
             scoreIndicator.text = winsPlayer + " - " + winsEnemy;
         }
 
+        Time.timeScale = 0;
         await Task.Delay(1500);
-
+        Time.timeScale = 1;
         rematch();
+    }
+
+    public void fadeText(int i)
+    {
+        scoreIndicator.text = "3";
+        scoreIndicator.enabled = false;
+        dialogueCanvas.GetComponent<EndOfFightDialogueManager>().startOfDialogue(i);
+
+        if (i == 0)
+        {
+            dialogueCanvas.SetActive(true);
+            dialogueE.SetActive(true);
+            dialogueP.SetActive(false);
+        }
+        else
+        {
+            dialogueCanvas.SetActive(true);
+            dialogueP.SetActive(true);
+            dialogueE.SetActive(false);
+        }
     }
 
     public void rematch()
@@ -151,10 +193,26 @@ public class OffFinghtManager : MonoBehaviour
 
     public void startOfFight()
     {
+        if (StoryTellingManager.story)
+        {
+            dialogueCanvas.SetActive(false);
+        }
+
+        resetEnvironment();
+
         Time.timeScale = 1; //Reset the flowing of time
         game = true;
         enemy.GetComponent<CharacterManager>().fighterManager.roundsWon = 0;
+        enemy.GetComponent<CharacterManager>().fighterManager.startOfFight();
+        enemy.transform.position = new Vector2(10.58f, -.5f);
+        enemy.GetComponent<CharacterManager>().hasLost = false;
+        roundsWonTextE.GetComponent<TextMeshProUGUI>().text = "0";
+
+        player.GetComponent<CharacterManager>().hasLost = false;
         player.GetComponent<CharacterManager>().fighterManager.roundsWon = 0;
+        player.GetComponent<CharacterManager>().fighterManager.startOfFight();
+        player.transform.position = new Vector2(-10.58f, -.5f);
+        roundsWonTextP.GetComponent<TextMeshProUGUI>().text = "0";
     }
 
     public void backToMainMenu()
