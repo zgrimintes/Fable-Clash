@@ -201,7 +201,7 @@ public class EnemyController : CharacterManager
         {
             stateMachine.Change(waitState);
 
-            await Task.Delay(1000);
+            await Task.Delay(2000);
 
             if (hasLost || playerInstance.GetComponent<CharacterManager>().hasLost) return;
             stateMachine.Change(chaseState);
@@ -219,7 +219,7 @@ public class EnemyController : CharacterManager
             GetComponent<AIAttacksCrisnicul>().enabled = false;
             Debug.Log("Stopped attacking");
 
-            await Task.Delay(1400); //Wait a second until can attack again
+            await Task.Delay(2400); //Wait a second until can attack again
 
             Debug.Log("Back to attack");
             setAIScripts();
