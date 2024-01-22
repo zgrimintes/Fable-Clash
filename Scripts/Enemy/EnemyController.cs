@@ -109,7 +109,7 @@ public class EnemyController : CharacterManager
 
         if (Random.Range(0, 4) < chanceToBlock) decideToBlock(1);
 
-        if (Time.time - lastWaited > 4f + Random.Range(-1, 1))
+        if (Time.time - lastWaited > 6f + Random.Range(-1, 1))
         {
             waitToAttack();
             lastWaited = Time.time;
@@ -201,7 +201,7 @@ public class EnemyController : CharacterManager
         {
             stateMachine.Change(waitState);
 
-            await Task.Delay(2000);
+            await Task.Delay(1400);
 
             if (hasLost || playerInstance.GetComponent<CharacterManager>().hasLost) return;
             stateMachine.Change(chaseState);
