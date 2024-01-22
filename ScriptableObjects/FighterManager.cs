@@ -18,6 +18,8 @@ public class FighterManager : ScriptableObject
     public float timeToGetRidOfEffects;
     public bool isBoss;
 
+    public string[] Dialogues = new string[2]; //0 - WinDialogue; 1 - LoseDialogue;
+
     public void ranged_Attack(GameObject parent)
     {
         stamina -= 1;
