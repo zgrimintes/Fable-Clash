@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EndOfFightDialogueManager : MonoBehaviour
 {
@@ -9,6 +11,7 @@ public class EndOfFightDialogueManager : MonoBehaviour
     public TextMeshProUGUI textDialogueP, textDialogueE;
     public GameObject iconDialogueP, iconDialogueE, dP, dE;
     public GameObject rcButton;
+    public GameObject storyCanvas;
 
     int dialogues = 1;
     int firstD;
@@ -29,8 +32,6 @@ public class EndOfFightDialogueManager : MonoBehaviour
             dP.SetActive(true);
             textDialogueP.enabled = true;
             iconDialogueP.SetActive(true);
-
-            firstD = 1;
         }
         else
         {
@@ -41,8 +42,6 @@ public class EndOfFightDialogueManager : MonoBehaviour
             dE.SetActive(true);
             textDialogueE.enabled = true;
             iconDialogueE.SetActive(true);
-
-            firstD = 0;
         }
     }
 
@@ -50,6 +49,9 @@ public class EndOfFightDialogueManager : MonoBehaviour
     {
         firstD = i; //Set the starting dialogue
         dialogues = 1;
+
+        iconDialogueP.GetComponent<Image>().sprite = player.GetComponent<CharacterManager>().fighterManager.characterIcon;
+        iconDialogueE.GetComponent<Image>().sprite = enemy.GetComponent<CharacterManager>().fighterManager.characterIcon;
 
         if (i == 0)
         {
@@ -63,5 +65,24 @@ public class EndOfFightDialogueManager : MonoBehaviour
             textDialogueP.text = player.GetComponent<CharacterManager>().fighterManager.Dialogues[0];
             textDialogueE.text = enemy.GetComponent<CharacterManager>().fighterManager.Dialogues[1];
         }
+    }
+
+    public void reButtonClick()
+    {
+        if (firstD == 0) resetFight();
+        else continueButton();
+    }
+
+    public void resetFight()
+    {
+        ChoseCharacterManager.instance.characterChoosed(1);
+        ChoseCharacterManager.instance.enemyChoosed(6);
+        ChoseCharacterManager.instance.startGame();
+    }
+
+    public void continueButton()
+    {
+        storyCanvas.SetActive(true);
+        StoryTellingManager.Instance.nextStory(19);
     }
 }
