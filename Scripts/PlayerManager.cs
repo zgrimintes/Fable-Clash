@@ -23,7 +23,11 @@ public class PlayerManager : CharacterManager
 
     void FixedUpdate()
     {
-        if (!canMove) return;
+        if (!canMove)
+        {
+            rb.velocity = Vector2.zero;
+            return;
+        }
 
         horizontal = Input.GetAxisRaw("Horizontal");
 
