@@ -72,7 +72,7 @@ public class EnemyController : CharacterManager
     {
         GameObject iconE = GameObject.Find("CharacterIconEnemy");//Set the icon in UI
         iconE.GetComponent<Image>().sprite = icon;
-        enemyInfoIcon.GetComponent<Image>().sprite = icon;
+        if (enemyInfoIcon) enemyInfoIcon.GetComponent<Image>().sprite = icon;
 
         setAIScripts();
     }
