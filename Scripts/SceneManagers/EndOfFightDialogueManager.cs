@@ -83,7 +83,6 @@ public class EndOfFightDialogueManager : MonoBehaviour
 
     public void resetFight()
     {
-        StoryTellingManager.nextStoryInstance -= 2; //Go back to the story instance of the start of the fight
         SceneManager.LoadScene("StoryTelling");
         StoryTellingManager.Instance.setFight(StoryTellingManager.currentFight);
     }
@@ -93,6 +92,5 @@ public class EndOfFightDialogueManager : MonoBehaviour
         StoryTellingManager.fightsWon[StoryTellingManager.currentFight] = true; //Set the current fight won
         storyCanvas.SetActive(true);
         SceneManager.LoadScene("StoryTelling");
-        StoryTellingManager.Instance.nextStory(18);
     }
 }
