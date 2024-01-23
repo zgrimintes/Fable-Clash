@@ -8,14 +8,31 @@ public class StoryTellingManager : MonoBehaviour
     public static StoryTellingManager Instance;
 
     public TMP_FontAsset normalFont, arhaicFont;
-    public GameObject storyText1, storyText2;
+    public GameObject storyText1, storyText2, startStoryText;
     public static bool finishedAnimation = false;
     public static bool story = true;
-    public int nextStoryInstance = 0;
+    public static int currentFight;
+    public static int nextStoryInstance = 0;
+    public static bool[] fightsWon = new bool[9];
 
     private void Start()
     {
         Instance = this;
+
+        if (startStoryText == null) return;
+
+        if (nextStoryInstance == 0)
+        {
+            startStoryText.SetActive(true);
+        }
+        else
+        {
+            if (!fightsWon[currentFight]) setFight(currentFight);
+            else
+            {
+                continueButton();
+            }
+        }
     }
 
     public void storyStarted()
@@ -40,7 +57,10 @@ public class StoryTellingManager : MonoBehaviour
 
     public void parametersForText()
     {
+        startStoryText.SetActive(false);
+        storyText1.SetActive(true);
         storyText2.SetActive(true);
+
         storyText1.GetComponent<Animator>().enabled = false;
         storyText1.GetComponent<TextMeshProUGUI>().font = normalFont;
         storyText1.GetComponent<TextMeshProUGUI>().fontSize = 28;
@@ -81,13 +101,25 @@ public class StoryTellingManager : MonoBehaviour
                 return "Praslea vs Zmeul\r\n";
             case 17:
                 setFight(1);
+                return "";
+            case 18: return "";
+            case 19:
+                storyText1.GetComponent<TextMeshProUGUI>().font = arhaicFont;
+                return "Prislea has won his fight! Now it is time for the others to do so.";
+            case 20: return "";
+            case 21:
                 storyText1.GetComponent<TextMeshProUGUI>().font = arhaicFont;
                 return "2nd fight:";
-            case 18: return "Harap-Alb vs Spinul\r\n";
-            case 19:
+            case 22:
+                storyText2.GetComponent<TextMeshProUGUI>().font = arhaicFont;
+                return "Harap-Alb vs Spinul\r\n";
+            case 23:
+                setFight(2);
                 return "";
-            case 20:
-                return "test";
+            case 24:
+                storyText1.GetComponent<TextMeshProUGUI>().font = arhaicFont;
+                return "Harap-Alb has won his fight too! Greuceanu's fight comes next.";
+            case 25: return "";
             default:
                 return "N/A";
         }
@@ -95,9 +127,19 @@ public class StoryTellingManager : MonoBehaviour
 
     public void setFight(int fightNb)
     {
+        currentFight = fightNb;
         gameObject.SetActive(false);
-        ChoseCharacterManager.instance.characterChoosed(1);
-        ChoseCharacterManager.instance.enemyChoosed(6);
+        if (fightNb == 1)
+        {
+            ChoseCharacterManager.instance.characterChoosed(1);
+            ChoseCharacterManager.instance.enemyChoosed(6);
+        }
+        else if (fightNb == 2)
+        {
+            ChoseCharacterManager.instance.characterChoosed(2);
+            ChoseCharacterManager.instance.enemyChoosed(4);
+        }
+
         ChoseCharacterManager.instance.startGame();
     }
 }
