@@ -27,7 +27,8 @@ public class StoryTellingManager : MonoBehaviour
         }
         else
         {
-            if (!fightsWon[currentFight]) setFight(currentFight);
+            if (!fightsWon[currentFight])
+                setFight(currentFight);
             else
             {
                 continueButton();
@@ -116,10 +117,22 @@ public class StoryTellingManager : MonoBehaviour
             case 23:
                 setFight(2);
                 return "";
-            case 24:
+            case 24: return "";
+            case 25:
                 storyText1.GetComponent<TextMeshProUGUI>().font = arhaicFont;
                 return "Harap-Alb has won his fight too! Greuceanu's fight comes next.";
-            case 25: return "";
+            case 26: return "";
+            case 27:
+                storyText1.GetComponent<TextMeshProUGUI>().font = arhaicFont;
+                return "3rd fight:";
+            case 28:
+                storyText2.GetComponent<TextMeshProUGUI>().font = arhaicFont;
+                return "Harap-Alb vs Spinul\r\n";
+            case 29:
+                setFight(3);
+                return "";
+            case 30: return "";
+
             default:
                 return "N/A";
         }
@@ -138,6 +151,11 @@ public class StoryTellingManager : MonoBehaviour
         {
             ChoseCharacterManager.instance.characterChoosed(2);
             ChoseCharacterManager.instance.enemyChoosed(4);
+        }
+        else if (fightNb == 3)
+        {
+            ChoseCharacterManager.instance.characterChoosed(3);
+            ChoseCharacterManager.instance.enemyChoosed(5);
         }
 
         ChoseCharacterManager.instance.startGame();
