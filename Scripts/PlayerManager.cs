@@ -30,6 +30,8 @@ public class PlayerManager : CharacterManager
         }
 
         horizontal = Input.GetAxisRaw("Horizontal");
+        Debug.Log(horizontal);
+        animator.SetFloat("speed", Mathf.Abs(horizontal));
 
         Vector2 movement = new Vector2(horizontal * speed, rb.velocity.y);
 
