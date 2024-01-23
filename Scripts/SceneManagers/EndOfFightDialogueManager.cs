@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class EndOfFightDialogueManager : MonoBehaviour
@@ -18,8 +19,13 @@ public class EndOfFightDialogueManager : MonoBehaviour
 
     public void nextDialogue()
     {
-        if (dialogues == 2) return;
+        if (dialogues == 2)
+        {
+            reButtonClick();
+            return;
+        }
 
+        rcButton.GetComponentInChildren<TextMeshProUGUI>().text = "Next"; //Reset the text
         dialogues++;
         if (firstD == 0)
         {
@@ -32,6 +38,8 @@ public class EndOfFightDialogueManager : MonoBehaviour
             dP.SetActive(true);
             textDialogueP.enabled = true;
             iconDialogueP.SetActive(true);
+
+            rcButton.GetComponentInChildren<TextMeshProUGUI>().text = "Retry";
         }
         else
         {
@@ -42,6 +50,8 @@ public class EndOfFightDialogueManager : MonoBehaviour
             dE.SetActive(true);
             textDialogueE.enabled = true;
             iconDialogueE.SetActive(true);
+
+            rcButton.GetComponentInChildren<TextMeshProUGUI>().text = "Continue";
         }
     }
 
@@ -55,13 +65,11 @@ public class EndOfFightDialogueManager : MonoBehaviour
 
         if (i == 0)
         {
-            rcButton.GetComponentInChildren<TextMeshProUGUI>().text = "Retry";
             textDialogueP.text = player.GetComponent<CharacterManager>().fighterManager.Dialogues[1];
             textDialogueE.text = enemy.GetComponent<CharacterManager>().fighterManager.Dialogues[0];
         }
         else
         {
-            rcButton.GetComponentInChildren<TextMeshProUGUI>().text = "Continue";
             textDialogueP.text = player.GetComponent<CharacterManager>().fighterManager.Dialogues[0];
             textDialogueE.text = enemy.GetComponent<CharacterManager>().fighterManager.Dialogues[1];
         }
@@ -75,14 +83,16 @@ public class EndOfFightDialogueManager : MonoBehaviour
 
     public void resetFight()
     {
-        ChoseCharacterManager.instance.characterChoosed(1);
-        ChoseCharacterManager.instance.enemyChoosed(6);
-        ChoseCharacterManager.instance.startGame();
+        StoryTellingManager.nextStoryInstance -= 2; //Go back to the story instance of the start of the fight
+        SceneManager.LoadScene("StoryTelling");
+        StoryTellingManager.Instance.setFight(StoryTellingManager.currentFight);
     }
 
     public void continueButton()
     {
+        StoryTellingManager.fightsWon[StoryTellingManager.currentFight] = true; //Set the current fight won
         storyCanvas.SetActive(true);
-        StoryTellingManager.Instance.nextStory(19);
+        SceneManager.LoadScene("StoryTelling");
+        StoryTellingManager.Instance.nextStory(18);
     }
 }
