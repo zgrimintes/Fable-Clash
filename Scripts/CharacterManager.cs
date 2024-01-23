@@ -43,6 +43,7 @@ public class CharacterManager : AttackManager
     [HideInInspector] public float timeToGetRidOfEffects;
     #endregion
 
+    public Animator animator;
     public BarsManager healthBar;
     public BarsManager manaBar;
     public BarsManager staminaBar;
@@ -90,6 +91,9 @@ public class CharacterManager : AttackManager
     protected override void Update()
     {
         base.Update();
+
+        if (Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, .01f, layer)) animator.SetBool("isJumping", false);
+        if (!Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, .01f, layer)) animator.SetBool("isJumping", true);
 
         if (transform.localScale.x < 0) horizontalS = -1;
         else horizontalS = 1;
@@ -481,7 +485,9 @@ public class CharacterManager : AttackManager
     public async void Block()
     {
         if (blocks < 1) return;
+        if (Time.time - lastAttack < cooldown) return;
 
+        lastAttack = Time.time;
         blocks--;
         updateText();
 
@@ -490,7 +496,6 @@ public class CharacterManager : AttackManager
 
         await Task.Delay(800);
 
-        Debug.Log("Doesn't block");
         canTakeDamage = true;
     }
 
