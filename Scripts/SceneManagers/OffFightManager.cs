@@ -109,7 +109,7 @@ public class OffFinghtManager : MonoBehaviour
 
             if (StoryTellingManager.story)
             {
-                await Task.Delay(2000);
+                await Task.Delay(1200);
                 fadeText(1);
                 return;
             }
@@ -134,20 +134,19 @@ public class OffFinghtManager : MonoBehaviour
     {
         scoreIndicator.text = "3";
         scoreIndicator.enabled = false;
-        dialogueCanvas.GetComponent<EndOfFightDialogueManager>().startOfDialogue(i);
-
+        dialogueCanvas.SetActive(true);
         if (i == 0)
         {
-            dialogueCanvas.SetActive(true);
             dialogueE.SetActive(true);
             dialogueP.SetActive(false);
         }
         else
         {
-            dialogueCanvas.SetActive(true);
             dialogueP.SetActive(true);
             dialogueE.SetActive(false);
         }
+
+        dialogueCanvas.GetComponent<EndOfFightDialogueManager>().startOfDialogue(i);
     }
 
     public void rematch()
@@ -208,10 +207,10 @@ public class OffFinghtManager : MonoBehaviour
         enemy.GetComponent<CharacterManager>().hasLost = false;
         roundsWonTextE.GetComponent<TextMeshProUGUI>().text = "0";
 
-        player.GetComponent<CharacterManager>().hasLost = false;
         player.GetComponent<CharacterManager>().fighterManager.roundsWon = 0;
         player.GetComponent<CharacterManager>().fighterManager.startOfFight();
         player.transform.position = new Vector2(-10.58f, -.5f);
+        player.GetComponent<CharacterManager>().hasLost = false;
         roundsWonTextP.GetComponent<TextMeshProUGUI>().text = "0";
     }
 
