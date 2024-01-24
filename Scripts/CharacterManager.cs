@@ -63,6 +63,8 @@ public class CharacterManager : AttackManager
 
     int indxEffects = 0; //For going trough every effect
 
+    [HideInInspector] public bool checkJumping = true;
+
     private float last_mist_dmg;
     private float scaleConstant = .3f;
 
@@ -92,8 +94,15 @@ public class CharacterManager : AttackManager
     {
         base.Update();
 
-        if (Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, .01f, layer)) animator.SetBool("isJumping", false);
-        if (!Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, .01f, layer)) animator.SetBool("isJumping", true);
+        if (Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, .01f, layer))
+        {
+            animator.SetBool("isJumping", false);
+            checkJumping = true;
+        }
+        if (!Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, .01f, layer) && checkJumping)
+        {
+            animator.SetBool("isJumping", true);
+        }
 
         if (transform.localScale.x < 0) horizontalS = -1;
         else horizontalS = 1;
