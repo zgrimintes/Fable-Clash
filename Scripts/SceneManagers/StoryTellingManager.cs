@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
 using UnityEngine;
 
@@ -21,7 +22,7 @@ public class StoryTellingManager : MonoBehaviour
 
         if (startStoryText == null) return;
 
-        if (nextStoryInstance == 0)
+        if (nextStoryInstance == 0 || nextStoryInstance == 44)
         {
             startStoryText.SetActive(true);
         }
@@ -127,12 +128,30 @@ public class StoryTellingManager : MonoBehaviour
                 return "3rd fight:";
             case 28:
                 storyText2.GetComponent<TextMeshProUGUI>().font = arhaicFont;
-                return "Harap-Alb vs Spinul\r\n";
+                return "Greuceanu vs Capcaunul\r\n";
             case 29:
                 setFight(3);
                 return "";
             case 30: return "";
-
+            case 31:
+                storyText1.GetComponent<TextMeshProUGUI>().font = arhaicFont;
+                return "And with this final win, the Realm of Men won the tournament.";
+            case 32: return "\"Incredible! Delightful! With such a showing I am more than honored to present the Golden Apple to our winner, Praslea! \r\nCongratulations boy, you may now make your wish!\"";
+            case 33: return "Finally getting his hands on the Golden Apple, Praslea could feel a macabre aura emanating from it, but pushed it to the back of his head, in order to save his realm. \r\nWhile holding the Golden Apple above his head, Praslea shouted:\r\n";
+            case 34: return "\"I wish for my realm to see nothing but safety and comfort for the rest of eternity!\"\r\n";
+            case 35: return "As the Golden Apple disappeared into an explosion of light, Praslea and the rest of the inhabitants of the realm of Men awaited their reward patiently, when suddenly a splitting headache launches all of them into grief.";
+            case 36: return "As Praslea could feel himself losing his grasp on reality, he realized what was truly happening:\r\n\"The Wizard…it’s his fault!\" The boy shouted, as he was dragged into a smoke cloud.\r\n";
+            case 37: return "In the smoke, The Crasnic now had hold over the inhabitants of the realm of Men, the Golden Apple was a lie created to lure in hopeless warriors:\r\n";
+            case 38: return "\"Aha! Incredible, even I didn’t expect this to go so smoothly, all that’s left now is to conquer the Realm of Beasts, only then will I truly be unstoppable!\"\r\n";
+            case 39: return "Back in the realm of Beasts, the warriors who had just witnessed this were shocked.";
+            case 40: return "Zmeul exclaimed: \"What happened!? Why is the realm of Men still withering away? They won!\"\r\n";
+            case 41: return "Spinul added: \"This is not good… I have a bad feeling about this, should we do something?\"\r\n";
+            case 42: return "Lastly, Capcaunul said: \"This must be related to that Wizard, I bet we’re next, we have to stop him!\"";
+            case 43: return "As the three of them ventured into the smoke cloud left behind by The Crasnic, they were now face to face with the warriors that they fought with moments before, except this time they had a stench of evil emanating from them...";
+            case 44:
+                storyText2.GetComponent<TextMeshProUGUI>().font = arhaicFont;
+                ChapterSelectManager.CH2 = true;
+                return " - End of Chapter 1 - ";
             default:
                 return "N/A";
         }
