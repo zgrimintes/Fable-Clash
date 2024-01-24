@@ -10,6 +10,7 @@ public class SignalFinishAttack : MonoBehaviour
         GetComponent<CharacterManager>().animator.SetBool("HA", false);
         GetComponent<CharacterManager>().animator.SetBool("RA", false);
         GetComponent<CharacterManager>().animator.SetBool("SA", false);
+        GetComponent<CharacterManager>().animator.SetBool("MA", false);
         GetComponent<CharacterManager>().animator.SetBool("Attacking", false);
     }
 }
