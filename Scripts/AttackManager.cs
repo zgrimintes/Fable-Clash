@@ -167,9 +167,14 @@ public class AttackManager : MonoBehaviour
 
     }
 
-    public void magic_Attack(float _MA_dmg, string _ch_name)
+    public async void magic_Attack(float _MA_dmg, string _ch_name)
     {
+        characterManager.animator.SetBool("MA", true);
+        characterManager.animator.SetBool("Attacking", true);
+        signalStopJump();
         if (normalNextAttack) dmg = _MA_dmg;
+
+        await Task.Delay(600);
 
         switch (_ch_name)
         {
