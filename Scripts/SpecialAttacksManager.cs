@@ -31,7 +31,7 @@ public class SpecialAttacksManager : MonoBehaviour
         for (index = 0; index < 7; index++)
         {
             rainStartPoints[index] = Random.Range(enemy.transform.position.x - 6f, enemy.transform.position.x + 6f); //Spaw in proximity to the enemy
-            projectiles[index] = Instantiate(projectile, new Vector3(rainStartPoints[index], 15, 0), Quaternion.Euler(0, 0, 180));
+            projectiles[index] = Instantiate(projectile, new Vector3(rainStartPoints[index], 15, 0), Quaternion.Euler(0, 0, -90));
         }
 
         for (index = 0; index < 7; index++)
