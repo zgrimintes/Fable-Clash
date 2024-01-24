@@ -30,7 +30,6 @@ public class PlayerManager : CharacterManager
         }
 
         horizontal = Input.GetAxisRaw("Horizontal");
-        Debug.Log(horizontal);
         animator.SetFloat("speed", Mathf.Abs(horizontal));
 
         Vector2 movement = new Vector2(horizontal * speed, rb.velocity.y);
@@ -40,7 +39,7 @@ public class PlayerManager : CharacterManager
         {
             int kbHor = getKnHor();
             Vector2 movement2 = new Vector2(kbHor * speed, rb.velocity.y);
-            rb.velocity = new Vector2(movement2.x * 2.5f, movement2.y);
+            rb.velocity = new Vector2(movement2.x * 1.1f, movement2.y);
             StartCoroutine(Knockback());
         }
     }
