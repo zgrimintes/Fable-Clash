@@ -4,6 +4,7 @@ using System.Data;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -114,7 +115,9 @@ public class AttackManager : MonoBehaviour
 
     public void normal_Attack(float _NA_dmg)
     {
-        characterManager.animator.SetBool("NA", true); signalStopJump();
+        characterManager.animator.SetBool("NA", true);
+        characterManager.animator.SetBool("Attacking", true);
+        signalStopJump();
         if (normalNextAttack) dmg = _NA_dmg;
         hasHit = false;
 
@@ -129,7 +132,14 @@ public class AttackManager : MonoBehaviour
 
     public void ranged_Attack(float _RA_dmg)
     {
+        characterManager.animator.SetBool("RA", true);
+        characterManager.animator.SetBool("Attacking", true);
+        signalStopJump();
         if (normalNextAttack) dmg = _RA_dmg;
+    }
+
+    public void RA_continue()
+    {
         float dir = GetComponent<CharacterManager>().horizontalS;
 
         if (dir >= 0) wp = Instantiate(Projectile, transform.position, Quaternion.identity);
@@ -141,12 +151,19 @@ public class AttackManager : MonoBehaviour
     public void heavy_Attack(float _HA_dmg)
     {
         if (normalNextAttack) dmg = _HA_dmg;
+        characterManager.animator.SetBool("HA", true);
+        characterManager.animator.SetBool("Attacking", true);
+        signalStopJump();
+        hasHit = false;
+
+        /// There is no need for a weapon now
+        /*
         wp = Instantiate(Weapon, transform.position, Quaternion.identity);
         animator = wp.GetComponent<Animator>();
         wp.AddComponent<FollowPlayer>().toFollow = gameObject; //Adding the FollowPlayer
 
         if (GetComponent<CharacterManager>().horizontalS == -1) animator.Play("HeavySwordSwingLeft");
-        else if (GetComponent<CharacterManager>().horizontalS == 1) animator.Play("HeavySwordSwing");
+        else if (GetComponent<CharacterManager>().horizontalS == 1) animator.Play("HeavySwordSwing");*/
 
     }
 
@@ -193,9 +210,14 @@ public class AttackManager : MonoBehaviour
         }
     }
 
-    public void special_Attack(float _SA_dmg, string _ch_name)
+    public async void special_Attack(float _SA_dmg, string _ch_name)
     {
+        characterManager.animator.SetBool("SA", true);
+        characterManager.animator.SetBool("Attacking", true);
+        signalStopJump();
         if (normalNextAttack) dmg = _SA_dmg;
+
+        await Task.Delay(800);
 
         switch (_ch_name)
         {
