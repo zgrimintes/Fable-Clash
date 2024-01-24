@@ -7,7 +7,7 @@ public class MagicAbilitiesManager : MonoBehaviour
 {
     public GameObject enemy;
     public LayerMask enemyLayer;
-    public GameObject Mace;
+    public GameObject SpecialArrow;
     public GameObject Mist;
     public GameObject Powder;
     public GameObject Boomerang;
@@ -31,7 +31,7 @@ public class MagicAbilitiesManager : MonoBehaviour
 
     public void Praslea_MA(GameObject wp)
     {
-        wp = Instantiate(Mace, transform.position, Quaternion.identity);
+        wp = Instantiate(SpecialArrow, transform.position, Quaternion.identity);
 
         setTag(wp);
 
