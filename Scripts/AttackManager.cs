@@ -106,11 +106,8 @@ public class AttackManager : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (Time.time - characterManager.lastAttack > characterManager.cooldown) hasHit = false;
-
         if (GetComponent<CanHit>().canHit && !hasHit)
         {
-            hasHit = true;
             checkForColls(attackPoint.position, attackRange, 0);
         }
     }
@@ -119,6 +116,7 @@ public class AttackManager : MonoBehaviour
     {
         characterManager.animator.SetBool("NA", true); signalStopJump();
         if (normalNextAttack) dmg = _NA_dmg;
+        hasHit = false;
 
         /// There is no need for a weapon now
         /*wp = Instantiate(Weapon, transform.position, Quaternion.identity);
@@ -134,8 +132,8 @@ public class AttackManager : MonoBehaviour
         if (normalNextAttack) dmg = _RA_dmg;
         float dir = GetComponent<CharacterManager>().horizontalS;
 
-        if (dir >= 0) wp = Instantiate(Projectile, transform.position, Quaternion.Euler(0, 0, 270));
-        else wp = Instantiate(Projectile, transform.position, Quaternion.Euler(0, 0, 90));
+        if (dir >= 0) wp = Instantiate(Projectile, transform.position, Quaternion.identity);
+        else wp = Instantiate(Projectile, transform.position, Quaternion.identity);
 
         StartCoroutine(ranged(dir, 0));
     }
@@ -267,6 +265,7 @@ public class AttackManager : MonoBehaviour
 
         foreach (Collider2D enemy in hitEnemies)
         {
+            hasHit = true;
             enemy.GetComponent<CharacterManager>().take_damage(dmg);
             enemy.GetComponent<CharacterManager>().applyEfects(effect);
             hasHit = true;
