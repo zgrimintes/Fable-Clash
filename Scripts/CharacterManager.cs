@@ -501,10 +501,12 @@ public class CharacterManager : AttackManager
         updateText();
 
         canTakeDamage = false;
+        animator.SetBool("isBlocking", true);
         Debug.Log("Blocks");
 
         await Task.Delay(800);
 
+        animator.SetBool("isBlocking", false);
         canTakeDamage = true;
     }
 
@@ -517,6 +519,7 @@ public class CharacterManager : AttackManager
 
         //The logic stuff
         isKnockback = true;
+        animator.SetBool("Hurt", true);
         attackDir = calculateAttackingDir();
         fighterManager.take_damage(gameObject, (int)damage);
         updateText();
@@ -602,18 +605,21 @@ public class CharacterManager : AttackManager
         if (canDash) //Don't dash if the circumstances don't let you
         {
             isDashing = true;
+            animator.SetBool("isDashing", true);
             lastKey = 0;
             rb.velocity = new Vector2(horizontalS * speed * 3, rb.velocity.y);
             yield return new WaitForSeconds(0.2f);
             isDashing = false;
+            animator.SetBool("isDashing", false);
         }
         else yield return null;
     }
 
     public IEnumerator Knockback()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(.4f);
         isKnockback = false;
+        animator.SetBool("Hurt", false);
     }
 
     public void try_NA()
