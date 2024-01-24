@@ -11,6 +11,7 @@ public class AttackManager : MonoBehaviour
 {
     MagicAbilitiesManager magicAbilitiesManager;
     SpecialAttacksManager specialAttacksManager;
+    CharacterManager characterManager;
     [SerializeField] private GameObject Weapon;
     [SerializeField] private GameObject Projectile;
 
@@ -35,6 +36,7 @@ public class AttackManager : MonoBehaviour
         coll = GetComponent<BoxCollider2D>();
         magicAbilitiesManager = GetComponent<MagicAbilitiesManager>();
         specialAttacksManager = GetComponent<SpecialAttacksManager>();
+        characterManager = GetComponent<CharacterManager>();
 
         setCharacteristics();
     }
@@ -104,30 +106,27 @@ public class AttackManager : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (wp == null)
-        {
-            hasHit = false;
-            return;
-        }
+        if (Time.time - characterManager.lastAttack > characterManager.cooldown) hasHit = false;
 
-        if (wp.GetComponent<CanHit>() == null) return;
-
-        if (wp.GetComponent<CanHit>().canHit && !hasHit)
+        if (GetComponent<CanHit>().canHit && !hasHit)
         {
+            hasHit = true;
             checkForColls(attackPoint.position, attackRange, 0);
         }
     }
 
     public void normal_Attack(float _NA_dmg)
     {
+        characterManager.animator.SetBool("NA", true); signalStopJump();
         if (normalNextAttack) dmg = _NA_dmg;
 
-        wp = Instantiate(Weapon, transform.position, Quaternion.identity);
+        /// There is no need for a weapon now
+        /*wp = Instantiate(Weapon, transform.position, Quaternion.identity);
         animator = wp.GetComponent<Animator>();
         wp.AddComponent<FollowPlayer>().toFollow = gameObject; //Adding the FollowPlayer
 
         if (GetComponent<CharacterManager>().horizontalS == -1) animator.Play("SwordSwingLeft");
-        else if (GetComponent<CharacterManager>().horizontalS == 1) animator.Play("SwordSwing");
+        else if (GetComponent<CharacterManager>().horizontalS == 1) animator.Play("SwordSwing");*/
     }
 
     public void ranged_Attack(float _RA_dmg)
@@ -273,5 +272,11 @@ public class AttackManager : MonoBehaviour
             hasHit = true;
             normalNextAttack = true;
         }
+    }
+
+    public void signalStopJump()
+    {
+        characterManager.animator.SetBool("isJumping", false);
+        characterManager.checkJumping = false;
     }
 }
