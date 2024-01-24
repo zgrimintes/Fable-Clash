@@ -24,7 +24,11 @@ public class StoryTellingManager : MonoBehaviour
 
         if (nextStoryInstance == 0 || nextStoryInstance == 44)
         {
-            startStoryText.SetActive(true);
+            if (nextStoryInstance == 0) startStoryText.SetActive(true);
+            else if (nextStoryInstance == 44)
+            {
+                storyText1.GetComponent<TextMeshProUGUI>().text = nextStory(43);
+            }
         }
         else
         {
