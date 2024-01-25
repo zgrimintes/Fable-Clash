@@ -63,8 +63,8 @@ public class FighterManager : ScriptableObject
 
     public void startOfFight()
     {
-        if (isBoss) HP = 40;
-        else HP = 15;
+        if (isBoss) HP = 60;
+        else HP = 20;
 
         mana = 4;
         stamina = 5;
