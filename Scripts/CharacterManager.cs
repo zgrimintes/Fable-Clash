@@ -115,6 +115,7 @@ public class CharacterManager : AttackManager
             if (hasLost) return;
 
             hasLost = true;
+            stopAllAnims();
             enemy.GetComponent<CharacterManager>().fighterManager.roundsWon++;
             GameManager.Instance.updateGameState(GameStates.EndOfRound);
         }
@@ -260,6 +261,16 @@ public class CharacterManager : AttackManager
         //Update the rest of the stuffs
         updateText();
         hasLost = false;
+    }
+
+    public void stopAllAnims()
+    {
+        GetComponent<SignalFinishAttack>().signalFinishAttack();
+        animator.SetFloat("speed", 0);
+        animator.SetBool("isJumping", false);
+        animator.SetBool("isBlocking", false);
+        animator.SetBool("isDashing", false);
+        animator.SetBool("Hurt", false);
     }
 
     public void applyEfects(int effect) //For applying effects inflicted by attacks to characters
@@ -519,7 +530,7 @@ public class CharacterManager : AttackManager
 
         //The logic stuff
         isKnockback = true;
-        animator.SetBool("Hurt", true);
+        animator.SetBool("Hurt", true); //GetComponent<SignalFinishAttack>().signalFinishAttack();
         attackDir = calculateAttackingDir();
         fighterManager.take_damage(gameObject, (int)damage);
         updateText();
