@@ -160,6 +160,7 @@ public class OffFinghtManager : MonoBehaviour
 
         //Reset the stats, position and effects of both characters
         enemy.GetComponent<CharacterManager>().startFight();
+        enemy.GetComponent<CharacterManager>().stopAllAnims();
         enemy.transform.position = new Vector2(10.58f, -.5f);
         enemy.transform.localScale = new Vector2(-enemy.transform.localScale.x, enemy.transform.localScale.y);
         enemy.GetComponent<CharacterManager>().rb.velocity = Vector3.zero;
@@ -167,6 +168,7 @@ public class OffFinghtManager : MonoBehaviour
         enemy.GetComponent<MagicAbilitiesManager>().StopAllCoroutines();
 
         player.GetComponent<CharacterManager>().startFight();
+        player.GetComponent<CharacterManager>().stopAllAnims();
         player.transform.position = new Vector2(-10.58f, -.5f);
         player.transform.localScale = new Vector2(Mathf.Abs(player.transform.localScale.x), player.transform.localScale.y);
         player.GetComponent<CharacterManager>().horizontalS = 1;
