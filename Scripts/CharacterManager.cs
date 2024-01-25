@@ -681,7 +681,7 @@ public class CharacterManager : AttackManager
         if (mana >= 2)
         {
             lastAttack = Time.time;
-            magic_Attack(_MA_dmg, _ch_name);
+            magic_Attack(_MA_dmg);
             fighterManager.magic_Attack(gameObject);
             updateText();
         }
@@ -695,7 +695,7 @@ public class CharacterManager : AttackManager
         if (mana >= 3)
         {
             lastAttack = Time.time;
-            special_Attack(_SA_dmg, _ch_name);
+            special_Attack(_SA_dmg);
             fighterManager.special_Attack(gameObject);
             updateText();
         }
