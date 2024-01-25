@@ -51,7 +51,7 @@ public class AIAttacksGreuceanu : MonoBehaviour
     {
         if (enemyController.HP <= 10) attacks[4] += .35f;
         else if (enemyController.HP > 10 && enemyController.HP < 14) attacks[4] += .1f;
-        else if (enemyController.HP <= 15) attacks[4] -= .2f;
+        else if (enemyController.HP <= 20) attacks[4] -= .2f;
     }
 
     protected void checkDistance()
@@ -72,7 +72,7 @@ public class AIAttacksGreuceanu : MonoBehaviour
         {
             attacks[4] += .25f;
             attacks[2] += .3f;
-            attacks[3] += .5f;
+            attacks[3] += .3f;
         }
         else
         {
