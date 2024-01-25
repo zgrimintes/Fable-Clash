@@ -297,6 +297,7 @@ public class CharacterManager : AttackManager
                 _RA_dmg += 1;
                 break;
             case 3:
+                stopAllAnims();
                 if (name == "Player") GetComponent<PlayerManager>().canMove = false;
                 else GetComponent<EnemyController>().stateMachine.Change(GetComponent<EnemyController>().waitState);
                 timeToGetRidOfEffects = 3.5f;
@@ -346,6 +347,7 @@ public class CharacterManager : AttackManager
                 popUpText("nerf", 4);
                 break;
             case 10:
+                stopAllAnims();
                 if (name == "Player") GetComponent<PlayerManager>().canMove = false;
                 else GetComponent<EnemyController>().stateMachine.Change(GetComponent<EnemyController>().waitState);
                 timeToGetRidOfEffects += .5f;
