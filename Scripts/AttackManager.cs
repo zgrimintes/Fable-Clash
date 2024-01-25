@@ -27,7 +27,6 @@ public class AttackManager : MonoBehaviour
     public float attackRange = 0.6f;
     public float flying_speed = 0.2f;
     public LayerMask enemyLayer;
-    Animator animator;
 
     private Vector3 positionToAttack;
 
@@ -167,16 +166,17 @@ public class AttackManager : MonoBehaviour
 
     }
 
-    public async void magic_Attack(float _MA_dmg, string _ch_name)
+    public void magic_Attack(float _MA_dmg)
     {
         characterManager.animator.SetBool("MA", true);
         characterManager.animator.SetBool("Attacking", true);
         signalStopJump();
         if (normalNextAttack) dmg = _MA_dmg;
+    }
 
-        await Task.Delay(600);
-
-        switch (_ch_name)
+    public void MA_continue()
+    {
+        switch (characterManager._ch_name)
         {
             case "Prislea":
                 float dir = GetComponent<CharacterManager>().horizontalS;
@@ -215,16 +215,17 @@ public class AttackManager : MonoBehaviour
         }
     }
 
-    public async void special_Attack(float _SA_dmg, string _ch_name)
+    public void special_Attack(float _SA_dmg)
     {
         characterManager.animator.SetBool("SA", true);
         characterManager.animator.SetBool("Attacking", true);
         signalStopJump();
         if (normalNextAttack) dmg = _SA_dmg;
+    }
 
-        await Task.Delay(800);
-
-        switch (_ch_name)
+    public void SA_continue()
+    {
+        switch (characterManager._ch_name)
         {
             case "Prislea":
                 specialAttacksManager.Praslea_SA(wp, Projectile);
