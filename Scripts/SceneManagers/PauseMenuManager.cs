@@ -6,10 +6,13 @@ using UnityEngine.SceneManagement;
 public class PauseMenuManager : MonoBehaviour
 {
     public GameObject pauseMenu;
+    public GameObject infoP, infoE;
+
+    bool showingInfo = true;
 
     private void Update()
     {
-        if (!OffFinghtManager.Instance.game) return;
+        if (!OffFinghtManager.Instance.game && !StoryTellingManager.story) return;
 
         if (Input.GetKeyUp(KeyCode.Escape))
         {
@@ -32,8 +35,21 @@ public class PauseMenuManager : MonoBehaviour
     public void onRestart()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("SampleScene");
-        OffFinghtManager.Instance.startOfFight();
+
+        if (OffFinghtManager.Instance.game)
+        {
+            SceneManager.LoadScene("SampleScene");
+            OffFinghtManager.Instance.startOfFight();
+        }
+        else
+        {
+            int storyInstance = StoryTellingManager.nextStoryInstance;
+            if (storyInstance < 44) StoryTellingManager.nextStoryInstance = 0;
+            else if (storyInstance < 68) StoryTellingManager.nextStoryInstance = 44;
+            else StoryTellingManager.nextStoryInstance = 68;
+
+            SceneManager.LoadScene("StoryTelling");
+        }
     }
 
     public void onMainMenu()
@@ -41,5 +57,13 @@ public class PauseMenuManager : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenu");
         OffFinghtManager.Instance.startOfFight();
+    }
+
+    public void onAbilitiesInfo()
+    {
+        infoE.SetActive(showingInfo);
+        infoP.SetActive(showingInfo);
+
+        showingInfo = !showingInfo;
     }
 }
