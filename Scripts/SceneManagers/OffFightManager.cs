@@ -163,12 +163,16 @@ public class OffFinghtManager : MonoBehaviour
         enemy.transform.position = new Vector2(10.58f, -.5f);
         enemy.transform.localScale = new Vector2(-enemy.transform.localScale.x, enemy.transform.localScale.y);
         enemy.GetComponent<CharacterManager>().rb.velocity = Vector3.zero;
+        enemy.GetComponent<SpecialAttacksManager>().StopAllCoroutines(); //Stop all corutines that may happen 
+        enemy.GetComponent<MagicAbilitiesManager>().StopAllCoroutines();
 
         player.GetComponent<CharacterManager>().startFight();
         player.transform.position = new Vector2(-10.58f, -.5f);
         player.transform.localScale = new Vector2(Mathf.Abs(player.transform.localScale.x), player.transform.localScale.y);
         player.GetComponent<CharacterManager>().horizontalS = 1;
         player.GetComponent<CharacterManager>().rb.velocity = Vector3.zero;
+        player.GetComponent<SpecialAttacksManager>().StopAllCoroutines(); //Stop all corutines that may happen 
+        player.GetComponent<MagicAbilitiesManager>().StopAllCoroutines();
 
         GameManager.Instance.updateGameState(GameStates.Fight);
     }
