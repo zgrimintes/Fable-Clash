@@ -195,6 +195,7 @@ public class EnemyController : CharacterManager
     {
         if (!canAttack) return;
 
+        stopAllAnims();
         float chanceToWait = Random.Range(0, 2.5f);
 
         if (chanceToWait < 1)
