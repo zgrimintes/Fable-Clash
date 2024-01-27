@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,6 +20,8 @@ public class FighterManager : ScriptableObject
     public bool isBoss;
 
     public string[] Dialogues = new string[2]; //0 - WinDialogue; 1 - LoseDialogue;
+    public Sprite projectile;
+    public AnimatorController animator;
 
     public void ranged_Attack(GameObject parent)
     {
