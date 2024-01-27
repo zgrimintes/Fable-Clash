@@ -25,7 +25,7 @@ public class SpecialAttacksManager : MonoBehaviour
     public void Praslea_SA(GameObject wp, GameObject projectile)
     {
         hits_Praslea = 0;
-        wp = Instantiate(projectile, transform.position, Quaternion.identity);
+        wp = Instantiate(projectile, transform.position, Quaternion.Euler(new Vector3(0, 0, 90)));
         StartCoroutine(fly(wp));
 
         for (index = 0; index < 7; index++)
