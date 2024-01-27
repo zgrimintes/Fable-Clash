@@ -13,8 +13,7 @@ public class AttackManager : MonoBehaviour
     MagicAbilitiesManager magicAbilitiesManager;
     SpecialAttacksManager specialAttacksManager;
     CharacterManager characterManager;
-    [SerializeField] private GameObject Weapon;
-    [SerializeField] private GameObject Projectile;
+    [SerializeField] public GameObject Projectile;
 
     [HideInInspector] public GameObject wp;
     [HideInInspector] public bool hasHit; //So you can't hit more than once per attack
@@ -141,7 +140,7 @@ public class AttackManager : MonoBehaviour
     {
         float dir = GetComponent<CharacterManager>().horizontalS;
 
-        if (dir >= 0) wp = Instantiate(Projectile, transform.position, Quaternion.identity);
+        if (dir >= 0) wp = Instantiate(Projectile, attackPoint.transform.position, Quaternion.identity);
         else wp = Instantiate(Projectile, transform.position, Quaternion.identity);
 
         StartCoroutine(ranged(dir, 0));
