@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.Networking.Types;
 using UnityEngine.Rendering;
@@ -149,6 +150,9 @@ public class CharacterManager : AttackManager
 
         gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
         gameObject.transform.localScale = new Vector2(scaleConstant, scaleConstant);
+
+        Projectile.GetComponent<SpriteRenderer>().sprite = fighterManager.projectile;
+        animator.runtimeAnimatorController = fighterManager.animator as RuntimeAnimatorController;
 
         setMaxValueBars();
     }
