@@ -199,9 +199,12 @@ public class SpecialAttacksManager : MonoBehaviour
             yield return null;
         }
 
+        GetComponent<SignalFinishAttack>().signalFinishAttack();
         if (gameObject.name == "Enemy") GetComponent<EnemyController>().isSpecial = false;
         attackManager.checkForColls(transform.position, 3.3f, 0);
         CameraShake.Shake(.2f, .2f);
+
+        StopAllCoroutines();
     }
 
     public IEnumerator fly(GameObject wp)
