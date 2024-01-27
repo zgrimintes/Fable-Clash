@@ -536,6 +536,7 @@ public class CharacterManager : AttackManager
 
         //The logic stuff
         isKnockback = true;
+        GetComponent<SignalFinishAttack>().signalFinishAttack(); //Stop the attacks if you are being hit
         animator.SetBool("Hurt", true); //GetComponent<SignalFinishAttack>().signalFinishAttack();
         attackDir = calculateAttackingDir();
         fighterManager.take_damage(gameObject, (int)damage);
