@@ -112,7 +112,7 @@ public class CharacterManager : AttackManager
         if (rb.velocity.y > 0) rb.gravityScale = gravityScale;
         else rb.gravityScale = fallGravityScale;
 
-        if (HP <= 0)
+        if (HP <= 0 || fighterManager.HP <= 0)
         {
             if (hasLost) return;
 
@@ -157,7 +157,8 @@ public class CharacterManager : AttackManager
 
         for (int i = 0; i < sounds.Length; i++)
         {
-            if (_ch_name != "NULL" && data.sounds[i] != null) sounds[i] = data.sounds[i];
+            if (_ch_name != "NULL" && data.sounds[i] != null)
+                sounds[i] = data.sounds[i];
         }
 
         setMaxValueBars();
