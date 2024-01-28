@@ -12,6 +12,7 @@ public class StoryTellingManager : MonoBehaviour
     public GameObject storyText1, storyText2, startStoryText;
     public static bool finishedAnimation = false;
     public static bool story = true;
+    public static bool bossBattle = false;
     public static int currentFight;
     public static int nextStoryInstance = 0;
     public static bool[] fightsWon = new bool[9];
@@ -211,6 +212,15 @@ public class StoryTellingManager : MonoBehaviour
                 storyText2.GetComponent<TextMeshProUGUI>().font = arhaicFont;
                 ChapterSelectManager.CH3 = true;
                 return " - End of Chapter 2 - ";
+            case 69:
+                storyText1.GetComponent<TextMeshProUGUI>().font = arhaicFont;
+                return "7th fight:";
+            case 70:
+                storyText2.GetComponent<TextMeshProUGUI>().font = arhaicFont;
+                return "The Realm of Men vs Zgripturoaica";
+            case 71:
+                setFight(7);
+                return "";
             default:
                 return "N/A";
         }
@@ -249,6 +259,24 @@ public class StoryTellingManager : MonoBehaviour
         {
             ChoseCharacterManager.instance.characterChoosed(5);
             ChoseCharacterManager.instance.enemyChoosed(3);
+        }
+        else if (fightNb == 7)
+        {
+            ChoseCharacterManager.instance.characterChoosed(1);
+            ChoseCharacterManager.instance.enemyChoosed(7);
+            bossBattle = true;
+        }
+        else if (fightNb == 8)
+        {
+            ChoseCharacterManager.instance.characterChoosed(4);
+            ChoseCharacterManager.instance.enemyChoosed(8);
+            bossBattle = true;
+        }
+        else if (fightNb == 9)
+        {
+            ChoseCharacterManager.instance.characterChoosed(1);
+            ChoseCharacterManager.instance.enemyChoosed(9);
+            bossBattle = true;
         }
 
         ChoseCharacterManager.instance.startGame();
