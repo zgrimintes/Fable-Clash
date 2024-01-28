@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ChapterSelectManager : MonoBehaviour
 {
-    public static bool CH1 = true, CH2 = true, CH3 = true;
+    public static bool CH1 = true, CH2 = false, CH3 = true;
     public GameObject buttonCH1, buttonCH2, buttonCH3;
     public GameObject buttonCH2XBg, buttonCH3XBG;
 
@@ -25,6 +25,7 @@ public class ChapterSelectManager : MonoBehaviour
     public void startChapetr1()
     {
         StoryTellingManager.story = true;
+        StoryTellingManager.bossBattle = false;
         StoryTellingManager.nextStoryInstance = 0;
         SceneManager.LoadScene("StoryTelling");
     }
@@ -32,6 +33,7 @@ public class ChapterSelectManager : MonoBehaviour
     public void startChapetr2()
     {
         StoryTellingManager.story = true;
+        StoryTellingManager.bossBattle = false;
         StoryTellingManager.nextStoryInstance = 44;
         SceneManager.LoadScene("StoryTelling");
     }
