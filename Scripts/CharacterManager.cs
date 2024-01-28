@@ -543,6 +543,7 @@ public class CharacterManager : AttackManager
         //The logic stuff
         isKnockback = true;
         GetComponent<SignalFinishAttack>().signalFinishAttack(); //Stop the attacks if you are being hit
+        GetComponent<AudioSource>().clip = sounds[9]; GetComponent<AudioSource>().volume = .4f; GetComponent<AudioSource>().Play(); //Make a sound when hit
         animator.SetBool("Hurt", true); //GetComponent<SignalFinishAttack>().signalFinishAttack();
         attackDir = calculateAttackingDir();
         fighterManager.take_damage(gameObject, (int)damage);
@@ -620,11 +621,11 @@ public class CharacterManager : AttackManager
         if (doubleTapped)
         {
             doubleTapped = false;
-            StartCoroutine(Dashh());
+            StartCoroutine(Dashh(.2f));
         }
     }
 
-    public IEnumerator Dashh()
+    public IEnumerator Dashh(float ttD)
     {
         if (canDash) //Don't dash if the circumstances don't let you
         {
@@ -632,7 +633,7 @@ public class CharacterManager : AttackManager
             animator.SetBool("isDashing", true);
             lastKey = 0;
             rb.velocity = new Vector2(horizontalS * speed * 3, rb.velocity.y);
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(ttD);
             isDashing = false;
             animator.SetBool("isDashing", false);
         }
