@@ -23,6 +23,8 @@ public class FighterManager : ScriptableObject
     public Sprite projectile;
     public AnimatorController animator;
 
+    public AudioClip[] sounds = new AudioClip[10];
+
     public void ranged_Attack(GameObject parent)
     {
         stamina -= 1;
