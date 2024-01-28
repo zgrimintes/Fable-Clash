@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class OffFinghtManager : MonoBehaviour
 {
@@ -18,6 +15,7 @@ public class OffFinghtManager : MonoBehaviour
     public GameObject dialogueCanvas, dialogueP, dialogueE;
 
     public bool game = false;
+    public static int bench = 3;
 
     private void Awake()
     {
@@ -73,14 +71,15 @@ public class OffFinghtManager : MonoBehaviour
 
     public async void roundWon()
     {
+        int winsPlayer = player.GetComponent<CharacterManager>().fighterManager.roundsWon,
+            winsEnemy = enemy.GetComponent<CharacterManager>().fighterManager.roundsWon;
+
         enemy.GetComponent<EnemyController>().canAttack = false;
         player.GetComponent<PlayerManager>().canMove = false;
 
         gameObject.SetActive(true);
-        scoreIndicator.enabled = true;
+        if (!StoryTellingManager.bossBattle || winsEnemy == 2 || winsPlayer == 2) scoreIndicator.enabled = true;
 
-        int winsPlayer = player.GetComponent<CharacterManager>().fighterManager.roundsWon,
-            winsEnemy = enemy.GetComponent<CharacterManager>().fighterManager.roundsWon;
 
         if (winsEnemy == 2)
         {
@@ -103,7 +102,12 @@ public class OffFinghtManager : MonoBehaviour
         else if (winsPlayer == 2)
         {
             game = false;
-            scoreIndicator.text = player.GetComponent<CharacterManager>().fighterManager.characterName + " has won!";
+            if (!StoryTellingManager.bossBattle) scoreIndicator.text = player.GetComponent<CharacterManager>().fighterManager.characterName + " has won!";
+            else
+            {
+                scoreIndicator.text = "The Realm of Men has won!";
+            }
+
             roundsWonTextP.GetComponent<TextMeshProUGUI>().text = "2";
             Time.timeScale = 0;
 
@@ -125,7 +129,7 @@ public class OffFinghtManager : MonoBehaviour
         }
 
         Time.timeScale = 0;
-        await Task.Delay(1500);
+        if (!StoryTellingManager.bossBattle) await Task.Delay(1500);
         Time.timeScale = 1;
         rematch();
     }
@@ -140,7 +144,12 @@ public class OffFinghtManager : MonoBehaviour
             dialogueE.SetActive(true);
             dialogueP.SetActive(false);
         }
-        else
+        else if (i == 1)
+        {
+            dialogueP.SetActive(true);
+            dialogueE.SetActive(false);
+        }
+        else if (i == 2)
         {
             dialogueP.SetActive(true);
             dialogueE.SetActive(false);
@@ -153,30 +162,65 @@ public class OffFinghtManager : MonoBehaviour
     {
         resetEnvironment();
 
+        if (StoryTellingManager.bossBattle)
+        {
+            nextBench();
+            return;
+        }
+
+        startCountdown();
+
+        //Reset the stats, position and effects of both characters
+        resetTraits(enemy);
+        enemy.transform.position = new Vector2(10.58f, -.5f);
+        enemy.transform.localScale = new Vector2(-enemy.transform.localScale.x, enemy.transform.localScale.y);
+
+        resetTraits(player);
+        player.transform.position = new Vector2(-10.58f, -.5f);
+        player.transform.localScale = new Vector2(Mathf.Abs(player.transform.localScale.x), player.transform.localScale.y);
+        player.GetComponent<CharacterManager>().horizontalS = 1;
+
+        GameManager.Instance.updateGameState(GameStates.Fight);
+    }
+
+    public void resetTraits(GameObject ch)
+    {
+        ch.GetComponent<CharacterManager>().startFight();
+        ch.GetComponent<CharacterManager>().stopAllAnims();
+
+        ch.GetComponent<CharacterManager>().rb.velocity = Vector3.zero;
+        ch.GetComponent<SpecialAttacksManager>().StopAllCoroutines(); //Stop all corutines that may happen 
+        ch.GetComponent<MagicAbilitiesManager>().StopAllCoroutines();
+    }
+
+    public void nextBench()
+    {
+        bench--;
+        if (bench <= 0)
+        {
+            enemy.GetComponent<CharacterManager>().fighterManager.roundsWon = 2;
+            roundWon();
+            return;
+        }
+
+        if (player.GetComponent<CharacterManager>().fighterManager.roundsWon == 1)
+        {
+            player.GetComponent<CharacterManager>().fighterManager.roundsWon = 2;
+            roundWon();
+            return;
+        }
+
+        if (enemy.GetComponent<CharacterManager>().fighterManager.roundsWon >= 1) enemy.GetComponent<CharacterManager>().fighterManager.roundsWon--;
+        fadeText(2);
+        Time.timeScale = 0;
+    }
+
+    public void startCountdown()
+    {
         scoreIndicator.enabled = false;
         countdown.text = "3";
         countdown.enabled = true;
         countdown.GetComponent<Animator>().Play("Countdown");
-
-        //Reset the stats, position and effects of both characters
-        enemy.GetComponent<CharacterManager>().startFight();
-        enemy.GetComponent<CharacterManager>().stopAllAnims();
-        enemy.transform.position = new Vector2(10.58f, -.5f);
-        enemy.transform.localScale = new Vector2(-enemy.transform.localScale.x, enemy.transform.localScale.y);
-        enemy.GetComponent<CharacterManager>().rb.velocity = Vector3.zero;
-        enemy.GetComponent<SpecialAttacksManager>().StopAllCoroutines(); //Stop all corutines that may happen 
-        enemy.GetComponent<MagicAbilitiesManager>().StopAllCoroutines();
-
-        player.GetComponent<CharacterManager>().startFight();
-        player.GetComponent<CharacterManager>().stopAllAnims();
-        player.transform.position = new Vector2(-10.58f, -.5f);
-        player.transform.localScale = new Vector2(Mathf.Abs(player.transform.localScale.x), player.transform.localScale.y);
-        player.GetComponent<CharacterManager>().horizontalS = 1;
-        player.GetComponent<CharacterManager>().rb.velocity = Vector3.zero;
-        player.GetComponent<SpecialAttacksManager>().StopAllCoroutines(); //Stop all corutines that may happen 
-        player.GetComponent<MagicAbilitiesManager>().StopAllCoroutines();
-
-        GameManager.Instance.updateGameState(GameStates.Fight);
     }
 
     public void resetEnvironment()
@@ -202,7 +246,7 @@ public class OffFinghtManager : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void startOfFight()
+    public void startOfFight(bool allReset)
     {
         if (StoryTellingManager.story)
         {
@@ -213,8 +257,14 @@ public class OffFinghtManager : MonoBehaviour
 
         Time.timeScale = 1; //Reset the flowing of time
         game = true;
-        enemy.GetComponent<CharacterManager>().fighterManager.roundsWon = 0;
-        enemy.GetComponent<CharacterManager>().fighterManager.startOfFight();
+        if (allReset)
+        {
+            EndOfFightDialogueManager.benchCh = 1;
+            bench = 3;
+            enemy.GetComponent<CharacterManager>().fighterManager.roundsWon = 0;
+            enemy.GetComponent<CharacterManager>().fighterManager.startOfFight();
+        }
+
         enemy.transform.position = new Vector2(10.58f, -.5f);
         enemy.GetComponent<CharacterManager>().hasLost = false;
         roundsWonTextE.GetComponent<TextMeshProUGUI>().text = "0";
