@@ -305,4 +305,14 @@ public class AttackManager : MonoBehaviour
         characterManager.animator.SetBool("isJumping", false);
         characterManager.checkJumping = false;
     }
+
+    public void playSound(int i) //0 - NA; 1 - HA; 2 - RA; 3 - MA; 4 - SA
+    {
+        AudioSource src = GetComponent<AudioSource>();
+        src.Stop();
+
+        src.clip = characterManager.sounds[i];
+
+        src.Play();
+    }
 }
