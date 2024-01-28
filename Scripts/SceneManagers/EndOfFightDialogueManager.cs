@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.ShortcutManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -16,6 +17,8 @@ public class EndOfFightDialogueManager : MonoBehaviour
 
     int dialogues = 1;
     int firstD;
+
+    public static int benchCh = 1;
 
     public void nextDialogue()
     {
@@ -65,20 +68,46 @@ public class EndOfFightDialogueManager : MonoBehaviour
 
         if (i == 0)
         {
-            textDialogueP.text = player.GetComponent<CharacterManager>().fighterManager.Dialogues[1];
+            if (StoryTellingManager.bossBattle)
+            {
+                textDialogueP.text = "Don’t give up now! Everything is on the line!";
+            }
+            else
+                textDialogueP.text = player.GetComponent<CharacterManager>().fighterManager.Dialogues[1];
+
             textDialogueE.text = enemy.GetComponent<CharacterManager>().fighterManager.Dialogues[0];
         }
-        else
+        else if (i == 1)
         {
-            textDialogueP.text = player.GetComponent<CharacterManager>().fighterManager.Dialogues[0];
+            if (StoryTellingManager.bossBattle)
+            {
+                textDialogueP.text = "We did our part!";
+            }
+            else
+                textDialogueP.text = player.GetComponent<CharacterManager>().fighterManager.Dialogues[0];
+
             textDialogueE.text = enemy.GetComponent<CharacterManager>().fighterManager.Dialogues[1];
+        }
+        else if (i == 2)
+        {
+            dialogues = 2;
+            rcButton.GetComponentInChildren<TextMeshProUGUI>().text = "Continue";
+            textDialogueP.text = player.GetComponent<CharacterManager>().fighterManager.Dialogues[2];
         }
     }
 
     public void reButtonClick()
     {
         if (firstD == 0) resetFight();
-        else continueButton();
+        else if (firstD == 1) continueButton();
+        else if (firstD == 2) nextBenchCh();
+    }
+
+    public void nextBenchCh()
+    {
+        ChoseCharacterManager.instance.characterChoosed(++benchCh);
+        OffFinghtManager.Instance.startOfFight(false);
+        OffFinghtManager.Instance.startFight();
     }
 
     public void resetFight()
