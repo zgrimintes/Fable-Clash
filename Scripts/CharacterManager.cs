@@ -54,6 +54,7 @@ public class CharacterManager : AttackManager
     public FighterManager fighterManager;
     public GameObject textPrfb;
     public LayerMask layer;
+    public AudioClip[] sounds = new AudioClip[6]; //0 - NA; 1 - HA; 2 - RA; 3 - MA; 4 - SA; rest for extra
     [HideInInspector] public GameObject enemy;
 
     [HideInInspector] public float _NA_dmg;
@@ -153,6 +154,11 @@ public class CharacterManager : AttackManager
 
         Projectile.GetComponent<SpriteRenderer>().sprite = fighterManager.projectile;
         animator.runtimeAnimatorController = fighterManager.animator as RuntimeAnimatorController;
+
+        for (int i = 0; i < sounds.Length; i++)
+        {
+            if (_ch_name != "NULL" && data.sounds[i] != null) sounds[i] = data.sounds[i];
+        }
 
         setMaxValueBars();
     }
