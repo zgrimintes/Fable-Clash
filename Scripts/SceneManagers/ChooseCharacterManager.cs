@@ -72,7 +72,7 @@ public class ChoseCharacterManager : MonoBehaviour
 
         gameObject.SetActive(false);
         countdownText.GetComponent<Animator>().Play("Countdown");
-        countdownText.GetComponentInParent<OffFinghtManager>().startOfFight();
+        countdownText.GetComponentInParent<OffFinghtManager>().startOfFight(true);
     }
 
     public void showInfo(int i, char c)
