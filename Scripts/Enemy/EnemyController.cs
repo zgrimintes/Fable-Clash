@@ -158,13 +158,13 @@ public class EnemyController : CharacterManager
     protected void checkIfAbove() //Check if the player is above so that can change states if so
     {
         if (Physics2D.BoxCast(transform.position + new Vector3(0, 3, 0), new Vector2(.2f, .2f), 0, Vector2.up, .1f, enemyLayer) && !isDashing)
-            StartCoroutine(Dashh());
+            StartCoroutine(Dashh(.3f));
     }
 
     protected void checkIfUnder() //Check if the player is under so that can change states if so
     {
         if (Physics2D.BoxCast(transform.position + new Vector3(0, -3, 0), new Vector2(.2f, .2f), 0, Vector2.down, .1f, enemyLayer) && !isDashing)
-            StartCoroutine(Dashh());
+            StartCoroutine(Dashh(.2f));
     }
 
     protected void tryDash()
@@ -175,7 +175,7 @@ public class EnemyController : CharacterManager
 
         if ((int)Random.Range(0, 550) <= 2) //Added a chance to dash to you
         {
-            StartCoroutine(Dashh());
+            StartCoroutine(Dashh(.2f));
         }
     }
 
@@ -187,7 +187,7 @@ public class EnemyController : CharacterManager
         if (r <= 2)
         {
             Jump();
-            StartCoroutine(Dashh());
+            StartCoroutine(Dashh(.2f));
         }
     }
 
