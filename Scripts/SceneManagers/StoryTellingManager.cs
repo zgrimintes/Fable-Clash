@@ -105,6 +105,7 @@ public class StoryTellingManager : MonoBehaviour
             case 8: return "His acolyte then said: \r\n \"Master, I have linked the realms together for a short time, you may pass on your message.\"";
             case 9:
                 storyText1.transform.localPosition = new Vector2(0, 0);
+                storyText1.GetComponent<TextMeshProUGUI>().fontSize = 26;
                 return "The Crasnic, delighted by these news turns around to face the smoke cloud created by his acolyte and said:\r\n" +
                     "\"Hear ye hear ye, I am a wizard from a distant land, and the despair of your people has moved me, I have decided to help you!\" \r\n" +
                     "\"There exists a Golden Apple with the power of saving one of the realms, but only the worthy will be allowed to use it’s power.\" \r\n" +
@@ -344,3 +345,4 @@ public class StoryTellingManager : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 }
+S
