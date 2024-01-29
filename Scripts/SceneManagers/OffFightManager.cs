@@ -149,7 +149,7 @@ public class OffFinghtManager : MonoBehaviour
             dialogueP.SetActive(true);
             dialogueE.SetActive(false);
         }
-        else if (i == 2)
+        else
         {
             dialogueP.SetActive(true);
             dialogueE.SetActive(false);
@@ -211,7 +211,7 @@ public class OffFinghtManager : MonoBehaviour
         }
 
         if (enemy.GetComponent<CharacterManager>().fighterManager.roundsWon >= 1) enemy.GetComponent<CharacterManager>().fighterManager.roundsWon--;
-        fadeText(2);
+        fadeText(StoryTellingManager.currentFight - 5);
         Time.timeScale = 0;
     }
 
