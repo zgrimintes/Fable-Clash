@@ -113,6 +113,7 @@ public class AttackManager : MonoBehaviour
 
     public void normal_Attack(float _NA_dmg)
     {
+        GetComponent<SignalFinishAttack>().signalFinishAttack();
         characterManager.animator.SetBool("NA", true);
         characterManager.animator.SetBool("Attacking", true);
         signalStopJump();
@@ -130,6 +131,7 @@ public class AttackManager : MonoBehaviour
 
     public void ranged_Attack(float _RA_dmg)
     {
+        GetComponent<SignalFinishAttack>().signalFinishAttack();
         characterManager.animator.SetBool("RA", true);
         characterManager.animator.SetBool("Attacking", true);
         signalStopJump();
@@ -149,6 +151,7 @@ public class AttackManager : MonoBehaviour
     public void heavy_Attack(float _HA_dmg)
     {
         if (normalNextAttack) dmg = _HA_dmg;
+        GetComponent<SignalFinishAttack>().signalFinishAttack();
         characterManager.animator.SetBool("HA", true);
         characterManager.animator.SetBool("Attacking", true);
         signalStopJump();
@@ -167,6 +170,7 @@ public class AttackManager : MonoBehaviour
 
     public void magic_Attack(float _MA_dmg)
     {
+        GetComponent<SignalFinishAttack>().signalFinishAttack();
         characterManager.animator.SetBool("MA", true);
         characterManager.animator.SetBool("Attacking", true);
         signalStopJump();
@@ -216,6 +220,7 @@ public class AttackManager : MonoBehaviour
 
     public void special_Attack(float _SA_dmg)
     {
+        GetComponent<SignalFinishAttack>().signalFinishAttack();
         characterManager.animator.SetBool("SA", true);
         characterManager.animator.SetBool("Attacking", true);
         signalStopJump();
@@ -311,6 +316,7 @@ public class AttackManager : MonoBehaviour
         AudioSource src = GetComponent<AudioSource>();
         src.Stop();
 
+        src.volume = .7f;
         src.clip = characterManager.sounds[i];
 
         src.Play();
