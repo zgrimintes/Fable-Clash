@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StoryTellingManager : MonoBehaviour
 {
     public static StoryTellingManager Instance;
 
     public TMP_FontAsset normalFont, arhaicFont;
-    public GameObject storyText1, storyText2, startStoryText;
+    public GameObject storyText1, storyText2, startStoryText, bTMMButton, cButton;
     public static bool finishedAnimation = false;
     public static bool story = false;
     public static bool bossBattle = false;
@@ -44,6 +45,8 @@ public class StoryTellingManager : MonoBehaviour
                 continueButton();
             }
         }
+
+        bTMMButton.SetActive(false);
     }
 
     public void storyStarted()
@@ -61,8 +64,15 @@ public class StoryTellingManager : MonoBehaviour
         if (!finishedAnimation) return;
         parametersForText();
 
-        storyText1.GetComponent<TextMeshProUGUI>().text = nextStory(++nextStoryInstance);
-        storyText2.GetComponent<TextMeshProUGUI>().text = nextStory(++nextStoryInstance);
+        if (nextStoryInstance < 86)
+        {
+            storyText1.GetComponent<TextMeshProUGUI>().text = nextStory(++nextStoryInstance);
+            storyText2.GetComponent<TextMeshProUGUI>().text = nextStory(++nextStoryInstance);
+        }
+        else
+        {
+            //Load credits
+        }
 
     }
 
@@ -259,6 +269,8 @@ public class StoryTellingManager : MonoBehaviour
                 storyText2.GetComponent<TextMeshProUGUI>().font = arhaicFont;
                 return "- End of Fable Clash -";
             case 85:
+                bTMMButton.SetActive(true);
+                cButton.GetComponentInChildren<TextMeshProUGUI>().text = "Credits >";
                 return "Thank you all for playing! \r\nWe hope that you had a great time playing our game!\r\n";
             case 86:
                 storyText2.GetComponent<TextMeshProUGUI>().fontSize = 18;
@@ -322,5 +334,13 @@ public class StoryTellingManager : MonoBehaviour
         }
 
         ChoseCharacterManager.instance.startGame();
+    }
+
+    public void backToMainMenu()
+    {
+        bossBattle = false;
+        story = false;
+
+        SceneManager.LoadScene("MainMenu");
     }
 }
