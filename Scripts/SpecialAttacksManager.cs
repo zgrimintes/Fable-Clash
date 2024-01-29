@@ -191,11 +191,11 @@ public class SpecialAttacksManager : MonoBehaviour
 
     public IEnumerator charge(float dir)
     {
-        float speed = 0.001f;
+        float speed = 10f;
         while (!attackManager.outOfBounds(gameObject) && Physics2D.OverlapBox(gameObject.transform.position, gameObject.GetComponent<BoxCollider2D>().size * .3f, 0, layer) == null)
         {
-            gameObject.transform.position += new Vector3(speed * dir, 0, 0);
-            speed += Time.deltaTime / 8;
+            gameObject.transform.position += new Vector3(speed * dir * Time.deltaTime, 0, 0);
+            speed += Time.deltaTime * 50;
             yield return null;
         }
 
