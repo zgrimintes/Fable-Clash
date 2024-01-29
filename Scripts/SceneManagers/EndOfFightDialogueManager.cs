@@ -62,6 +62,7 @@ public class EndOfFightDialogueManager : MonoBehaviour
     {
         firstD = i; //Set the starting dialogue
         dialogues = 1;
+        if (i == 3 && benchCh < 3) benchCh = 4;
 
         iconDialogueP.GetComponent<Image>().sprite = player.GetComponent<CharacterManager>().fighterManager.characterIcon;
         iconDialogueE.GetComponent<Image>().sprite = enemy.GetComponent<CharacterManager>().fighterManager.characterIcon;
@@ -70,7 +71,8 @@ public class EndOfFightDialogueManager : MonoBehaviour
         {
             if (StoryTellingManager.bossBattle)
             {
-                textDialogueP.text = "Don’t give up now! Everything is on the line!";
+                if (StoryTellingManager.currentFight == 7) textDialogueP.text = "Don’t give up now! Everything is on the line!";
+                else if (StoryTellingManager.currentFight == 8) textDialogueP.text = "Are we really going to let him one-up us?!";
             }
             else
                 textDialogueP.text = player.GetComponent<CharacterManager>().fighterManager.Dialogues[1];
@@ -81,14 +83,15 @@ public class EndOfFightDialogueManager : MonoBehaviour
         {
             if (StoryTellingManager.bossBattle)
             {
-                textDialogueP.text = "We did our part!";
+                if (StoryTellingManager.currentFight == 7) textDialogueP.text = "We did our part!";
+                else if (StoryTellingManager.currentFight == 8) textDialogueP.text = "I bet we finished this faster than those kids";
             }
             else
                 textDialogueP.text = player.GetComponent<CharacterManager>().fighterManager.Dialogues[0];
 
             textDialogueE.text = enemy.GetComponent<CharacterManager>().fighterManager.Dialogues[1];
         }
-        else if (i == 2)
+        else if (i == 2 || i == 3)
         {
             dialogues = 2;
             rcButton.GetComponentInChildren<TextMeshProUGUI>().text = "Continue";
@@ -100,11 +103,12 @@ public class EndOfFightDialogueManager : MonoBehaviour
     {
         if (firstD == 0) resetFight();
         else if (firstD == 1) continueButton();
-        else if (firstD == 2) nextBenchCh();
+        else nextBenchCh();
     }
 
     public void nextBenchCh()
     {
+        Debug.Log("continue");
         ChoseCharacterManager.instance.characterChoosed(++benchCh);
         OffFinghtManager.Instance.startOfFight(false);
         OffFinghtManager.Instance.startFight();
