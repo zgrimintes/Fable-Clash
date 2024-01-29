@@ -211,7 +211,7 @@ public class SpecialAttacksManager : MonoBehaviour
     {
         while (wp.transform.position.y < 15f)
         {
-            wp.transform.position = wp.transform.position + new Vector3(0, 0.2f, 0);
+            wp.transform.position = wp.transform.position + new Vector3(0, 80f * Time.deltaTime, 0);
             yield return null;
         }
 
