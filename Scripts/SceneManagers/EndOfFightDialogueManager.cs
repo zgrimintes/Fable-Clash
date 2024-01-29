@@ -73,6 +73,7 @@ public class EndOfFightDialogueManager : MonoBehaviour
             {
                 if (StoryTellingManager.currentFight == 7) textDialogueP.text = "Don’t give up now! Everything is on the line!";
                 else if (StoryTellingManager.currentFight == 8) textDialogueP.text = "Are we really going to let him one-up us?!";
+                else if (StoryTellingManager.currentFight == 9) textDialogueP.text = "This..isn’t a fitting finale...";
             }
             else
                 textDialogueP.text = player.GetComponent<CharacterManager>().fighterManager.Dialogues[1];
@@ -85,6 +86,7 @@ public class EndOfFightDialogueManager : MonoBehaviour
             {
                 if (StoryTellingManager.currentFight == 7) textDialogueP.text = "We did our part!";
                 else if (StoryTellingManager.currentFight == 8) textDialogueP.text = "I bet we finished this faster than those kids";
+                else if (StoryTellingManager.currentFight == 9) textDialogueP.text = "We did it! We’re Saved!";
             }
             else
                 textDialogueP.text = player.GetComponent<CharacterManager>().fighterManager.Dialogues[0];
@@ -97,6 +99,12 @@ public class EndOfFightDialogueManager : MonoBehaviour
             rcButton.GetComponentInChildren<TextMeshProUGUI>().text = "Continue";
             textDialogueP.text = player.GetComponent<CharacterManager>().fighterManager.Dialogues[2];
         }
+        else
+        {
+            dialogues = 2;
+            rcButton.GetComponentInChildren<TextMeshProUGUI>().text = "Continue";
+            textDialogueP.text = player.GetComponent<CharacterManager>().fighterManager.Dialogues[3];
+        }
     }
 
     public void reButtonClick()
@@ -108,10 +116,34 @@ public class EndOfFightDialogueManager : MonoBehaviour
 
     public void nextBenchCh()
     {
-        Debug.Log("continue");
-        ChoseCharacterManager.instance.characterChoosed(++benchCh);
+        ChoseCharacterManager.instance.characterChoosed((StoryTellingManager.currentFight != 9) ? ++benchCh : nextOneFinalBattle());
         OffFinghtManager.Instance.startOfFight(false);
         OffFinghtManager.Instance.startFight();
+    }
+
+    public int nextOneFinalBattle()
+    {
+        switch (benchCh)
+        {
+            case 1:
+                benchCh = 6;
+                OffFinghtManager.bench = 5;
+                break;
+            case 6:
+                benchCh = 2;
+                break;
+            case 2:
+                benchCh = 4;
+                break;
+            case 4:
+                benchCh = 3;
+                break;
+            case 3:
+                benchCh = 5;
+                break;
+        }
+
+        return benchCh;
     }
 
     public void resetFight()
