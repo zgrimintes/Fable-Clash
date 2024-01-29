@@ -19,7 +19,7 @@ public class FighterManager : ScriptableObject
     public float timeToGetRidOfEffects;
     public bool isBoss;
 
-    public string[] Dialogues = new string[2]; //0 - WinDialogue; 1 - LoseDialogue;
+    public string[] Dialogues = new string[4]; //0 - WinDialogue; 1 - LoseDialogue; 2 - NextBench
     public Sprite projectile;
     public AnimatorController animator;
 
@@ -68,7 +68,11 @@ public class FighterManager : ScriptableObject
 
     public void startOfFight()
     {
-        if (isBoss) HP = 60;
+        if (isBoss)
+        {
+            if (characterName != "Crisnicul") HP = 60;
+            else HP = 120;
+        }
         else HP = 20;
 
         mana = 4;
