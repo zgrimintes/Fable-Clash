@@ -11,11 +11,11 @@ public class StoryTellingManager : MonoBehaviour
     public TMP_FontAsset normalFont, arhaicFont;
     public GameObject storyText1, storyText2, startStoryText;
     public static bool finishedAnimation = false;
-    public static bool story = true;
+    public static bool story = false;
     public static bool bossBattle = false;
     public static int currentFight;
     public static int nextStoryInstance = 0;
-    public static bool[] fightsWon = new bool[9];
+    public static bool[] fightsWon = new bool[10];
 
     private void Start()
     {
@@ -72,8 +72,11 @@ public class StoryTellingManager : MonoBehaviour
         storyText1.SetActive(true);
         storyText2.SetActive(true);
 
+        storyText1.GetComponent<TextMeshProUGUI>().color = Color.white;
+        storyText2.GetComponent<TextMeshProUGUI>().color = Color.white;
         storyText1.GetComponent<Animator>().enabled = false;
         storyText1.GetComponent<TextMeshProUGUI>().font = normalFont;
+        storyText2.GetComponent<TextMeshProUGUI>().font = normalFont;
         storyText1.GetComponent<TextMeshProUGUI>().fontSize = 28;
         storyText1.transform.localPosition = new Vector2(0, 100);
     }
@@ -221,6 +224,45 @@ public class StoryTellingManager : MonoBehaviour
             case 71:
                 setFight(7);
                 return "";
+            case 72: return "";
+            case 73:
+                storyText1.GetComponent<TextMeshProUGUI>().font = arhaicFont;
+                return "8th fight:";
+            case 74:
+                storyText2.GetComponent<TextMeshProUGUI>().font = arhaicFont;
+                return "The Realm of Beasts vs Balaurul";
+            case 75:
+                setFight(8);
+                return "";
+            case 76: return "";
+            case 77:
+                return "After both of Crisnicu's acolytes were defeated he appeared and yelled: \r\n\"How dare you be such weaklings! Get out of my face!\"";
+            case 78:
+                return "With those words, and with a swing of his cleaver, The Crasnic executes both Zgripturoaica and Balaurul, turning his attention to the group of six people, now standing before him:\r\n\"I’ll take care of you myself! After I’m done with you I’ll take over your realms. Don’t say I didn’t warn you!\"";
+            case 79:
+                storyText1.GetComponent<TextMeshProUGUI>().font = arhaicFont;
+                storyText1.GetComponent<TextMeshProUGUI>().color = Color.red;
+                return "9th fight:";
+            case 80:
+                storyText2.GetComponent<TextMeshProUGUI>().font = arhaicFont;
+                storyText2.GetComponent<TextMeshProUGUI>().color = Color.red;
+                return "The Warriors of both realms vs The Crasnic";
+            case 81:
+                setFight(9);
+                return "";
+            case 82: return "";
+            case 83:
+                storyText1.GetComponent<TextMeshProUGUI>().font = arhaicFont;
+                return "After The Crasnic’s defeat his body dissipates, the Sun and Moon erupting from his stomach returning to their rightful place. \r\n" +
+                    "With the crisis averted and the balance reinstituted, the warriors each returned to their home realms to live untold stories, stories for another time...";
+            case 84:
+                storyText2.GetComponent<TextMeshProUGUI>().font = arhaicFont;
+                return "- End of Fable Clash -";
+            case 85:
+                return "Thank you all for playing! \r\nWe hope that you had a great time playing our game!\r\n";
+            case 86:
+                storyText2.GetComponent<TextMeshProUGUI>().fontSize = 18;
+                return "You can alwasy go to the Freeplay and continue playing as long as you want.";
             default:
                 return "N/A";
         }
