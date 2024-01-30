@@ -49,10 +49,7 @@ public class SpecialAttacksManager : MonoBehaviour
 
     public void HarapAlb_SA(GameObject character)
     {
-        characterManager.jumpForce = 25f;
-        characterManager.fallGravityScale = 17f;
-        characterManager.Jump();
-        StartCoroutine(fallLunge(character));
+        StartCoroutine(Lunge(character));
     }
 
     public void Spinul_SA()
@@ -169,23 +166,21 @@ public class SpecialAttacksManager : MonoBehaviour
         characterManager.isDangerous = false;
     }
 
-    public IEnumerator fallLunge(GameObject character)
+    public IEnumerator Lunge(GameObject character)
     {
-        while (character.GetComponent<CharacterManager>().rb.velocity.y > 0)
-        {
-            yield return 0;
-        }
+        float dir = characterManager.horizontalS;
+        float speed = 20f;
+        float lungeDir = 0;
 
-        while (character.GetComponent<CharacterManager>().rb.velocity.y < 0)
+        while (!attackManager.outOfBounds(gameObject) && Physics2D.OverlapBox(gameObject.transform.position, gameObject.GetComponent<BoxCollider2D>().size * .3f, 0, layer) == null && lungeDir < 20)
         {
-            yield return 0;
+            gameObject.transform.position += new Vector3(speed * dir * Time.deltaTime, 0, 0);
+            lungeDir += .1f;
+            yield return null;
         }
-
-        character.GetComponent<CharacterManager>().jumpForce = 21f;
-        character.GetComponent<CharacterManager>().fallGravityScale = 5f;
 
         attackManager.dmg = 4;
-        attackManager.checkForColls(transform.position, 5f, 0);
+        attackManager.checkForColls(transform.position, 4f, 0);
         CameraShake.Shake(.3f, .3f);
     }
 
@@ -234,5 +229,6 @@ public class SpecialAttacksManager : MonoBehaviour
 
         GetComponent<CharacterManager>().enemy.GetComponent<CharacterManager>().take_damage(hits_Praslea); hits_Praslea = 0;
         Destroy(wp);
+        characterManager.animator.SetBool("isSpecial", false);
     }
 }
