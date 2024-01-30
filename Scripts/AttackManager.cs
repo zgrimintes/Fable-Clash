@@ -223,6 +223,7 @@ public class AttackManager : MonoBehaviour
         GetComponent<SignalFinishAttack>().signalFinishAttack();
         characterManager.animator.SetBool("SA", true);
         characterManager.animator.SetBool("Attacking", true);
+        characterManager.animator.SetBool("isSpecial", true);
         signalStopJump();
         if (normalNextAttack) dmg = _SA_dmg;
     }
