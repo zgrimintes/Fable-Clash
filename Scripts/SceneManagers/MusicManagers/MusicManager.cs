@@ -16,11 +16,20 @@ public class MusicManager : MonoBehaviour
 
     bool[] sceneChecked = new bool[5];
     int currScene;
+    static float bibaTime = 0f;
 
     public void putOnTape(AudioClip tape)
     {
         src.clip = tape;
-        src.volume = .1f;
+        src.volume = .05f;
+
+        if (tape == biba)
+        {
+            Debug.Log(tape);
+            src.time = bibaTime;
+        }
+        else src.time = 0;
+
         src.Play();
     }
 
@@ -42,6 +51,11 @@ public class MusicManager : MonoBehaviour
     private void Update()
     {
         checkScene();
+
+        if (src.clip == biba)
+        {
+            bibaTime = src.time;
+        }
     }
 
     public void checkScene()
