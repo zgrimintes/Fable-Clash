@@ -47,6 +47,7 @@ public class StoryTellingManager : MonoBehaviour
         }
 
         bTMMButton.SetActive(false);
+        MusicManager.Instance.onStory();
     }
 
     public void storyStarted()
@@ -329,6 +330,7 @@ public class StoryTellingManager : MonoBehaviour
         }
         else if (fightNb == 9)
         {
+            MusicManager.Instance.onCrisnicBattle();
             ChoseCharacterManager.instance.characterChoosed(1);
             ChoseCharacterManager.instance.enemyChoosed(9);
             bossBattle = true;
@@ -345,4 +347,3 @@ public class StoryTellingManager : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 }
-S
