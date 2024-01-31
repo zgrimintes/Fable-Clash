@@ -39,6 +39,7 @@ public class AIAttacksHarapAlb : MonoBehaviour
         checkDistance();
         checkLookingDir();
         checkIfInFront();
+        checkYAxis();
         checkHealth();
         checkForMA();
         checkStamina();
@@ -46,6 +47,17 @@ public class AIAttacksHarapAlb : MonoBehaviour
 
         chooseAttack();
     }
+
+    protected void checkYAxis()
+    {
+        if (Mathf.Abs(playerInstance.transform.position.y) - Mathf.Abs(transform.position.y) > 0.28f)
+        {
+            attacks[3] -= .2f;
+            attacks[2] -= .2f;
+            attacks[4] += .2f;
+        }
+    }
+
     protected void checkForMA()
     {
         for (int i = indxAttacks - 1; i >= 0; i--)
@@ -60,6 +72,8 @@ public class AIAttacksHarapAlb : MonoBehaviour
     protected void checkHealth()
     {
         if (playerInstance.GetComponent<CharacterManager>().HP < 5) attacks[3] += .6f;
+        else if (playerInstance.GetComponent<CharacterManager>().HP < 10) attacks[3] -= .2f;
+        else attacks[3] -= .8f;
     }
 
     protected void checkPreviousAttacks(int attackMade) //For reducing the "spam an attack"
@@ -110,12 +124,13 @@ public class AIAttacksHarapAlb : MonoBehaviour
     {
         if (enemyController.horizontalS == playerInstance.GetComponent<CharacterManager>().horizontalS)
         {
-            attacks[4] += .45f;
+            attacks[4] += .15f;
             attacks[2] += .3f;
             attacks[3] -= .3f;
         }
         else
         {
+            if (attacks[4] > 0) attacks[4] += .25f;
             if (attacks[3] > 0) attacks[3] += .2f;
             if (attacks[1] > 0) attacks[1] += .3f;
         }
