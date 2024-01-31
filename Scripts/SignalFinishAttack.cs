@@ -13,5 +13,6 @@ public class SignalFinishAttack : MonoBehaviour
         GetComponent<CharacterManager>().animator.SetBool("MA", false);
         GetComponent<CharacterManager>().animator.SetBool("Attacking", false);
         GetComponent<AttackManager>().hasHit = true;
+        GetComponent<CanHit>().canHit = false;
     }
 }
