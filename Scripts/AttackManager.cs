@@ -143,7 +143,7 @@ public class AttackManager : MonoBehaviour
         float dir = GetComponent<CharacterManager>().horizontalS;
 
         if (dir >= 0) wp = Instantiate(Projectile, attackPoint.transform.position, Quaternion.identity);
-        else wp = Instantiate(Projectile, transform.position, Quaternion.identity);
+        else wp = Instantiate(Projectile, attackPoint.transform.position, Quaternion.Euler(new Vector3(0, 0, 180)));
 
         StartCoroutine(ranged(dir, 0));
     }
