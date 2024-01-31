@@ -70,6 +70,7 @@ public class ChoseCharacterManager : MonoBehaviour
             return;
         }
 
+        MusicManager.Instance.onStartFight();
         gameObject.SetActive(false);
         countdownText.GetComponent<Animator>().Play("Countdown");
         countdownText.GetComponentInParent<OffFinghtManager>().startOfFight(true);
