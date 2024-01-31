@@ -13,6 +13,7 @@ public class MusicManager : MonoBehaviour
     public AudioClip biba;
     public AudioClip oRomanita;
     public AudioClip mioriticMetal;
+    public AudioClip sirbaCaLaDociln;
 
     bool[] sceneChecked = new bool[5];
     int currScene;
@@ -21,7 +22,7 @@ public class MusicManager : MonoBehaviour
     public void putOnTape(AudioClip tape)
     {
         src.clip = tape;
-        src.volume = .05f;
+        src.volume = .2f;
 
         if (tape == biba)
         {
@@ -92,6 +93,11 @@ public class MusicManager : MonoBehaviour
     public void onStory()
     {
         putOnTape(biba);
+    }
+
+    public void onCrisnicBattle()
+    {
+        putOnTape(sirbaCaLaDociln);
     }
 
     public void onStartFight()
