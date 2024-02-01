@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,7 +20,7 @@ public class FighterManager : ScriptableObject
 
     public string[] Dialogues = new string[4]; //0 - WinDialogue; 1 - LoseDialogue; 2 - NextBench
     public Sprite projectile;
-    public AnimatorController animator;
+    public RuntimeAnimatorController animator;
 
     public AudioClip[] sounds = new AudioClip[10];
 
