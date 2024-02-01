@@ -69,7 +69,7 @@ public class PlayerManager : CharacterManager
         if (!canMove) return;
 
         Dash();
-        if (!isDashing && Input.GetKeyDown(KeyCode.Space)) Jump();
+        if (!isDashing && Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)) Jump();
 
         if (horizontal == -1)
         {
@@ -98,11 +98,11 @@ public class PlayerManager : CharacterManager
         {
             try_MA();
         }
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.U))
         {
             try_SA();
         }
-        if (Input.GetKeyDown(KeyCode.LeftControl))
+        if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             Block();
         }
