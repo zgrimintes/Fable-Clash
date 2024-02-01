@@ -22,7 +22,7 @@ public class MusicManager : MonoBehaviour
     public void putOnTape(AudioClip tape)
     {
         src.clip = tape;
-        src.volume = .2f;
+        src.volume = .15f;
 
         if (tape == biba)
         {
