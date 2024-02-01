@@ -317,7 +317,7 @@ public class AttackManager : MonoBehaviour
         AudioSource src = GetComponent<AudioSource>();
         src.Stop();
 
-        src.volume = .7f;
+        src.volume = .5f;
         src.clip = characterManager.sounds[i];
 
         src.Play();
