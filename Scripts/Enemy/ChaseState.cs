@@ -33,7 +33,7 @@ public class ChaseState : EnemyState
             stateMachine.Change(enemy.waitState);
         }
 
-        Vector2 velocityToApply = new Vector2(enemy.playerInstance.transform.position.x - enemy.transform.position.x, enemy.rb.velocity.y).normalized * (enemy.speed / 2);
+        Vector2 velocityToApply = new Vector2(enemy.playerInstance.transform.position.x - enemy.transform.position.x, enemy.rb.velocity.y).normalized * (enemy.speed / 1.5f);
         velocityToApply.y = enemy.rb.velocity.y;
         enemy.MoveEnemy(velocityToApply);
     }
