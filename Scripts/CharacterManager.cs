@@ -329,7 +329,6 @@ public class CharacterManager : AttackManager
                 GetComponent<SpriteRenderer>().color = new Color(.7f, .7f, .7f, 1);
                 break;
             case 6:
-                Debug.Log("Shield Up!");
                 timeToGetRidOfEffects = 4f;
                 canTakeDamage = false;
                 break;
@@ -424,6 +423,9 @@ public class CharacterManager : AttackManager
                     if (!hasEffects[5]) return;
 
                     canTakeDamage = true;
+                    GameObject windShield = GameObject.Find("WindShield(Clone)");
+                    if (windShield != null) Destroy(windShield);
+
                     timeToGetRidOfEffects = defaultValues[7];
 
                     hasEffects[5] = false;
