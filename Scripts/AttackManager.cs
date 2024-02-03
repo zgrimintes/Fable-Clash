@@ -141,6 +141,8 @@ public class AttackManager : MonoBehaviour
     public void RA_continue()
     {
         float dir = GetComponent<CharacterManager>().horizontalS;
+        if (characterManager._ch_name == "Zgripturoaica") Projectile.transform.localScale = new Vector3(.2f, .2f);
+        else Projectile.transform.localScale = Vector3.one;
 
         if (dir >= 0) wp = Instantiate(Projectile, attackPoint.transform.position, Quaternion.identity);
         else wp = Instantiate(Projectile, attackPoint.transform.position, Quaternion.Euler(new Vector3(0, 0, 180)));
