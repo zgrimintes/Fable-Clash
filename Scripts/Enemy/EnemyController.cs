@@ -29,6 +29,7 @@ public class EnemyController : CharacterManager
     public bool isAbove = false;
     [HideInInspector] public bool isJumping = false; //Remove if not use later
     [HideInInspector] public bool isSpecial = false;
+    [HideInInspector] public float chance;
 
     float chanceToBlock = .5f;
     float lastBlock = 0;
@@ -144,7 +145,13 @@ public class EnemyController : CharacterManager
         //if (isJumping) return; //If jumping stop the wrinting of velocity
         if (isDashing) return; //If dashing stop the wrinting of velocity
 
-        if (enemy.GetComponent<CharacterManager>().isDangerous) { velocity = new Vector2(-velocity.x, rb.velocity.y); dirToKnock = 5; Debug.Log("is dangerous"); }
+        if (enemy.GetComponent<CharacterManager>().isDangerous)
+        {
+            if (chance > 1.2f)
+            {
+                velocity = new Vector2(-velocity.x, rb.velocity.y); dirToKnock = 5; Debug.Log("is dangerous");
+            }
+        }
 
         if (!isKnockback)
         {
@@ -155,7 +162,7 @@ public class EnemyController : CharacterManager
         {
             rb.velocity = new Vector2(velocity.x * dirToKnock, velocity.y);
             StartCoroutine(Knockback());
-            dirToKnock = -5;
+            dirToKnock = -2.5f;
         }
     }
 
