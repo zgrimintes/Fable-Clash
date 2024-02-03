@@ -16,6 +16,8 @@ public class SpecialAttacksManager : MonoBehaviour
     int index;
     public float fallingSpeed;
 
+    public GameObject windShield;
+
     private void Start()
     {
         attackManager = GetComponent<AttackManager>();
@@ -88,6 +90,9 @@ public class SpecialAttacksManager : MonoBehaviour
     public void Zgripturoaica_SA()
     {
         characterManager.applyEfects(6);
+        GameObject wS = Instantiate(windShield, transform.position, Quaternion.identity);
+        wS.AddComponent<FollowPlayer>();
+        wS.GetComponent<FollowPlayer>().toFollow = gameObject;
     }
 
     public void Balaurul_SA()
