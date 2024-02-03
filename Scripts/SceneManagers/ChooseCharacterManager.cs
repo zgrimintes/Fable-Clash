@@ -175,7 +175,7 @@ public class ChoseCharacterManager : MonoBehaviour
         switch (i)
         {
             case 1:
-                return "Prislea's intelligence helped him in making a weapon that can deal damage and raise one's attack cooldown.";
+                return "Prislea's intelligence helped him in enchanting a a arrow that can deal damage and raise one's attack cooldown.";
             case 2:
                 return "By winning the bear pelt from his father, HarapAlb's bear roar gives him strenght and increases his damage by one.";
             case 3:
@@ -187,7 +187,7 @@ public class ChoseCharacterManager : MonoBehaviour
             case 6:
                 return "The mist created by the Zmeu is the result of experience in tormenting men. It deals one damage for each second spent in it.";
             case 7:
-                return "Atropa, also known as deadly nightshade, is famous for it's toxicity. Even one blow can lower your speed and raise your attack cooldown.";
+                return "Atropa, also known as Deadly Nightshade, is famous for it's toxicity. Even one blow can lower your speed, raise your attack cooldown and drain your mana.";
             case 8:
                 return "His fire mastery is like no other's. Balaurul can create a boomerang that travels the screen four times and deals two damage upon impact.";
             case 9:
@@ -204,7 +204,7 @@ public class ChoseCharacterManager : MonoBehaviour
             case 1:
                 return "Arrows are his best friends so why not make good use of them? The enemy will be surprised by 7 falling arrows each dealing one damage.";
             case 2:
-                return "The lunge is the evidence of his courage. Harap Alb will jump and deal four damage upon falling to the ground.";
+                return "The lunge is the evidence of his courage. Harap Alb will strike and deal four damage upon landing a hit on the enemy.";
             case 3:
                 return "Greuceanu is the one people always rely on, therefore his healing will restore five hit points in order for him to continue the fight.";
             case 4:
