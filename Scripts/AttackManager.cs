@@ -324,4 +324,10 @@ public class AttackManager : MonoBehaviour
 
         src.Play();
     }
+
+    public void loopAnimation(int ok)
+    {
+        characterManager.animator.SetBool("SALoop", ok == 1);
+        characterManager.canDash = ok == 0;
+    }
 }
