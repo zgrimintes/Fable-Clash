@@ -144,9 +144,9 @@ public class EnemyController : CharacterManager
         //if (isJumping) return; //If jumping stop the wrinting of velocity
         if (isDashing) return; //If dashing stop the wrinting of velocity
 
-        if (enemy.GetComponent<CharacterManager>().isDangerous) { velocity = new Vector2(-velocity.x, velocity.y); dirToKnock = 5; Debug.Log("is dangerous"); }
+        if (enemy.GetComponent<CharacterManager>().isDangerous) { velocity = new Vector2(-velocity.x, rb.velocity.y); dirToKnock = 5; Debug.Log("is dangerous"); }
 
-        if (!isKnockback) rb.velocity = velocity;//Stop writing the velocity if you are getting knockbacked
+        if (!isKnockback) rb.velocity = new Vector2(velocity.x, rb.velocity.y);//Stop writing the velocity if you are getting knockbacked
         else
         {
             rb.velocity = new Vector2(velocity.x * dirToKnock, velocity.y);
