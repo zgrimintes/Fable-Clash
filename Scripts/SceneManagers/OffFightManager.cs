@@ -128,6 +128,9 @@ public class OffFinghtManager : MonoBehaviour
             scoreIndicator.text = winsPlayer + " - " + winsEnemy;
         }
 
+        player.GetComponent<AttackManager>().loopAnimation(0);
+        enemy.GetComponent<AttackManager>().loopAnimation(0);
+
         Time.timeScale = 0;
         if (!StoryTellingManager.bossBattle) await Task.Delay(1500);
         Time.timeScale = 1;
