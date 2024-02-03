@@ -230,12 +230,14 @@ public class OffFinghtManager : MonoBehaviour
         GameObject PProjectile = GameObject.Find("PProjectile(Clone)");
         GameObject EProjectile = GameObject.Find("EProjectile(Clone)");
         GameObject arrowC = GameObject.Find("arrow-color(Clone)");
+        GameObject windShield = GameObject.Find("WindShield(Clone)");
 
         if (darkMist != null) Destroy(darkMist);
         if (boomerang != null) Destroy(boomerang);
         if (PProjectile != null) Destroy(PProjectile);
         if (EProjectile != null) Destroy(EProjectile);
         if (arrowC != null) Destroy(arrowC);
+        if (windShield != null) Destroy(windShield);
     }
 
     public void startFight()
