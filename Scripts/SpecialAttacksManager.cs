@@ -59,7 +59,7 @@ public class SpecialAttacksManager : MonoBehaviour
         characterManager.speed -= 6f;
         characterManager.canDash = false;
         characterManager.isDangerous = true;
-        Debug.Log("Start Rotating");
+        characterManager.enemy.GetComponent<EnemyController>().chance = Random.Range(0, 2.5f); //Decide if the enemy will run 
         StartCoroutine(rotate());
     }
 
@@ -100,7 +100,7 @@ public class SpecialAttacksManager : MonoBehaviour
         characterManager.speed -= 6f;
         characterManager.canDash = false;
         characterManager.isDangerous = true;
-        Debug.Log("Start Blasting");
+        characterManager.enemy.GetComponent<EnemyController>().chance = Random.Range(0, 2.5f); //Decide if the enemy will run
         StartCoroutine(fireSpit());
     }
 
@@ -165,7 +165,7 @@ public class SpecialAttacksManager : MonoBehaviour
             yield return 0;
         }
 
-        Debug.Log("Finish Rotating");
+        attackManager.loopAnimation(0);
         characterManager.speed += 6;
         characterManager.canDash = true;
         characterManager.isDangerous = false;
