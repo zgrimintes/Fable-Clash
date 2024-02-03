@@ -97,7 +97,7 @@ public class SpecialAttacksManager : MonoBehaviour
 
     public void Balaurul_SA()
     {
-        characterManager.speed -= 8f;
+        characterManager.speed -= 6f;
         characterManager.canDash = false;
         characterManager.isDangerous = true;
         Debug.Log("Start Blasting");
@@ -125,7 +125,7 @@ public class SpecialAttacksManager : MonoBehaviour
             yield return null;
         }
 
-        Debug.Log("Finish Blasting");
+        attackManager.loopAnimation(0);
         characterManager.speed += 8;
         characterManager.canDash = true;
         characterManager.isDangerous = false;
