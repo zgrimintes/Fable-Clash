@@ -35,6 +35,7 @@ public class ChoseCharacterManager : MonoBehaviour
 
         if (fighterManagersP[c - 1] != null)
         {
+            player.GetComponent<CharacterManager>().blocks = 3;
             player.GetComponent<CharacterManager>().fighterManager = fighterManagersP[c - 1];
             player.GetComponent<CharacterManager>().LoadPlayer(fighterManagersP[c - 1]);
             player.GetComponent<AttackManager>().setCharacteristics();
@@ -148,7 +149,7 @@ public class ChoseCharacterManager : MonoBehaviour
         switch (i)
         {
             case 1:
-                return "NA - Bow jab\r\nHa - Bow strike\r\nRA - arrow\r\nMa - Mace trow\r\nSA - arrow rain";
+                return "NA - Bow jab\r\nHa - Bow strike\r\nRA - arrow\r\nMa - Magic arrow\r\nSA - arrow rain";
             case 2:
                 return "NA - Sword Slash\r\nHA - Sword Thrust\r\nRA - Shield Toss\r\nMA - Bear Roar\r\nSA - Sword Lunge";
             case 3:
