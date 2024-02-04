@@ -200,7 +200,7 @@ public class OffFinghtManager : MonoBehaviour
 
     public void nextBench()
     {
-        bench--;
+        if (player.GetComponent<CharacterManager>().HP <= 0 || player.GetComponent<CharacterManager>().fighterManager.HP <= 0) bench--;
         if (bench <= 0)
         {
             enemy.GetComponent<CharacterManager>().fighterManager.roundsWon = 2;
