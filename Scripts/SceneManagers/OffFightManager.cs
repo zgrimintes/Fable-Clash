@@ -130,6 +130,8 @@ public class OffFinghtManager : MonoBehaviour
 
         player.GetComponent<AttackManager>().loopAnimation(0);
         enemy.GetComponent<AttackManager>().loopAnimation(0);
+        player.GetComponent<CharacterManager>().isDangerous = false;
+        enemy.GetComponent<CharacterManager>().isDangerous = false;
 
         Time.timeScale = 0;
         if (!StoryTellingManager.bossBattle) await Task.Delay(1500);
