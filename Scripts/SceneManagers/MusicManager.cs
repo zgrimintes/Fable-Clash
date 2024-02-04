@@ -15,7 +15,7 @@ public class MusicManager : MonoBehaviour
     public AudioClip mioriticMetal;
     public AudioClip sirbaCaLaDociln;
 
-    bool[] sceneChecked = new bool[5];
+    bool[] sceneChecked = new bool[6];
     int currScene;
     static float bibaTime = 0f;
 
@@ -26,7 +26,6 @@ public class MusicManager : MonoBehaviour
 
         if (tape == biba)
         {
-            Debug.Log(tape);
             src.time = bibaTime;
         }
         else src.time = 0;
@@ -92,7 +91,8 @@ public class MusicManager : MonoBehaviour
 
     public void onStory()
     {
-        putOnTape(biba);
+        if (StoryTellingManager.fightsWon[StoryTellingManager.currentFight] || StoryTellingManager.currentFight == 0)
+            putOnTape(biba);
     }
 
     public void onCrisnicBattle()
