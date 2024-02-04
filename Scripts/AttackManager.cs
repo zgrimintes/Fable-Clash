@@ -141,7 +141,7 @@ public class AttackManager : MonoBehaviour
     public void RA_continue()
     {
         float dir = GetComponent<CharacterManager>().horizontalS;
-        if (characterManager._ch_name == "Zgripturoaica") Projectile.transform.localScale = new Vector3(.2f, .2f);
+        if (characterManager._ch_name == "Zgripturoaica" || characterManager._ch_name == "Crisnicul") Projectile.transform.localScale = new Vector3(.2f, .2f);
         else Projectile.transform.localScale = Vector3.one;
 
         if (dir >= 0) wp = Instantiate(Projectile, attackPoint.transform.position, Quaternion.identity);
@@ -175,6 +175,7 @@ public class AttackManager : MonoBehaviour
         GetComponent<SignalFinishAttack>().signalFinishAttack();
         characterManager.animator.SetBool("MA", true);
         characterManager.animator.SetBool("Attacking", true);
+        characterManager.animator.SetBool("notMagic", false);
         signalStopJump();
         if (normalNextAttack) dmg = _MA_dmg;
     }
@@ -328,6 +329,9 @@ public class AttackManager : MonoBehaviour
     public void loopAnimation(int ok)
     {
         characterManager.animator.SetBool("SALoop", ok == 1);
+        characterManager.animator.SetBool("SA", ok == 1);
+        characterManager.animator.SetBool("isSpecial", ok == 1);
         characterManager.canDash = ok == 0;
+        //characterManager.isDangerous = ok == 0;
     }
 }
