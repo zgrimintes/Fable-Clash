@@ -7,6 +7,7 @@ public class MainMenuManager : MonoBehaviour
 {
     public void FreePlay() //Start the free play mode
     {
+        StoryTellingManager.story = false;
         GameManager.Instance.updateGameState(GameStates.Start);
         SceneManager.LoadScene("SampleScene");
     }
@@ -24,5 +25,10 @@ public class MainMenuManager : MonoBehaviour
     public void Tutorial()
     {
         SceneManager.LoadScene("TutorialScene");
+    }
+
+    public void Credits()
+    {
+        SceneManager.LoadScene("CreditsScene");
     }
 }
