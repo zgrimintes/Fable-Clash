@@ -115,7 +115,7 @@ public class AttackManager : MonoBehaviour
     {
         GetComponent<SignalFinishAttack>().signalFinishAttack();
         characterManager.animator.SetBool("NA", true);
-        characterManager.animator.SetBool("Attacking", true);
+        StartCoroutine(declareAttacking());
         signalStopJump();
         if (normalNextAttack) dmg = _NA_dmg;
         hasHit = false;
@@ -133,7 +133,7 @@ public class AttackManager : MonoBehaviour
     {
         GetComponent<SignalFinishAttack>().signalFinishAttack();
         characterManager.animator.SetBool("RA", true);
-        characterManager.animator.SetBool("Attacking", true);
+        StartCoroutine(declareAttacking());
         signalStopJump();
         if (normalNextAttack) dmg = _RA_dmg;
     }
@@ -155,7 +155,7 @@ public class AttackManager : MonoBehaviour
         if (normalNextAttack) dmg = _HA_dmg;
         GetComponent<SignalFinishAttack>().signalFinishAttack();
         characterManager.animator.SetBool("HA", true);
-        characterManager.animator.SetBool("Attacking", true);
+        StartCoroutine(declareAttacking());
         signalStopJump();
         hasHit = false;
 
@@ -173,9 +173,8 @@ public class AttackManager : MonoBehaviour
     public void magic_Attack(float _MA_dmg)
     {
         GetComponent<SignalFinishAttack>().signalFinishAttack();
-        characterManager.animator.SetBool("MA", true);
-        characterManager.animator.SetBool("Attacking", true);
         characterManager.animator.SetBool("notMagic", false);
+        characterManager.animator.SetBool("MA", true);
         signalStopJump();
         if (normalNextAttack) dmg = _MA_dmg;
     }
@@ -219,20 +218,23 @@ public class AttackManager : MonoBehaviour
                 StartCoroutine(ranged(dirC, rEffect));
                 break;
         }
+
+
+        StartCoroutine(declareAttacking());
     }
 
     public void special_Attack(float _SA_dmg)
     {
         GetComponent<SignalFinishAttack>().signalFinishAttack();
-        characterManager.animator.SetBool("SA", true);
-        characterManager.animator.SetBool("Attacking", true);
-        characterManager.animator.SetBool("isSpecial", true);
         signalStopJump();
+        characterManager.animator.SetBool("SA", true);
+        characterManager.animator.SetBool("isSpecial", true);
         if (normalNextAttack) dmg = _SA_dmg;
     }
 
     public void SA_continue()
     {
+
         switch (characterManager._ch_name)
         {
             case "Prislea":
@@ -264,6 +266,8 @@ public class AttackManager : MonoBehaviour
                 specialAttacksManager.Crisnicul_SA();
                 break;
         }
+
+        StartCoroutine(declareAttacking());
     }
 
     public IEnumerator ranged(float dir, int effect)
@@ -333,5 +337,12 @@ public class AttackManager : MonoBehaviour
         characterManager.animator.SetBool("isSpecial", ok == 1);
         characterManager.canDash = ok == 0;
         //characterManager.isDangerous = ok == 0;
+    }
+
+    protected IEnumerator declareAttacking()
+    {
+        yield return new WaitForEndOfFrame();
+
+        characterManager.animator.SetBool("Attaking", true);
     }
 }
