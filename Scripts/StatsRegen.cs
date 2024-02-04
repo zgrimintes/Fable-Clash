@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class StatsRegen : MonoBehaviour
 {
-    [SerializeField] private float timeToGainMana = 15f;
+    [SerializeField] private float timeToGainMana = 10f;
     [SerializeField] private float timeToGainStamina = 3f;
     private float lastManaGain;
     private float lastStaminaGain;
     private int mana;
     private int stamina;
 
-
     void Update()
     {
+        if (GetComponent<CharacterManager>().fighterManager.isBoss)
+        {
+            timeToGainMana = 6.5f;
+        }
+
         mana = GetComponent<CharacterManager>().mana;
         stamina = GetComponent<CharacterManager>().stamina;
 
