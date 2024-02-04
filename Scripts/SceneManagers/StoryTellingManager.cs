@@ -14,7 +14,7 @@ public class StoryTellingManager : MonoBehaviour
     public static bool finishedAnimation = false;
     public static bool story = false;
     public static bool bossBattle = false;
-    public static int currentFight;
+    public static int currentFight = 0;
     public static int nextStoryInstance = 0;
     public static bool[] fightsWon = new bool[10];
 
