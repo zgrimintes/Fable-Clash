@@ -95,6 +95,10 @@ public class MagicAbilitiesManager : MonoBehaviour
 
     public void Balaurul_MA()
     {
+        GameObject alrBoom = GameObject.Find("Boomerang(Clone)");
+        if (alrBoom != null)
+            Destroy(alrBoom);
+
         GameObject boomerang = Instantiate(Boomerang, transform.position, Quaternion.identity);
         setTag(boomerang);
         StartCoroutine(blazingBoomerang(boomerang, characterManager.horizontalS));
