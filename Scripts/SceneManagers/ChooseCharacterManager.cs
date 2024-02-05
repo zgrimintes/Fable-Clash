@@ -153,7 +153,7 @@ public class ChoseCharacterManager : MonoBehaviour
             case 2:
                 return "NA - Sword Slash\r\nHA - Sword Thrust\r\nRA - Shield Toss\r\nMA - Bear Roar\r\nSA - Sword Lunge";
             case 3:
-                return "NA - Bludgeon Slap\r\nHA - Bludgeon Slam\r\nRA - Sun Blast/Moon Blast\r\nMA - Sleep Bringer\r\nSA - Raven Water Drop";
+                return "NA - Bludgeon Slap\r\nHA - Bludgeon Slam\r\nRA - Sun Blast\r\nMA - Sleep Bringer\r\nSA - Raven Water Drop";
             case 4:
                 return "NA - Sickle Graze\r\nHA - Sickle Gash\r\nRA - Sickle Shy\r\nMA - Shadow Teleport\r\nSA - Sickle Hurricane";
             case 5:
