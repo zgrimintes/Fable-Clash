@@ -91,8 +91,15 @@ public class MusicManager : MonoBehaviour
 
     public void onStory()
     {
-        if (StoryTellingManager.fightsWon[StoryTellingManager.currentFight] || StoryTellingManager.currentFight == 0)
+        if (StoryTellingManager.fightsWon[StoryTellingManager.currentFight] || StoryTellingManager.currentFight == 0 || checkIndex())
             putOnTape(biba);
+    }
+
+    protected bool checkIndex()
+    {
+        if (StoryTellingManager.nextStoryInstance == 0 || StoryTellingManager.nextStoryInstance == 44 || StoryTellingManager.nextStoryInstance == 68) return true;
+
+        return false;
     }
 
     public void onCrisnicBattle()
