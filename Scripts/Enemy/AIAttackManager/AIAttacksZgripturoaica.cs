@@ -54,14 +54,19 @@ public class AIAttacksZgripturoaica : MonoBehaviour
 
     protected void checkForMA()
     {
+        int att = 12;
+        if (enemyController.fighterManager.isBoss) att *= 3;
 
         for (int i = indxAttacks - 1; i >= 0; i--)
         {
-            if (indxAttacks - i > 7) break;
+            float toDec = 5; //How much chance it decreases
+
+            if (indxAttacks - i > 12) break;
+            if (enemyController.fighterManager.isBoss && indxAttacks - i < att) toDec = .5f;
 
             if (allAttacks[i] == 3)
             {
-                attacks[3] = -5f;
+                attacks[3] = -toDec;
             }
         }
     }
@@ -74,9 +79,18 @@ public class AIAttacksZgripturoaica : MonoBehaviour
 
     protected void checkHealt()
     {
-        if (enemyController.HP < 5) { attacks[4] += .5f; attacks[3] -= .3f; }
-        else if (enemyController.HP < 7) attacks[3] -= .2f;
-        else if (enemyController.HP > 10) attacks[4] -= .3f;
+        int HPbd1 = 5, HPbd2 = 7, HPbd3 = 10;
+
+        if (enemyController.fighterManager.isBoss)
+        {
+            HPbd1 = 15;
+            HPbd2 = 40;
+            HPbd3 = 50;
+        }
+
+        if (enemyController.HP < HPbd1) { attacks[4] += .5f; attacks[3] = -14f; }
+        else if (enemyController.HP < HPbd2) attacks[3] -= .9f;
+        else if (enemyController.HP > HPbd3) attacks[4] -= .3f;
     }
 
     protected void checkDistance()
