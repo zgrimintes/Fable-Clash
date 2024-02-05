@@ -11,6 +11,7 @@ public class AIAttacksHarapAlb : MonoBehaviour
     float[] attacks = new float[5];
     float[] allAttacks = new float[1000]; //For storing all attacks made by that character
     int indxAttacks = 0;
+    int chanceToStartLunge; //For diversifying the start of the round against HarapAlb
 
     public void Start()
     {
@@ -20,6 +21,8 @@ public class AIAttacksHarapAlb : MonoBehaviour
 
     public void OnEnable()
     {
+        chanceToStartLunge = Random.Range(0, 3);
+
         //Reset the attacks log
         indxAttacks = 0;
         for (int i = 0; i < allAttacks.Length; i++)
@@ -80,7 +83,7 @@ public class AIAttacksHarapAlb : MonoBehaviour
     {
         if (indxAttacks == 0)
         {
-            //if (chanceToStartDashing < 1) attacks[4] = 0;
+            if (chanceToStartLunge < 1) attacks[4] = 0;
         }
         else //If there has been at least one attack
         {
