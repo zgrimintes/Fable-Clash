@@ -12,7 +12,11 @@ public class SignalFinishAttack : MonoBehaviour
         GetComponent<CharacterManager>().animator.SetBool("SA", false);
         GetComponent<CharacterManager>().animator.SetBool("MA", false);
         GetComponent<CharacterManager>().animator.SetBool("Attacking", false);
+        GetComponent<CharacterManager>().animator.SetBool("isSpecial", false);
+        GetComponent<CharacterManager>().animator.SetBool("notMagic", true);
         GetComponent<AttackManager>().hasHit = true;
         GetComponent<CanHit>().canHit = false;
+
+        if (GetComponent<CharacterManager>()._ch_name == "Capcaunul") GetComponent<CharacterManager>().canDash = true;
     }
 }
