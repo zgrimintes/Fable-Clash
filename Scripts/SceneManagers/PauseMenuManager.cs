@@ -12,6 +12,7 @@ public class PauseMenuManager : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeScale == 0) return;
         if (!OffFinghtManager.Instance.game && !StoryTellingManager.story) return;
 
         if (Input.GetKeyUp(KeyCode.Escape))
@@ -36,10 +37,11 @@ public class PauseMenuManager : MonoBehaviour
     {
         Time.timeScale = 1f;
 
-        if (OffFinghtManager.Instance.game)
+        if (OffFinghtManager.Instance.game && StoryTellingManager.story == false)
         {
+            MusicManager.Instance.onStartPlaying();
             SceneManager.LoadScene("SampleScene");
-            OffFinghtManager.Instance.startOfFight();
+            OffFinghtManager.Instance.startOfFight(true);
         }
         else
         {
@@ -56,7 +58,7 @@ public class PauseMenuManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenu");
-        OffFinghtManager.Instance.startOfFight();
+        OffFinghtManager.Instance.startOfFight(true);
     }
 
     public void onAbilitiesInfo()
