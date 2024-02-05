@@ -18,6 +18,8 @@ public class SpecialAttacksManager : MonoBehaviour
 
     public GameObject windShield;
 
+    public static int hitsGround = 0;
+
     private void Start()
     {
         attackManager = GetComponent<AttackManager>();
@@ -59,7 +61,8 @@ public class SpecialAttacksManager : MonoBehaviour
         characterManager.speed -= 6f;
         characterManager.canDash = false;
         characterManager.isDangerous = true;
-        characterManager.enemy.GetComponent<EnemyController>().chance = Random.Range(0, 2.5f); //Decide if the enemy will run 
+        if (characterManager.enemy.GetComponent<EnemyController>() != null)
+            characterManager.enemy.GetComponent<EnemyController>().chance = Random.Range(0, 2.5f); //Decide if the enemy will run 
         StartCoroutine(rotate());
     }
 
@@ -69,11 +72,11 @@ public class SpecialAttacksManager : MonoBehaviour
         characterManager.fighterManager.HP += hpGained;
         characterManager.HP += hpGained;
 
-        if (characterManager.HP > 15)
+        if (characterManager.HP > 20)
         {
-            hpGained = 5 - (characterManager.HP - 15);
-            characterManager.fighterManager.HP = 15;
-            characterManager.HP = 15;
+            hpGained = 5 - (characterManager.HP - 20);
+            characterManager.fighterManager.HP = 20;
+            characterManager.HP = 20;
         }
 
         characterManager.popUpText("heal", hpGained);
@@ -82,9 +85,19 @@ public class SpecialAttacksManager : MonoBehaviour
 
     public void Capcaunul_SA()
     {
-        characterManager.canDash = false;
-        characterManager.speed -= 6;
-        StartCoroutine(hitTheGround());
+        //.speed -= 6;
+        if (hitsGround < 3) characterManager.canDash = false;
+        else
+        {
+            hitsGround = 0;
+            characterManager.canDash = true;
+            Debug.Log(characterManager.canDash);
+        }
+
+        enemy.GetComponent<CharacterManager>().groundShake();
+        CameraShake.Shake(.5f, .3f);
+        hitsGround++;
+        //StartCoroutine(hitTheGround());   
     }
 
     public void Zgripturoaica_SA()
@@ -100,7 +113,8 @@ public class SpecialAttacksManager : MonoBehaviour
         characterManager.speed -= 6f;
         characterManager.canDash = false;
         characterManager.isDangerous = true;
-        characterManager.enemy.GetComponent<EnemyController>().chance = Random.Range(0, 2.5f); //Decide if the enemy will run
+        if (characterManager.enemy.GetComponent<EnemyController>() != null)
+            characterManager.enemy.GetComponent<EnemyController>().chance = Random.Range(0, 2.5f); //Decide if the enemy will run
         StartCoroutine(fireSpit());
     }
 
@@ -131,7 +145,7 @@ public class SpecialAttacksManager : MonoBehaviour
         characterManager.isDangerous = false;
     }
 
-    public IEnumerator hitTheGround()
+    public IEnumerator hitTheGround() //Not in use right now
     {
         int hitsCapcaunul = 0;
         while (hitsCapcaunul < 4)
