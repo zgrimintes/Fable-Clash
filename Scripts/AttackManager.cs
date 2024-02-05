@@ -142,6 +142,7 @@ public class AttackManager : MonoBehaviour
     {
         float dir = GetComponent<CharacterManager>().horizontalS;
         if (characterManager._ch_name == "Zgripturoaica" || characterManager._ch_name == "Crisnicul") Projectile.transform.localScale = new Vector3(.2f, .2f);
+        else if (characterManager._ch_name == "Greuceanul" || characterManager._ch_name == "Capcaunul") Projectile.transform.localScale = new Vector3(.3f, .3f);
         else Projectile.transform.localScale = Vector3.one;
 
         if (dir >= 0) wp = Instantiate(Projectile, attackPoint.transform.position, Quaternion.identity);
@@ -234,6 +235,7 @@ public class AttackManager : MonoBehaviour
 
     public void SA_continue()
     {
+        StartCoroutine(declareAttacking());
 
         switch (characterManager._ch_name)
         {
@@ -266,8 +268,6 @@ public class AttackManager : MonoBehaviour
                 specialAttacksManager.Crisnicul_SA();
                 break;
         }
-
-        StartCoroutine(declareAttacking());
     }
 
     public IEnumerator ranged(float dir, int effect)
